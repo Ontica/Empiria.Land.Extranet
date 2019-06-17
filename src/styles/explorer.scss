@@ -1,0 +1,8 @@
+@mixin explorer-defaults {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+
+  flex: auto;
+  margin: 8px;
+}
