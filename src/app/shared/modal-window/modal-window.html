@@ -1,0 +1,11 @@
+<div class="overlay" (click)="onClickOverlay()">
+
+</div>
+<div class="modal-container"
+      [style.width]="config.width || 'auto'"
+      [style.height]="config.height || 'auto'"
+      [style.max-width]="config.maxWidth || '90%'"
+      [style.max-height]="config.maxHeight || '90%'">
+  <ng-content>
+  </ng-content>
+</div>

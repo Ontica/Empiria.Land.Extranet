@@ -1,0 +1,22 @@
+<div class="header">
+
+  <div class="title">
+
+    <div>{{navigationHeader.title}}</div>
+    <div class="breadcrumb">{{navigationHeader.hint}}</div>
+
+  </div>
+</div>
+
+<div class="menu-bar">
+  <emp-ng-nav-menu
+      class="menu"
+      [items]="navigationHeader.mainMenu"
+      (navMenuItemClick)="onClickMenu($event)">
+  </emp-ng-nav-menu>
+
+  <div></div>
+
+  <div></div>
+
+</div>

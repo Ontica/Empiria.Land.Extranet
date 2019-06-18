@@ -1,0 +1,44 @@
+// constants
+
+$green-color: #17c457 !default;
+$amber-color: #e68a00 !default;
+$red-color: #9b1b1f !default;
+$no-color: #909090!default;
+
+:host {
+  display: inline;
+}
+
+.circle {
+  display: inline-block;
+  border-radius: 50%;
+  height: 15px;
+  width: 15px;
+  text-align: center;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.circle:hover {
+  opacity: 1.0;
+}
+
+.amber {
+  background-color: $amber-color;
+}
+
+.green {
+  background: $green-color;
+}
+
+.red {
+  background: $red-color;
+}
+
+.no-color {
+  background-color: transparent;
+}
+
+.no-color:hover {
+  border: 1pt solid $no-color;
+}
