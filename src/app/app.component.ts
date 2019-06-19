@@ -1,12 +1,31 @@
-import { Component } from '@angular/core';
+/**
+ * @license
+ * Copyright (c) La Vía Óntica SC, Ontica LLC and contributors. All rights reserved.
+ *
+ * See LICENSE.txt in the project root for complete license information.
+ */
+
+import { Component, OnInit } from '@angular/core';
+
 
 @Component({
   selector: 'emp-ng-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  template: '<router-outlet></router-outlet>'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  title = 'land-extranet';
+  ngOnInit() {
+
+    window.addEventListener('dragover', e => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'none';
+    }, false);
+
+    window.addEventListener('drop', e => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'none';
+    }, false);
+
+  }
 
 }
