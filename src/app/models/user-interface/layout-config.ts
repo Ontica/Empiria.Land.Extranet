@@ -7,23 +7,23 @@
 
 import { View, Layout } from './user-interface';
 
-import { DocumentsViews,
+import { InstrumentsViews,
          TransactionsViews,
          SearchViews } from './views.config';
 
 
-export type LayoutType = 'Documents' | 'Transactions' | 'Search';
+export type LayoutType = 'Instruments' | 'Transactions' | 'Search';
 
 
-export const APP_VIEWS: View[] = DocumentsViews.concat(TransactionsViews,
+export const APP_VIEWS: View[] = InstrumentsViews.concat(TransactionsViews,
                                                        SearchViews);
 
 export const APP_LAYOUTS: Layout[] = [
   {
-    name: 'Documents',
-    views: DocumentsViews,
-    hint: 'Registro de oficios y documentos',
-    defaultTitle: 'Oficios y documentos'
+    name: 'Instruments',
+    views: InstrumentsViews,
+    hint: 'Registro de oficios e instrumentos legales',
+    defaultTitle: 'Instrumentos'
   },
   {
     name: 'Transactions',

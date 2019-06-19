@@ -18,7 +18,7 @@ import { NoContentComponent } from '@app/shared/no-content/no-content.component'
   imports: [
     RouterModule.forChild([
       {
-        path: 'documents', component: MainLayoutComponent,
+        path: 'instruments', component: MainLayoutComponent,
         canActivate: [SecurityGuardService],
         children: [
           { path: 'pending', component: NoContentComponent },
@@ -32,4 +32,4 @@ import { NoContentComponent } from '@app/shared/no-content/no-content.component'
   exports: [RouterModule]
 
 })
-export class DocumentsRoutingModule { }
+export class InstrumentsRoutingModule { }

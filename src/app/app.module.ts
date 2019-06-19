@@ -15,7 +15,7 @@ import { StoreModule } from './store/store.module';
 import { ServicesModule } from './services/services.module';
 import { SharedModule } from './shared/shared.module';
 
-import { DocumentsModule } from './documents/documents.module';
+import { InstrumentsModule } from './instruments/instruments.module';
 import { SearchModule } from './search/search.module';
 import { SecurityUIModule } from './security-ui/security-ui.module';
 import { TransactionsModule } from './transactions/transactions.module';
@@ -48,7 +48,7 @@ const EXCEPTION_HANDLER_PROVIDER = { provide: ErrorHandler, useClass: ExceptionH
     StoreModule,
     SecurityUIModule,
 
-    DocumentsModule,
+    InstrumentsModule,
     TransactionsModule,
     SearchModule,
 

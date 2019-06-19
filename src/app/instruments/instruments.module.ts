@@ -9,7 +9,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { DocumentsRoutingModule } from './documents-routing.module';
+import { InstrumentsRoutingModule } from './instruments-routing.module';
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -20,7 +20,7 @@ import { DocumentsRoutingModule } from './documents-routing.module';
     CommonModule,
     ReactiveFormsModule,
 
-    DocumentsRoutingModule
+    InstrumentsRoutingModule
   ],
 
   declarations: [
@@ -32,4 +32,4 @@ import { DocumentsRoutingModule } from './documents-routing.module';
   ]
 
 })
-export class DocumentsModule { }
+export class InstrumentsModule { }

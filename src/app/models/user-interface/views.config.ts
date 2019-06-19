@@ -8,24 +8,24 @@
 import { View } from './user-interface';
 
 
-export const DocumentsViews: View[] = [
+export const InstrumentsViews: View[] = [
   {
-    name: 'Documents.Pending',
-    title: 'Documentos abiertos',
+    name: 'Instruments.Pending',
+    title: 'Instrumentos abiertos',
     menuTitle: 'Abiertos',
-    url: '/documents/pending'
+    url: '/instruments/pending'
   },
   {
-    name: 'Documents.Signed',
-    title: 'Documentos firmados',
+    name: 'Instruments.Signed',
+    title: 'Instrumentos firmados',
     menuTitle: 'Firmados',
-    url: '/documents/signed'
+    url: '/instruments/signed'
   },
   {
-    name: 'Documents.Sent',
-    title: 'Documentos tramitados',
+    name: 'Instruments.Sent',
+    title: 'Instrumentos tramitados',
     menuTitle: 'Tramitados',
-    url: '/documents/requested'
+    url: '/instruments/requested'
   }
 ];
 
