@@ -54,6 +54,18 @@ export interface PartitionedType {
 }
 
 
+export interface Quantity {
+  unit: Identifiable;
+  amount: number;
+}
+
+
+export interface Money {
+  currency: Identifiable;
+  amount: number;
+}
+
+
 export function isEmpty(instance: Identifiable): boolean {
   return (!instance || !instance.uid ||
           instance.uid === '' || instance.uid === 'Empty');
