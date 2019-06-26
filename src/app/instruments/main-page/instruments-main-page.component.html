@@ -1,0 +1,15 @@
+<div class="explorer"
+    [class.remove-min-width]="!displayEditor">
+
+  <div class="explorer-panel primary">
+    <emp-land-instrument-list
+      (selectInstrument)="onSelectInstrument($event)">
+    </emp-land-instrument-list>
+
+  </div>
+
+  <div *ngIf="displayEditor" class="explorer-panel secondary">
+    Instruments editor
+  </div>
+
+</div>

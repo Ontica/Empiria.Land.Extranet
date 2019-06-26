@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
 import { SecurityGuardService } from '@app/core';
 
 import { MainLayoutComponent } from '@app/shared';
-import { NoContentComponent } from '@app/shared/no-content/no-content.component';
+import { InstrumentsMainPageComponent } from './main-page/instruments-main-page.component';
 
 @NgModule({
 
@@ -21,9 +21,10 @@ import { NoContentComponent } from '@app/shared/no-content/no-content.component'
         path: 'instruments', component: MainLayoutComponent,
         canActivate: [SecurityGuardService],
         children: [
-          { path: 'pending', component: NoContentComponent },
-          { path: 'signed', component: NoContentComponent },
-          { path: 'requested', component: NoContentComponent },
+          { path: 'pending', component: InstrumentsMainPageComponent },
+          { path: 'signed', component: InstrumentsMainPageComponent },
+          { path: 'requested', component: InstrumentsMainPageComponent },
+          { path: 'all', component: InstrumentsMainPageComponent },
           { path: '', redirectTo: 'pending', pathMatch: 'full' }
         ]
       }

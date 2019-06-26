@@ -1,0 +1,69 @@
+<div class="card card-border">
+
+  <div class="card-header card-header-flat">
+
+    <div class="card-title">
+      {{title}}
+      <div class="card-hint">{{hint}}</div>
+    </div>
+
+    <div class="card-header-options">
+        <div style="width:32px"></div>
+
+        <span i18n>Buscar:</span>&nbsp;
+        <input type="search" class="text-box" style="width:210px;"
+               (keyup.enter)="onFilterChange()" [(ngModel)]="filter">
+        &nbsp; &nbsp; &nbsp;  &nbsp;
+        <button class="btn-action"
+                (click)="onCreate()" i18n>Nuevo</button>
+
+    </div>
+
+  </div>
+
+  <div class="card-body">
+
+      <div *ngFor="let instrument of instrumentList"
+           class="list-item" matRipple [matRippleTrigger]="trigger"
+           [class.list-item-selected]="isSelected(instrument)">
+
+        <div class="list-item-container">
+
+          <div class="item-name">
+            <a #trigger
+               (click)="onSelect(instrument)">{{instrument.name}}</a>
+          </div>
+
+          <div class="list-item-columns">
+
+            <div class="column">
+              {{instrument.typeName}}
+            </div>
+
+            <div class="column nowrap">
+              <div i18n>Fecha:</div>
+              <div>
+                {{instrument.issueDate | date:'dd/LLL/yyyy'}}
+              </div>
+            </div>
+
+            <div class="column nowrap">
+              <div i18n>Estado:</div>
+              <div>
+                {{instrument.status} &nbsp;
+              </div>
+            </div>
+
+            <div class="right-column expand">
+              {{instrument.postedBy.name}}
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+  </div>
+
+</div>

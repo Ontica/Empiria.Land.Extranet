@@ -7,9 +7,14 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { AngularMaterialModule } from '@app/shared/angular-material.module';
 
 import { InstrumentsRoutingModule } from './instruments-routing.module';
+
+import { InstrumentsMainPageComponent } from './main-page/instruments-main-page.component';
+import { InstrumentListComponent } from './list/instrument-list.component';
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -18,13 +23,16 @@ import { InstrumentsRoutingModule } from './instruments-routing.module';
 
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
+    AngularMaterialModule,
 
     InstrumentsRoutingModule
   ],
 
   declarations: [
-
+    InstrumentsMainPageComponent,
+    InstrumentListComponent
   ],
 
   exports: [
