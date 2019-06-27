@@ -11,21 +11,27 @@ import { View } from './user-interface';
 export const InstrumentsViews: View[] = [
   {
     name: 'Instruments.Pending',
-    title: 'Instrumentos abiertos',
-    menuTitle: 'Abiertos',
+    title: 'Documentos abiertos',
+    menuTitle: 'Documentos abiertos',
     url: '/instruments/pending'
   },
   {
     name: 'Instruments.Signed',
-    title: 'Instrumentos firmados',
+    title: 'Documentos firmados',
     menuTitle: 'Firmados',
     url: '/instruments/signed'
   },
   {
     name: 'Instruments.Sent',
-    title: 'Instrumentos tramitados',
+    title: 'Documentos tramitados',
     menuTitle: 'Tramitados',
     url: '/instruments/requested'
+  },
+  {
+    name: 'Instruments.All',
+    title: 'Todos los documentos',
+    menuTitle: 'Todos',
+    url: '/instruments/all'
   }
 ];
 
@@ -34,7 +40,7 @@ export const TransactionsViews: View[] = [
   {
     name: 'Transactions.Pending',
     title: 'Trámites pendientes',
-    menuTitle: 'Pendientes',
+    menuTitle: 'Trámites pendientes',
     url: '/transactions/pending'
   },
   {

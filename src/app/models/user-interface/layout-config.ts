@@ -22,8 +22,8 @@ export const APP_LAYOUTS: Layout[] = [
   {
     name: 'Instruments',
     views: InstrumentsViews,
-    hint: 'Registro de oficios e instrumentos legales',
-    defaultTitle: 'Instrumentos'
+    hint: 'Registro de instrumentos legales y oficios',
+    defaultTitle: 'Documentos'
   },
   {
     name: 'Transactions',

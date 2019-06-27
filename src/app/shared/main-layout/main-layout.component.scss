@@ -31,11 +31,11 @@ mat-sidenav {
 .nav-bar {
   @include row;
 
-  min-height: 52px;
+  min-height: 68px;
   overflow: visible;
 
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
 
   color: $text-color-dark;
 
@@ -50,17 +50,18 @@ mat-sidenav {
     }
   }
 
+
   .search-and-settings {
     @include row;
 
     width: auto;
     align-items: center;
-    margin-top: 8px;
 
     > * {
       margin-left: 32px;
     }
   }
+
 
   .logo {
     @include small-hide;
@@ -71,7 +72,6 @@ mat-sidenav {
 
   .main-menu {
     margin-left: 30px;
-    margin-top: 12px;
   }
 
 }

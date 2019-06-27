@@ -94,14 +94,13 @@
 
 
 .card-header-raised {
-  border-bottom: 6px solid $primary-color;
+  border-bottom: 4px solid $primary-color;
 
   @include raised-header;
 }
 
 .card-header-flat {
-  background-color: $secondary-color-light;
-  border-bottom: 6px solid $primary-color;
+  border-bottom: 4px solid $primary-color;
 }
 
 
