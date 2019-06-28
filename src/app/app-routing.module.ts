@@ -12,7 +12,7 @@ import { NoContentComponent } from './shared/no-content/no-content.component';
 
 
 const ROUTES: Routes = [
-  { path: '', redirectTo: 'instruments', pathMatch: 'full' },
+  { path: '', redirectTo: 'documents', pathMatch: 'full' },
   { path: '**', component: NoContentComponent }
 ];
 

@@ -18,7 +18,7 @@ import { InstrumentsMainPageComponent } from './main-page/instruments-main-page.
   imports: [
     RouterModule.forChild([
       {
-        path: 'instruments', component: MainLayoutComponent,
+        path: 'documents', component: MainLayoutComponent,
         canActivate: [SecurityGuardService],
         children: [
           { path: 'pending', component: InstrumentsMainPageComponent },

@@ -13,6 +13,7 @@ import { RecordingActType, RecordingAct } from './recording-act';
 
 
 export interface LegalInstrument extends Identifiable, PartitionedType {
+  typeName: string;
   number: string;
   issueOffice: Contact;
   issuedBy: Contact;

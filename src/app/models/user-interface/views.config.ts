@@ -13,25 +13,25 @@ export const InstrumentsViews: View[] = [
     name: 'Instruments.Pending',
     title: 'Documentos abiertos',
     menuTitle: 'Documentos abiertos',
-    url: '/instruments/pending'
+    url: '/documents/pending'
   },
   {
     name: 'Instruments.Signed',
     title: 'Documentos firmados',
     menuTitle: 'Firmados',
-    url: '/instruments/signed'
+    url: '/documents/signed'
   },
   {
     name: 'Instruments.Sent',
     title: 'Documentos tramitados',
     menuTitle: 'Tramitados',
-    url: '/instruments/requested'
+    url: '/documents/requested'
   },
   {
     name: 'Instruments.All',
     title: 'Todos los documentos',
     menuTitle: 'Todos',
-    url: '/instruments/all'
+    url: '/documents/all'
   }
 ];
 
