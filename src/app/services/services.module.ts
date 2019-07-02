@@ -7,15 +7,15 @@
 
 import { NgModule } from '@angular/core';
 
+import { InstrumentService } from './instrument.service';
+import { PropertyService } from './property.service';
+
+
 @NgModule({
 
-  imports: [
-  ],
-
-  exports: [
-  ],
-
   providers: [
+    InstrumentService,
+    PropertyService
   ]
 
 })
