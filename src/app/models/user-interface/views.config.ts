@@ -11,9 +11,15 @@ import { View } from './user-interface';
 export const InstrumentsViews: View[] = [
   {
     name: 'Instruments.Pending',
-    title: 'Documentos abiertos',
-    menuTitle: 'Documentos abiertos',
+    title: 'Documentos en elaboración',
+    menuTitle: 'En elaboración',
     url: '/documents/pending'
+  },
+  {
+    name: 'Instruments.ToSign',
+    title: 'Documentos por firmar',
+    menuTitle: 'Por firmar',
+    url: '/documents/to-sign'
   },
   {
     name: 'Instruments.Signed',
@@ -77,12 +83,6 @@ export const TransactionsViews: View[] = [
 
 
 export const SearchViews: View[] = [
-  {
-    name: 'Search.All',
-    title: 'Resultados de la consulta',
-    menuTitle: '',
-    url: '/search/all'
-  },
   {
     name: 'Search.RealEstate',
     title: 'Índice de propiedades',

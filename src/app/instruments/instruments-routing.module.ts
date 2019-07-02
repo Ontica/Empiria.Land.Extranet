@@ -22,6 +22,7 @@ import { InstrumentsMainPageComponent } from './main-page/instruments-main-page.
         canActivate: [SecurityGuardService],
         children: [
           { path: 'pending', component: InstrumentsMainPageComponent },
+          { path: 'to-sign', component: InstrumentsMainPageComponent },
           { path: 'signed', component: InstrumentsMainPageComponent },
           { path: 'requested', component: InstrumentsMainPageComponent },
           { path: 'all', component: InstrumentsMainPageComponent },
