@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { SecurityUIRoutingModule } from './security-ui-routing.module';
 import { UserLoginComponent } from './user-login/user-login.component';
+import { ESignInputComponent } from './esign/esign-input.component';
 
 
 /**
@@ -26,10 +27,12 @@ import { UserLoginComponent } from './user-login/user-login.component';
   ],
 
   declarations: [
+    ESignInputComponent,
     UserLoginComponent
   ],
 
   exports: [
+    ESignInputComponent,
     UserLoginComponent
   ]
 
