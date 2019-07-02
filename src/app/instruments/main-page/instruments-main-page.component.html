@@ -3,6 +3,7 @@
 
   <div class="explorer-panel primary">
     <emp-land-instrument-list
+      [view]="currentView"
       (selectInstrument)="onSelectInstrument($event)">
     </emp-land-instrument-list>
 

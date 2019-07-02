@@ -3,7 +3,7 @@
   <div class="card-header card-header-flat">
 
     <div class="card-title">
-      {{title}}
+      {{view.title}}
       <div class="card-hint">{{hint}}</div>
     </div>
 
@@ -15,7 +15,7 @@
                (keyup.enter)="onFilterChange()" [(ngModel)]="filter">
         &nbsp; &nbsp; &nbsp;  &nbsp;
         <button class="btn-action"
-                (click)="onCreate()" i18n>Nuevo</button>
+                (click)="openCreateDocumentWizard()" i18n>Nuevo</button>
 
     </div>
 
@@ -67,3 +67,15 @@
   </div>
 
 </div>
+
+
+<emp-ng-modal-window *ngIf="displayCreateDocumentWizard"
+                     [config]="{width:'840px', height:'900px', disableClose:true}"
+                     (modalWindowClose)="closeCreateDocumentWizard()">
+
+    <emp-ng-card title='Nuevo documento'
+                 hint="Crear un nuevo instrumento legal u oficio"
+                 (cardClose)="closeCreateDocumentWizard()">
+        <emp-land-create-instrument-wizard></emp-land-create-instrument-wizard>
+    </emp-ng-card>
+</emp-ng-modal-window>

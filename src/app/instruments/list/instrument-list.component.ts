@@ -1,5 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+/**
+ * @license
+ * Copyright (c) La Vía Óntica SC, Ontica LLC and contributors. All rights reserved.
+ *
+ * See LICENSE.txt in the project root for complete license information.
+ */
+
+import { Component, OnInit, Input } from '@angular/core';
 import { LegalInstrument } from '@app/models/registration';
+import { View } from '@app/models/user-interface';
+
 
 @Component({
   selector: 'emp-land-instrument-list',
@@ -11,11 +20,14 @@ import { LegalInstrument } from '@app/models/registration';
 })
 export class InstrumentListComponent implements OnInit {
 
-  title = 'Documentos abiertos';
+  @Input() view: View;
+
   hint = 'Ningún documento encontrado';
   filter = '';
 
   instrumentList = [];
+
+  displayCreateDocumentWizard = false;
 
   constructor() { }
 
@@ -27,10 +39,14 @@ export class InstrumentListComponent implements OnInit {
 
   }
 
-  onCreate() {
-
+  openCreateDocumentWizard() {
+    this.displayCreateDocumentWizard = true;
   }
 
+
+  closeCreateDocumentWizard() {
+    this.displayCreateDocumentWizard = false;
+  }
 
   onFilterChange() {
 
