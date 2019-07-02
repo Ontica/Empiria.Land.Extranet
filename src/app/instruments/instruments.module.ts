@@ -10,11 +10,19 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AngularMaterialModule } from '@app/shared/angular-material.module';
+import { SharedModule } from '@app/shared/shared.module';
+import { SecurityUIModule } from '@app/security-ui/security-ui.module';
 
 import { InstrumentsRoutingModule } from './instruments-routing.module';
 
 import { InstrumentsMainPageComponent } from './main-page/instruments-main-page.component';
 import { InstrumentListComponent } from './list/instrument-list.component';
+import { CreateInstrumentWizardComponent } from './create-wizard/create-instrument-wizard.component';
+import { PreventiveNoteComponent } from './editors/preventive-note.component';
+import { DefinitiveNoteComponent } from './editors/definitive-note.component';
+import { DeedComponent } from './editors/deed.component';
+import { FolioRealRequestComponent } from './editors/folio-real-request.component';
+
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -26,13 +34,19 @@ import { InstrumentListComponent } from './list/instrument-list.component';
     FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule,
-
+    SharedModule,
+    SecurityUIModule,
     InstrumentsRoutingModule
   ],
 
   declarations: [
     InstrumentsMainPageComponent,
-    InstrumentListComponent
+    InstrumentListComponent,
+    CreateInstrumentWizardComponent,
+    PreventiveNoteComponent,
+    DefinitiveNoteComponent,
+    DeedComponent,
+    FolioRealRequestComponent
   ],
 
   exports: [

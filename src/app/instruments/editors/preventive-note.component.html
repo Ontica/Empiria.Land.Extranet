@@ -1,0 +1,74 @@
+<form class="form-container" autocomplete="off" [formGroup]="form">
+
+  <fieldset>
+
+    <table class="form-section">
+      <tr>
+        <td class="form-section-title" colspan="4" i18n>Información del predio</td>
+      </tr>
+      <tr>
+        <td>Folio real:</td>
+        <td>
+          <input type="text" class="text-box" formControlName="propertyUID" style="width:170px" maxlength="20">
+          <button type="button" class="btn"
+                  (click)="onUpload()" i18n>Leer</button>
+        </td>
+        <td>
+          Clave catastral:
+        </td>
+        <td>
+          <input type="text" class="text-box" readonly="readonly">
+        </td>
+      </tr>
+      <tr>
+        <td>Distrito:</td>
+        <td>
+          <input type="text" class="text-box" style="width:170px" readonly="readonly">
+        </td>
+        <td>Municipio:</td>
+        <td>
+          <input type="text" class="text-box" readonly="readonly">
+        </td>
+      </tr>
+      <tr>
+        <td>Tipo de predio:</td>
+        <td>
+          <input type="text" class="text-box" style="width:170px" readonly="readonly">
+        </td>
+        <td>Denominado:</td>
+        <td>
+          <input type="text" class="text-box" readonly="readonly">
+        </td>
+      </tr>
+      <tr>
+        <td class="align-top">Ubicado en:</td>
+        <td colspan="3">
+          <textarea class="text-area" rows="2" readonly="readonly"></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td class="align-top">Medidas y<br>colindancias:</td>
+        <td colspan="3">
+          <textarea class="text-area" rows="3" readonly="readonly"></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td class="form-section-title" colspan="4" i18n>Operación proyectada</td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <textarea class="text-area" rows="14" formControlName="projectedOperation"></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="3" class="text-align-right">
+            <button type="button" class="btn-action right"
+            (click)="onUpload()" i18n>Guardar</button>
+        </td>
+      </tr>
+    </table>
+
+  </fieldset>
+
+</form>
