@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 
 import { Assertion, HttpService } from '@app/core';
 
-import { RealEstate, PreventiveNote, LegalInstrument } from '@app/models/registration';
+import { PreventiveNote, LegalInstrument, PreventiveNoteRequest } from '@app/models/registration';
 
 
 @Injectable()
@@ -35,7 +35,7 @@ export class InstrumentService {
   }
 
 
-  createPreventiveNote(data: { requestedBy: string; propertyUID: string; projectedOperation: string; }): Observable<PreventiveNote> {
+  createPreventiveNote(data: PreventiveNoteRequest): Observable<PreventiveNote> {
     Assertion.assertValue(data, 'data');
 
     const path = `v2/extranet/instruments/create-preventive-note`;
@@ -44,8 +44,48 @@ export class InstrumentService {
   }
 
 
+  requestPaymentOrder(instrument: LegalInstrument, data: any): Observable<LegalInstrument> {
+    Assertion.assertValue(instrument, 'instrument');
+
+    const path = `v2/extranet/instruments/${instrument.uid}/request-payment-order`;
+
+    return this.http.post<LegalInstrument>(path, data);
+  }
+
+
+  requestRecording(instrument: LegalInstrument, data: any) {
+    Assertion.assertValue(instrument, 'instrument');
+
+    const path = `v2/extranet/instruments/${instrument.uid}/request-recording`;
+
+    return this.http.post<LegalInstrument>(path, data);
+  }
+
+
+  revokeInstrumentSign(instrument: LegalInstrument,
+                       revokeSignToken: string) {
+    Assertion.assertValue(instrument, 'instrument');
+    Assertion.assertValue(revokeSignToken, 'revokeSignToken');
+
+    const path = `v2/extranet/instruments/${instrument.uid}/revoke-sign`;
+
+    return this.http.post<LegalInstrument>(path, { revokeSignToken });
+  }
+
+
+  signInstrument(instrument: LegalInstrument,
+                 signToken: string): Observable<LegalInstrument> {
+    Assertion.assertValue(instrument, 'instrument');
+    Assertion.assertValue(signToken, 'signToken');
+
+    const path = `v2/extranet/instruments/${instrument.uid}/sign`;
+
+    return this.http.post<LegalInstrument>(path, { signToken });
+  }
+
+
   updatePreventiveNote(preventiveNote: PreventiveNote,
-                       data: { requestedBy: string, propertyUID: string; projectedOperation: string; }): Observable<PreventiveNote> {
+                       data: PreventiveNoteRequest): Observable<PreventiveNote> {
     Assertion.assertValue(preventiveNote, 'preventiveNote');
     Assertion.assertValue(data, 'data');
 

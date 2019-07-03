@@ -3,26 +3,28 @@
              (cardClose)="onClose()">
 
   <mat-horizontal-stepper linear #stepper labelPosition="bottom" color="accent">
+
     <mat-step *ngIf="showInstrumentTypeSelector" [completed]="documentType !== ''">
       <ng-template matStepLabel>Seleccionar<br>el tipo de<br> documento</ng-template>
 
-      <label id="example-radio-group-label">¿Qúe tipo de documento se desea registrar?</label>
-      <mat-radio-group class="example-radio-group" [(ngModel)]="documentType">
-        <mat-radio-button class="example-radio-button" value="PreventiveNote">Aviso preventivo</mat-radio-button>
-        <mat-radio-button class="example-radio-button" value="DefinitiveNote">Segundo aviso definitivo</mat-radio-button>
-        <mat-radio-button class="example-radio-button" value="NotaryDeed">Escritura pública</mat-radio-button>
-        <mat-radio-button class="example-radio-button" value="FolioRealRequest">Solicitar expedición de folio real</mat-radio-button>
+      <label>¿Qúe tipo de documento se desea registrar?</label>
+      <mat-radio-group class="radio-group" [(ngModel)]="documentType">
+        <mat-radio-button class="radio-button" value="PreventiveNote">Aviso preventivo</mat-radio-button>
+        <mat-radio-button class="radio-button" value="DefinitiveNote">Segundo aviso definitivo</mat-radio-button>
+        <mat-radio-button class="radio-button" value="NotaryDeed">Escritura pública</mat-radio-button>
+        <mat-radio-button class="radio-button" value="FolioRealRequest">Solicitar expedición de folio real</mat-radio-button>
       </mat-radio-group>
       <div class="right">
           <button [class.btn]="!documentType" [class.btn-action]="documentType" [disabled]="!documentType" matStepperNext>Siguiente</button>
       </div>
     </mat-step>
+
     <mat-step [completed]="instrument.uid">
-      <ng-template matStepLabel>Llenar<br>el formulario</ng-template>
+      <ng-template matStepLabel>{{instrument.isSigned ? 'Ver' : 'Llenar'}}<br>el formulario</ng-template>
       <ng-container *ngIf="documentType === 'PreventiveNote'">
         <emp-land-preventive-note
-            [instrument]="instrument"
-            (instrumentChange)="onInstrumentChange($event)">
+            [preventiveNote]="instrument"
+            (preventiveNoteChange)="onInstrumentChange($event)">
         </emp-land-preventive-note>
       </ng-container>
       <ng-container *ngIf="documentType === 'DefinitiveNote'">
@@ -35,49 +37,45 @@
         <emp-land-folio-real-request></emp-land-folio-real-request>
       </ng-container>
       <div class="right">
-        <button mat-button matStepperPrevious>Anterior</button>
         <button [class.btn]="!instrument.uid" [class.btn-action]="instrument.uid" [disabled]="!instrument.uid" matStepperNext>Siguiente</button>
       </div>
     </mat-step>
+
     <mat-step [completed]="false" *ngIf="documentType === 'NotaryDeed'">
       <ng-template matStepLabel>Adjuntar<br>archivos</ng-template>
-      Subidor de archivos
-      <div>
-        <button mat-button matStepperPrevious>Anterior</button>
-        <button class="btn-action" matStepperNext>Siguiente</button>
-      </div>
-    </mat-step>
-    <mat-step [completed]="false">
-      <ng-template matStepLabel>Firmar<br>el documento</ng-template>
-      <emp-ng-esign-input></emp-ng-esign-input>
+      <emp-ng-file-control></emp-ng-file-control>
+
       <div class="right">
         <button mat-button matStepperPrevious>Anterior</button>
         <button class="btn-action" matStepperNext>Siguiente</button>
       </div>
     </mat-step>
-    <mat-step [completed]="false">
-      <ng-template matStepLabel>Solicitar<br>el trámite</ng-template>
+
+    <mat-step [completed]="instrument.isSigned">
+      <ng-template matStepLabel>{{instrument.isSigned ? 'Firma electrónica' : 'Firmar el documento'}}</ng-template>
+
+      <emp-land-instrument-sign-request
+          [instrument]="instrument" (instrumentChange)="onInstrumentChange($event)">
+      </emp-land-instrument-sign-request>
 
       <div class="right">
         <button mat-button matStepperPrevious>Anterior</button>
-        <button mat-raised-button color="accent" matStepperNext>Siguiente</button>
+        <button [class.btn]="!instrument.isSigned" [class.btn-action]="instrument.isSigned"
+                [disabled]="!instrument.isSigned" matStepperNext>Siguiente</button>
       </div>
     </mat-step>
-    <mat-step [completed]="false">
-      <ng-template matStepLabel>Pagar<br>el trámite</ng-template>
+
+    <mat-step [completed]="instrument.isRequested">
+      <ng-template matStepLabel>{{instrument.isRequested ? 'Información del trámite' : 'Solicitar el trámite'}}</ng-template>
+
+      <emp-land-instrument-filing
+          [instrument]="instrument" (instrumentChange)="onInstrumentChange($event)">
+      </emp-land-instrument-filing>
 
       <div class="right">
         <button mat-button matStepperPrevious>Anterior</button>
-        <button mat-raised-button color="accent" matStepperNext>Siguiente</button>
       </div>
     </mat-step>
-    <mat-step [completed]="false">
-      <ng-template matStepLabel>Ingresar<br>el trámite</ng-template>
 
-      <div class="right">
-        <button mat-button matStepperPrevious>Anterior</button>
-        <button mat-raised-button color="accent" matStepperPrevious>Finalizar</button>
-      </div>
-    </mat-step>
   </mat-horizontal-stepper>
 </emp-ng-card>

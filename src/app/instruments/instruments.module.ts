@@ -22,6 +22,8 @@ import { PreventiveNoteComponent } from './editors/preventive-note.component';
 import { DefinitiveNoteComponent } from './editors/definitive-note.component';
 import { DeedComponent } from './editors/deed.component';
 import { FolioRealRequestComponent } from './editors/folio-real-request.component';
+import { InstrumentSignRequestComponent } from './sign-request/instrument-sign-request.component';
+import { InstrumentFilingComponent } from './filing/instrument-filing.component';
 
 
 /**
@@ -46,7 +48,9 @@ import { FolioRealRequestComponent } from './editors/folio-real-request.componen
     PreventiveNoteComponent,
     DefinitiveNoteComponent,
     DeedComponent,
-    FolioRealRequestComponent
+    FolioRealRequestComponent,
+    InstrumentSignRequestComponent,
+    InstrumentFilingComponent
   ],
 
   exports: [

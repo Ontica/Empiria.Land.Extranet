@@ -1,0 +1,72 @@
+<form class="form-container" autocomplete="off" [formGroup]="form">
+
+  <fieldset>
+
+    <table class="form-section">
+      <tr>
+        <td class="form-section-title" colspan="4">Información del trámite</td>
+      </tr>
+      <tr>
+        <td>
+          <label>Solicitante:</label>
+        </td>
+        <td colspan="3">
+          <input type="text" class="text-box" disabled [value]="instrument.requestedBy">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label i18n>Correo electrónico:</label>
+        </td>
+        <td>
+          <input type="email" class="text-box" style="width: 200px"
+                 formControlName="sendTo" [value]="form.get('sendTo').value | lowercase">
+        </td>
+        <td>
+          <label>RFC facturación:</label>
+        </td>
+        <td>
+          <input type="text" class="text-box" style="width: 200px" maxlength="15"
+                 formControlName="rfc" [value]="form.get('rfc').value | uppercase">
+        </td>
+      </tr>
+      <tr *ngIf="!instrument.transaction.uid">
+        <td></td>
+        <td colspan="3">
+          <button type="submit" class="btn-action" (click)="onRequestPaymentOrder()">Solicitar el trámite</button>
+        </td>
+      </tr>
+      <tr *ngIf="instrument.transaction.uid">
+        <td>
+          <label>Número de trámite:</label>
+        </td>
+        <td>
+          <input type="text" class="text-box" [value]="instrument.transaction.uid" disabled style="width: 200px">
+        </td>
+        <td>
+          <label>Documentos:</label>
+        </td>
+        <td>
+          <a target="_blank"
+             href="http://empiria.land/intranet/land.registration.system.transactions/bank.payment.order.aspx?id={{instrument.transaction.id}}">Boleta de pago</a>
+        </td>
+      </tr>
+      <tr *ngIf="instrument.transaction.uid && !instrument.transaction.presentationDate">
+        <td></td>
+        <td colspan="3">
+          <button type="submit" class="btn-action" (click)="onRequestRecording()">Ingresar el trámite</button>
+        </td>
+      </tr>
+      <tr *ngIf="instrument.transaction.uid && instrument.transaction.presentationDate">
+        <td>
+          <label>Estado del trámite:</label>
+        </td>
+        <td colspan="3">
+          <input type="text" class="text-box" style="width: 200px" disabled [value]="instrument.transaction.status">
+        </td>
+      </tr>
+    </table>
+
+  </fieldset>
+
+</form>
