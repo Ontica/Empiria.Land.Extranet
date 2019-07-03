@@ -45,7 +45,7 @@ export interface Identifiable {
 
 export const Empty: Identifiable = {
   uid: '',
-  name: 'No determinado',
+  name: '',
 };
 
 
@@ -58,6 +58,11 @@ export interface Quantity {
   unit: Identifiable;
   amount: number;
 }
+
+export const EmptyQuantity: Quantity = {
+  unit: Empty,
+  amount: 0
+};
 
 
 export interface Money {

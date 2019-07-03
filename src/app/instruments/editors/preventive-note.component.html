@@ -4,6 +4,18 @@
 
     <table class="form-section">
       <tr>
+        <td class="form-section-title" colspan="4" i18n>Aviso preventivo</td>
+      </tr>
+      <tr>
+        <td>Solicitante:</td>
+        <td colspan="3" style="width:100%">
+          <input type="text" class="text-box" formControlName="requestedBy" style="width:calc(100% - 120px)">
+          &nbsp; &nbsp; &nbsp;
+          <button type="button" [class.btn]="!form.valid || form.pristine" [class.btn-action]="form.valid && !form.pristine" class="right" [disabled]="!form.valid || form.pristine"
+            (click)="onSave()" i18n>Guardar</button>
+        </td>
+      </tr>
+      <tr>
         <td class="form-section-title" colspan="4" i18n>Información del predio</td>
       </tr>
       <tr>
@@ -11,45 +23,43 @@
         <td>
           <input type="text" class="text-box" formControlName="propertyUID" style="width:170px" maxlength="20">
           <button type="button" class="btn"
-                  (click)="onUpload()" i18n>Leer</button>
+                  (click)="getPropertyData()" i18n>Leer</button>
         </td>
+        <td>Clave catastral:</td>
         <td>
-          Clave catastral:
-        </td>
-        <td>
-          <input type="text" class="text-box" readonly="readonly">
+          <input type="text" class="text-box" disabled readonly="readonly" [value]="realEstate.cadastralKey">
         </td>
       </tr>
       <tr>
         <td>Distrito:</td>
         <td>
-          <input type="text" class="text-box" style="width:170px" readonly="readonly">
+          <input type="text" class="text-box" disabled style="width:170px" readonly="readonly" [value]="realEstate.district.name">
         </td>
         <td>Municipio:</td>
         <td>
-          <input type="text" class="text-box" readonly="readonly">
+          <input type="text" class="text-box" disabled readonly="readonly" [value]="realEstate.municipality.name">
         </td>
       </tr>
       <tr>
         <td>Tipo de predio:</td>
         <td>
-          <input type="text" class="text-box" style="width:170px" readonly="readonly">
+          <input type="text" class="text-box" disabled style="width:170px" readonly="readonly" [value]="realEstate.realEstateType.name">
         </td>
         <td>Denominado:</td>
         <td>
-          <input type="text" class="text-box" readonly="readonly">
+          <input type="text" class="text-box" disabled readonly="readonly" [value]="realEstate.name">
         </td>
       </tr>
       <tr>
         <td class="align-top">Ubicado en:</td>
         <td colspan="3">
-          <textarea class="text-area" rows="2" readonly="readonly"></textarea>
+          <textarea class="text-area" rows="2" disabled readonly="readonly" [value]="realEstate.location"></textarea>
         </td>
       </tr>
       <tr>
         <td class="align-top">Medidas y<br>colindancias:</td>
         <td colspan="3">
-          <textarea class="text-area" rows="3" readonly="readonly"></textarea>
+          <textarea class="text-area" rows="3" disabled readonly="readonly" [value]="realEstate.metesAndBounds"></textarea>
         </td>
       </tr>
       <tr>
@@ -57,14 +67,7 @@
       </tr>
       <tr>
         <td colspan="4">
-          <textarea class="text-area" rows="14" formControlName="projectedOperation"></textarea>
-        </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td colspan="3" class="text-align-right">
-            <button type="button" class="btn-action right"
-            (click)="onUpload()" i18n>Guardar</button>
+          <textarea class="text-area" rows="10" formControlName="projectedOperation"></textarea>
         </td>
       </tr>
     </table>

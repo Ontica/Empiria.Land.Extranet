@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Identifiable, PartitionedType, Quantity } from '../core/core-types';
+import { Identifiable, PartitionedType, Quantity, EmptyQuantity, Empty } from '../core/core-types';
 
 
 export interface Property extends Identifiable, PartitionedType {
@@ -30,3 +30,19 @@ export interface RealEstate extends Property {
   isPartition: boolean;
   partitionOf: Identifiable;
 }
+
+export const EmptyRealEstate: RealEstate = {
+  uid: '',
+  name: '',
+  type: '',
+  realEstateType: Empty,
+  cadastralKey: '',
+  metesAndBounds: '',
+  district: Empty,
+  municipality: Empty,
+  location: '',
+  lotSize: EmptyQuantity,
+  notes: '',
+  isPartition: false,
+  partitionOf: Empty,
+};
