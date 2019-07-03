@@ -5,7 +5,11 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Observable, of } from 'rxjs';
+
+import { InstrumentService } from '@app/services/instrument.service';
+
 import { LegalInstrument } from '@app/models/registration';
 import { View } from '@app/models/user-interface';
 
@@ -21,23 +25,27 @@ import { View } from '@app/models/user-interface';
 export class InstrumentListComponent implements OnInit {
 
   @Input() view: View;
+  @Output() instrumentSelected = new EventEmitter<LegalInstrument>();
 
   hint = 'Ningún documento encontrado';
   filter = '';
 
-  instrumentList = [];
+  instrumentList: Observable<LegalInstrument[]> = of([]);
+  selectedInstrument: LegalInstrument = {};
 
   displayCreateDocumentWizard = false;
 
-  constructor() { }
+  constructor(private instrumentService: InstrumentService) { }
 
   ngOnInit() {
+    this.instrumentList = this.instrumentService.getInstruments();
   }
 
 
   isSelected(instrument: LegalInstrument) {
-
+    return (this.selectedInstrument.uid === instrument.uid);
   }
+
 
   openCreateDocumentWizard() {
     this.displayCreateDocumentWizard = true;
@@ -53,8 +61,13 @@ export class InstrumentListComponent implements OnInit {
   }
 
 
-  onSelect(instrument: LegalInstrument) {
+  onInstrumentChange() {
 
+  }
+
+  onSelect(instrument: LegalInstrument) {
+    this.selectedInstrument = instrument;
+    this.instrumentSelected.emit(this.selectedInstrument);
   }
 
 }

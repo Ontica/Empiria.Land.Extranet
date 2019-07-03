@@ -15,6 +15,7 @@ import { RecordingActType, RecordingAct } from './recording-act';
 export interface LegalInstrument extends Identifiable, PartitionedType {
   typeName: string;
   number: string;
+  requestedBy: string;
   issueOffice: Contact;
   issuedBy: Contact;
   issueDate: DateString;
@@ -25,12 +26,9 @@ export interface LegalInstrument extends Identifiable, PartitionedType {
 }
 
 
-export interface PreemptiveNote extends LegalInstrument {
+export interface PreventiveNote extends LegalInstrument {
   property: RealEstate;
-  projectedActs: RecordingActType[];
-  projectedParties: Party[];
-  overNewPartition: boolean;
-  projectedPartition?: RealEstate;
+  projectedOperation: string;
 }
 
 

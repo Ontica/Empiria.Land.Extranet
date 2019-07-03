@@ -4,7 +4,7 @@
 
     <div class="card-title">
       {{view.title}}
-      <div class="card-hint">{{hint}}</div>
+      <div class="card-hint">{{(instrumentList | async)?.length}} documentos encontrados</div>
     </div>
 
     <div class="card-header-options">
@@ -23,7 +23,7 @@
 
   <div class="card-body">
 
-      <div *ngFor="let instrument of instrumentList"
+      <div *ngFor="let instrument of instrumentList | async"
            class="list-item" matRipple [matRippleTrigger]="trigger"
            [class.list-item-selected]="isSelected(instrument)">
 
@@ -31,7 +31,7 @@
 
           <div class="item-name">
             <a #trigger
-               (click)="onSelect(instrument)">{{instrument.name}}</a>
+               (click)="onSelect(instrument)">{{instrument.requestedBy}}</a>
           </div>
 
           <div class="list-item-columns">
@@ -43,19 +43,15 @@
             <div class="column nowrap">
               <div i18n>Fecha:</div>
               <div>
-                {{instrument.issueDate | date:'dd/LLL/yyyy'}}
-              </div>
-            </div>
-
-            <div class="column nowrap">
-              <div i18n>Estado:</div>
-              <div>
-                {{instrument.status} &nbsp;
+                {{(instrument.issueDate || instrument.postingTime) | date:'dd/LLL/yyyy'}}
               </div>
             </div>
 
             <div class="right-column expand">
-              {{instrument.postedBy.name}}
+              <div i18n>Estado:</div>
+              <div>
+                {{instrument.status}} &nbsp;
+              </div>
             </div>
 
           </div>
@@ -72,10 +68,9 @@
 <emp-ng-modal-window *ngIf="displayCreateDocumentWizard"
                      [config]="{width:'840px', height:'900px', disableClose:true}"
                      (modalWindowClose)="closeCreateDocumentWizard()">
-
-    <emp-ng-card title='Nuevo documento'
-                 hint="Crear un nuevo instrumento legal u oficio"
-                 (cardClose)="closeCreateDocumentWizard()">
-        <emp-land-create-instrument-wizard></emp-land-create-instrument-wizard>
-    </emp-ng-card>
+    <emp-land-create-instrument-wizard
+        [showInstrumentTypeSelector]="true"
+        (instrumentChange)="onInstrumentChange($event)"
+        (wizardClose)="closeCreateDocumentWizard()">
+    </emp-land-create-instrument-wizard>
 </emp-ng-modal-window>

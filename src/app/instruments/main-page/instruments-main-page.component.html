@@ -4,13 +4,17 @@
   <div class="explorer-panel primary">
     <emp-land-instrument-list
       [view]="currentView"
-      (selectInstrument)="onSelectInstrument($event)">
+      (instrumentSelected)="onSelectInstrument($event)">
     </emp-land-instrument-list>
 
   </div>
 
   <div *ngIf="displayEditor" class="explorer-panel secondary">
-    Instruments editor
+    <emp-land-create-instrument-wizard
+        [instrument]="selectedInstrument"
+        (instrumentChange)="onInstrumentChange($event)"
+        (wizardClose)="onEditorClose()">
+    </emp-land-create-instrument-wizard>
   </div>
 
 </div>

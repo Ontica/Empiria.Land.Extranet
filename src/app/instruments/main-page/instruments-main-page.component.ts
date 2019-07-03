@@ -26,7 +26,7 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
   toggleEditor = false;
   currentView: View;
 
-  selectedInstrument: LegalInstrument;
+  selectedInstrument: LegalInstrument = {};
 
   private subs1: Subscription;
 
@@ -51,6 +51,11 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
   onSelectInstrument(instrument: LegalInstrument) {
     this.selectedInstrument = instrument;
     this.displayEditor = true;
+  }
+
+  onEditorClose() {
+    this.selectedInstrument = {};
+    this.displayEditor = false;
   }
 
 
