@@ -1,20 +1,28 @@
+/**
+ * @license
+ * Copyright (c) La Vía Óntica SC, Ontica LLC and contributors. All rights reserved.
+ *
+ * See LICENSE.txt in the project root for complete license information.
+ */
+
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EsignInputComponent } from './esign-input.component';
+import { ESignInputComponent } from './esign-input.component';
+
 
 describe('EsignInputComponent', () => {
-  let component: EsignInputComponent;
-  let fixture: ComponentFixture<EsignInputComponent>;
+  let component: ESignInputComponent;
+  let fixture: ComponentFixture<ESignInputComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EsignInputComponent ]
+      declarations: [ ESignInputComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EsignInputComponent);
+    fixture = TestBed.createComponent(ESignInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

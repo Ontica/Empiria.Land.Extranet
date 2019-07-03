@@ -5,19 +5,42 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+
+import { Cryptography } from '@app/core/security/cryptography';
 
 
 @Component({
   selector: 'emp-ng-esign-input',
   templateUrl: './esign-input.component.html',
-  styleUrls: ['./esign-input.component.scss']
+  styleUrls: [
+    '../../../styles/general-styles.scss',
+    '../../../styles/form.scss'
+  ]
 })
-export class ESignInputComponent implements OnInit {
+export class ESignInputComponent {
 
-  constructor() { }
+  @Input() revokeMode = false;
 
-  ngOnInit() {
+  @Output() signTokenReceived = new EventEmitter<string>();
+
+  esign = '';
+
+  onESign() {
+    const esignToken = this.esign;
+
+    // const token = 'abracadabra';
+    // const encrypted = Cryptography.encrypt(esignToken, token);
+    // console.log('encrypted', encrypted);
+    // const decrypted = Cryptography.decrypt(encrypted, token);
+    // console.log('decrypted', decrypted);
+
+    if (this.esign === 's3cur1ty') {
+      this.signTokenReceived.emit(esignToken);
+    } else {
+      alert('No reconozco la firma electrónica proporcionada.');
+      this.esign = '';
+    }
   }
 
 }

@@ -1,3 +1,34 @@
-<p>
-  esign-input works!
-</p>
+<form class="form-container">
+
+  <fieldset>
+
+    <table class="form-section">
+      <tr>
+        <td class="form-section-title" colspan="2" i18n>Firma electrónica autorizada</td>
+      </tr>
+      <tr>
+        <td>
+            <label for="esign" i18n>Firma electrónica:</label>
+        </td>
+        <td>
+            <input type="password" class="text-box" id="esign" [value]="esign" (input)="esign=$event.target.value"
+                   maxlength="64" autocomplete="electronic-sign" style="max-width:200px">
+            <br>
+            Nota: Su firma electrónica avanzada vence el 13 de agosto de 2019.
+        </td>
+      </tr>
+      <tr>
+        <td>
+
+        </td>
+        <td>
+          <button type="submit" [class.btn]="!esign" [class.btn-action]="esign" [disabled]="!esign" (click)="onESign()" i18n>
+            {{revokeMode ? 'Revocar la firma' : 'Firmar el documento'}}
+          </button>
+        </td>
+      </tr>
+    </table>
+
+  </fieldset>
+
+</form>

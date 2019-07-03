@@ -1,0 +1,50 @@
+<ng-container *ngIf="instrument.isSigned">
+
+  <form class="form-container">
+
+    <fieldset>
+
+      <table class="form-section">
+        <tr>
+          <td class="form-section-title" colspan="2" i18n>Este documento está firmado electrónicamente</td>
+        </tr>
+        <tr>
+          <td>
+            <label i18n>Firma electrónica:</label>
+          </td>
+          <td>
+            <textarea class="text-area" rows="4" disabled readonly="readonly" [value]="instrument.esign?.sign"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label i18n>Sello digital:</label>
+          </td>
+          <td>
+            <textarea class="text-area" rows="4" disabled readonly="readonly" [value]="instrument.esign?.seal"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label i18n>Código de seguridad:</label>
+          </td>
+          <td>
+            <input type="text" class="text-box" disabled readonly="readonly" [value]="instrument.esign?.hash" style="max-width: 120px;">
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <input type="checkbox" [checked]="revokeMode" (change)="toggleRevokeMode()">Deseo revocar la firma del documento
+          </td>
+        </tr>
+      </table>
+
+  </fieldset>
+
+  </form>
+</ng-container>
+
+<ng-container *ngIf="!instrument.isSigned || revokeMode">
+    <emp-ng-esign-input [revokeMode]="revokeMode" (signTokenReceived)="onSignTokenReceived($event)"></emp-ng-esign-input>
+</ng-container>
