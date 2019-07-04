@@ -4,70 +4,78 @@
 
     <table class="form-section">
       <tr>
-        <td class="form-section-title" colspan="4" i18n>Aviso preventivo</td>
+        <td class="form-section-title" colspan="4">Aviso preventivo</td>
       </tr>
       <tr>
         <td>Solicitante:</td>
         <td colspan="3" style="width:100%">
-          <input type="text" class="text-box" formControlName="requestedBy" style="width:calc(100% - 120px)">
+          <input type="text" class="text-box" style="width:calc(100% - 120px)"
+                formControlName="requestedBy" [value]="form.get('requestedBy').value | uppercase">
           &nbsp; &nbsp; &nbsp;
-          <button type="button" [class.btn]="!form.valid || form.pristine" [class.btn-action]="form.valid && !form.pristine" class="right" [disabled]="!form.valid || form.pristine"
-            (click)="onSave()" i18n>Guardar</button>
+          <button *ngIf="!readonly" type="button" class="right"
+                  [class.btn]="!form.valid || form.pristine" [class.btn-action]="form.valid && !form.pristine"
+                  [disabled]="!form.valid || form.pristine"
+                  (click)="onSave()">Guardar</button>
         </td>
       </tr>
       <tr>
-        <td class="form-section-title" colspan="4" i18n>Información del predio</td>
+        <td class="form-section-title" colspan="4">Información del predio</td>
       </tr>
       <tr>
         <td>Folio real:</td>
         <td>
-          <input type="text" class="text-box" formControlName="propertyUID" style="width:170px" maxlength="20">
-          <button type="button" class="btn"
-                  (click)="getPropertyData()" i18n>Leer</button>
+          <input type="text" class="text-box" style="width:170px" maxlength="19"
+                 formControlName="propertyUID"
+                 [value]="form.get('propertyUID').value | uppercase">
+          <button type="button" *ngIf="!readonly" class="btn" [disabled]="readonly"
+                  (click)="onReadRealEstateData()">Leer</button>
         </td>
         <td>Clave catastral:</td>
         <td>
-          <input type="text" class="text-box" disabled readonly="readonly" [value]="realEstate.cadastralKey">
+          <input type="text" class="text-box" maxlength="31" disabled
+                 [value]="realEstate.cadastralKey">
         </td>
       </tr>
       <tr>
         <td>Distrito:</td>
         <td>
-          <input type="text" class="text-box" disabled style="width:170px" readonly="readonly" [value]="realEstate.district.name">
+          <input type="text" class="text-box" style="width:170px" disabled [value]="realEstate.district.name">
         </td>
         <td>Municipio:</td>
         <td>
-          <input type="text" class="text-box" disabled readonly="readonly" [value]="realEstate.municipality.name">
+          <input type="text" class="text-box" disabled [value]="realEstate.municipality.name">
         </td>
       </tr>
       <tr>
         <td>Tipo de predio:</td>
         <td>
-          <input type="text" class="text-box" disabled style="width:170px" readonly="readonly" [value]="realEstate.realEstateType.name">
+          <input type="text" class="text-box" style="width:170px" disabled [value]="realEstate.realEstateType.name">
         </td>
         <td>Denominado:</td>
         <td>
-          <input type="text" class="text-box" disabled readonly="readonly" [value]="realEstate.name">
+          <input type="text" class="text-box" disabled [value]="realEstate.name">
         </td>
       </tr>
       <tr>
         <td class="align-top">Ubicado en:</td>
         <td colspan="3">
-          <textarea class="text-area" rows="2" disabled readonly="readonly" [value]="realEstate.location"></textarea>
+          <textarea class="text-area" rows="2" disabled [value]="realEstate.location"></textarea>
         </td>
       </tr>
       <tr>
         <td class="align-top">Medidas y<br>colindancias:</td>
         <td colspan="3">
-          <textarea class="text-area" rows="3" disabled readonly="readonly" [value]="realEstate.metesAndBounds"></textarea>
+          <textarea class="text-area" rows="3" disabled [value]="realEstate.metesAndBounds"></textarea>
         </td>
       </tr>
       <tr>
-        <td class="form-section-title" colspan="4" i18n>Operación proyectada</td>
+        <td class="form-section-title" colspan="4">Operación proyectada</td>
       </tr>
       <tr>
         <td colspan="4">
-          <textarea class="text-area" rows="10" formControlName="projectedOperation"></textarea>
+          <textarea class="text-area" rows="10"
+              formControlName="projectedOperation"
+              [value]="form.get('projectedOperation').value | uppercase"></textarea>
         </td>
       </tr>
     </table>

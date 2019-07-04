@@ -16,12 +16,6 @@ export const InstrumentsViews: View[] = [
     url: '/documents/pending'
   },
   {
-    name: 'Instruments.ToSign',
-    title: 'Documentos por firmar',
-    menuTitle: 'Por firmar',
-    url: '/documents/to-sign'
-  },
-  {
     name: 'Instruments.Signed',
     title: 'Documentos firmados',
     menuTitle: 'Firmados',
