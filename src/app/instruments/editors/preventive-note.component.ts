@@ -5,71 +5,72 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Component, EventEmitter, Input,
-         OnChanges, OnInit, Output } from '@angular/core';
+import {
+  Component, EventEmitter, Input,
+  OnChanges, OnInit, Output
+} from '@angular/core';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { PropertyService } from '@app/services/property.service';
-import { EmptyRealEstate, PreventiveNote } from '@app/models/registration';
-import { InstrumentService } from '@app/services/instrument.service';
-import { ReturnStatement } from '@angular/compiler';
+import { InstrumentStore } from '@app/store';
 
-
-enum FormMessages {
-
-}
+import { EmptyRealEstate, PreventiveNote, PreventiveNoteRequest } from '@app/models/registration';
+import { MessageBoxService } from '@app/shared/services';
 
 
 @Component({
   selector: 'emp-land-preventive-note',
   templateUrl: './preventive-note.component.html',
-  styleUrls: ['./preventive-note.component.scss']
+  styleUrls: [
+    '../../../styles/general-styles.scss',
+    '../../../styles/form.scss'
+  ]
 })
 export class PreventiveNoteComponent implements OnInit, OnChanges {
 
-  @Input() instrument: PreventiveNote;
+  @Input() preventiveNote: PreventiveNote;
 
-  @Output() instrumentChange = new EventEmitter<PreventiveNote>();
+  @Output() preventiveNoteChange = new EventEmitter<PreventiveNote>();
 
-  form = new FormGroup( {
+  readonly = false;
+
+  form = new FormGroup({
     requestedBy: new FormControl('', Validators.required),
     propertyUID: new FormControl('', Validators.required),
     projectedOperation: new FormControl('', Validators.required),
   });
 
+
   realEstate = EmptyRealEstate;
 
-  constructor(private instrumentService: InstrumentService,
-              private propertyService: PropertyService) {
+  constructor(private store: InstrumentStore,
+              private msgBoxService: MessageBoxService) {
 
   }
+
 
   ngOnInit() {
     this.realEstate = EmptyRealEstate;
   }
 
+
   ngOnChanges() {
+    this.readonly = this.preventiveNote.isSigned;
     this.resetForm();
-    this.getPropertyData();
+    this.getRealEstateData();
   }
 
 
-  getPropertyData() {
-    if (!this.form.value.propertyUID) {
-      return;
-    }
-    this.propertyService.getRealEstate(this.form.value.propertyUID)
-        .toPromise()
-        .then(x => this.realEstate = x);
+  onReadRealEstateData() {
+    this.getRealEstateData();
   }
 
 
   onSave() {
-    if (!this.instrument.uid) {
-      this.createInstrument();
+    if (!this.preventiveNote.uid) {
+      this.createPreventiveNote();
     } else {
-      this.updateInstrument();
+      this.updatePreventiveNote();
     }
   }
 
@@ -77,20 +78,19 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
   // private members
 
 
-  private createInstrument() {
+  private createPreventiveNote() {
     const data = this.getFormData();
 
-    this.instrumentService.createPreventiveNote(data)
-      .toPromise()
+    this.store.createPreventiveNote(data)
       .then(x => {
-        this.instrument = x;
+        this.preventiveNote = x;
         this.resetForm();
-        this.instrumentChange.emit(this.instrument);
+        this.preventiveNoteChange.emit(this.preventiveNote);
       });
   }
 
 
-  private getFormData() {
+  private getFormData(): PreventiveNoteRequest {
     const formModel = this.form.value;
 
     const data = {
@@ -103,23 +103,38 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
   }
 
 
-  private resetForm() {
-    this.form.reset({
-      requestedBy: this.instrument.requestedBy,
-      propertyUID: this.instrument.property ? this.instrument.property.uid : '',
-      projectedOperation: this.instrument.projectedOperation
-    });
+  private getRealEstateData() {
+    if (!this.form.value.propertyUID) {
+      return;
+    }
+    this.store.getRealEstate(this.form.value.propertyUID)
+      .then(x => this.realEstate = x)
+      .catch(e => this.msgBoxService.showError(e));
   }
 
 
-  private updateInstrument() {
+  private resetForm() {
+    this.form.reset({
+      requestedBy: this.preventiveNote.requestedBy,
+      propertyUID: this.preventiveNote.property ? this.preventiveNote.property.uid : '',
+      projectedOperation: this.preventiveNote.projectedOperation
+    });
+
+    if (this.readonly) {
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
+  }
+
+
+  private updatePreventiveNote() {
     const data = this.getFormData();
 
-    this.instrumentService.updatePreventiveNote(this.instrument, data)
-      .toPromise()
+    this.store.updatePreventiveNote(this.preventiveNote, data)
       .then(x => {
-        this.instrument = x;
-        this.instrumentChange.emit(this.instrument);
+        this.preventiveNote = x;
+        this.preventiveNoteChange.emit(this.preventiveNote);
       });
   }
 

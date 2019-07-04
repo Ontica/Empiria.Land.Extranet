@@ -8,6 +8,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+
+import { InstrumentStore } from './instrument.store';
 import { UserInterfaceStore } from './ui.store';
 
 
@@ -18,7 +20,9 @@ import { UserInterfaceStore } from './ui.store';
   ],
 
   providers: [
+    InstrumentStore,
     UserInterfaceStore
   ]
+
 })
 export class StoreModule { }

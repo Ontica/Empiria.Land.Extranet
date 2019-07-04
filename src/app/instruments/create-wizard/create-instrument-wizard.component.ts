@@ -7,7 +7,7 @@
 
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 
-import { LegalInstrument } from '@app/models/registration';
+import { LegalInstrument, EmptyLegalInstrument } from '@app/models/registration';
 
 
 @Component({
@@ -17,10 +17,9 @@ import { LegalInstrument } from '@app/models/registration';
 })
 export class CreateInstrumentWizardComponent implements OnInit, OnChanges {
 
-  @Input() instrument: LegalInstrument = {};
+  @Input() instrument: LegalInstrument = EmptyLegalInstrument;
   @Input() showInstrumentTypeSelector = false;
 
-  @Output() instrumentChange = new EventEmitter<LegalInstrument>();
   @Output() wizardClose = new EventEmitter<void>();
 
   documentType = '';
@@ -44,7 +43,6 @@ export class CreateInstrumentWizardComponent implements OnInit, OnChanges {
 
   onInstrumentChange(instrument: LegalInstrument) {
     this.instrument = instrument;
-    this.instrumentChange.emit(this.instrument);
   }
 
 }

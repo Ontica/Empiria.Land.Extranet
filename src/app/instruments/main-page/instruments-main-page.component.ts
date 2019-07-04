@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 
 import { UserInterfaceStore } from '@app/store/ui.store';
 
-import { LegalInstrument } from '@app/models/registration';
+import { LegalInstrument, EmptyLegalInstrument } from '@app/models/registration';
 
 import { View } from '@app/models/user-interface';
 
@@ -26,7 +26,7 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
   toggleEditor = false;
   currentView: View;
 
-  selectedInstrument: LegalInstrument = {};
+  selectedInstrument: LegalInstrument = EmptyLegalInstrument;
 
   private subs1: Subscription;
 
@@ -54,7 +54,7 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
   }
 
   onEditorClose() {
-    this.selectedInstrument = {};
+    this.selectedInstrument = EmptyLegalInstrument;
     this.displayEditor = false;
   }
 

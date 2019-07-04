@@ -8,10 +8,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { InstrumentService } from '@app/services/instrument.service';
+import { InstrumentStore } from '@app/store';
 
-import { LegalInstrument } from '@app/models/registration';
+import { LegalInstrument, EmptyLegalInstrument } from '@app/models/registration';
 import { View } from '@app/models/user-interface';
+
 
 
 @Component({
@@ -31,14 +32,14 @@ export class InstrumentListComponent implements OnInit {
   filter = '';
 
   instrumentList: Observable<LegalInstrument[]> = of([]);
-  selectedInstrument: LegalInstrument = {};
+  selectedInstrument: LegalInstrument = EmptyLegalInstrument;
 
   displayCreateDocumentWizard = false;
 
-  constructor(private instrumentService: InstrumentService) { }
+  constructor(private store: InstrumentStore) { }
 
   ngOnInit() {
-    this.instrumentList = this.instrumentService.getInstruments();
+    this.instrumentList = this.store.getInstruments();
   }
 
 
@@ -57,11 +58,6 @@ export class InstrumentListComponent implements OnInit {
   }
 
   onFilterChange() {
-
-  }
-
-
-  onInstrumentChange() {
 
   }
 
