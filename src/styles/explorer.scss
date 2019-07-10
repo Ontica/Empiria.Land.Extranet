@@ -6,3 +6,26 @@
   flex: auto;
   margin: 8px;
 }
+
+
+.explorer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+
+  margin: 8px;
+
+  .primary {
+    flex: 1 1 600px;
+    min-width: 400px;
+    max-width: 960px;
+  }
+
+
+  .secondary {
+    flex: 3 1 720px;
+    min-width: 400px;
+    max-width: 960px;
+  }
+
+}

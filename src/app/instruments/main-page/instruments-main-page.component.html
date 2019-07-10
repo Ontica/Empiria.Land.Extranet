@@ -1,18 +1,15 @@
-<div class="explorer"
-    [class.remove-min-width]="!displayEditor">
+<div class="explorer" fxLayoutGap="32px">
 
-  <div class="explorer-panel primary">
+  <div [fxHide.lt-lg]="displayEditor" class="primary">
     <emp-land-instrument-list
-      [view]="currentView"
-      (instrumentSelected)="onSelectInstrument($event)">
+        [view]="currentView"
+        (instrumentSelected)="onSelectInstrument($event)">
     </emp-land-instrument-list>
-
   </div>
 
-  <div *ngIf="displayEditor" class="explorer-panel secondary">
+  <div *ngIf="displayEditor" class="secondary">
     <emp-land-create-instrument-wizard
         [instrument]="selectedInstrument"
-        (instrumentChange)="onInstrumentChange($event)"
         (wizardClose)="onEditorClose()">
     </emp-land-create-instrument-wizard>
   </div>

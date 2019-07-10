@@ -1,0 +1,30 @@
+<div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="8px" fxLayoutGap.gt-xs="32px">
+
+  <div fxFlex="10%">
+    <div class="label">Documento</div>
+    <div class="primary-text nowrap">{{instrument.typeName}}</div>
+    {{(instrument.issueDate || instrument.postingTime) | date:'dd/LLL/yyyy'}}
+  </div>
+
+  <div *ngIf="instrument.property && instrument.property.uid" fxFlex="auto">
+    <div class="label">Folio real del predio</div>
+    <div class="primary-text nowrap">{{instrument.property.uid}}</div>
+    <div>{{instrument.property.name}}</div>
+  </div>
+
+  <div fxFlex="15%">
+    <div *ngIf="instrument.transaction.uid">
+      <div class="label">Trámite ante el RPP</div>
+      <div>
+        <div class="primary-text nowrap">{{instrument.transaction.uid}}</div>
+        <div>Amount</div>
+      </div>
+    </div>
+  </div>
+
+  <div fxFlex="8%">
+    <div class="label">Estado:</div>
+    <div>{{instrument.status}}</div>
+  </div>
+
+</div>

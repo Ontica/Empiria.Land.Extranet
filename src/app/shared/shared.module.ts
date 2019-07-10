@@ -9,6 +9,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { AngularFlexLayoutModule } from './angular-flex-layout.module';
 
 import { DatepickerComponent } from './datepicker/datepicker.component';
 import { FileControlComponent } from './file-control/file-control.component';
@@ -43,7 +44,8 @@ import { SpinnerService } from './spinner/spinner.service';
     RouterModule,
     FormsModule,
 
-    AngularMaterialModule
+    AngularMaterialModule,
+    AngularFlexLayoutModule
   ],
 
   declarations: [

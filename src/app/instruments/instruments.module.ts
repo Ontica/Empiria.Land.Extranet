@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AngularMaterialModule } from '@app/shared/angular-material.module';
+import { AngularFlexLayoutModule } from '@app/shared/angular-flex-layout.module';
 import { SharedModule } from '@app/shared/shared.module';
 import { SecurityUIModule } from '@app/security-ui/security-ui.module';
 
@@ -24,6 +25,7 @@ import { DeedComponent } from './editors/deed.component';
 import { FolioRealRequestComponent } from './editors/folio-real-request.component';
 import { InstrumentSignRequestComponent } from './sign-request/instrument-sign-request.component';
 import { InstrumentFilingComponent } from './filing/instrument-filing.component';
+import { InstrumentListItemComponent } from './list/instrument-list-item.component';
 
 
 /**
@@ -36,6 +38,7 @@ import { InstrumentFilingComponent } from './filing/instrument-filing.component'
     FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule,
+    AngularFlexLayoutModule,
     SharedModule,
     SecurityUIModule,
     InstrumentsRoutingModule
@@ -50,7 +53,8 @@ import { InstrumentFilingComponent } from './filing/instrument-filing.component'
     DeedComponent,
     FolioRealRequestComponent,
     InstrumentSignRequestComponent,
-    InstrumentFilingComponent
+    InstrumentFilingComponent,
+    InstrumentListItemComponent
   ],
 
   exports: [

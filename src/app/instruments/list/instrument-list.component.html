@@ -10,10 +10,10 @@
     <div class="card-header-options">
         <div style="width:32px"></div>
 
-        <span i18n>Buscar:</span>&nbsp;
-        <input type="search" class="text-box" style="width:210px;"
+        <input type="search" class="text-box" style="width:auto" fxHide.lt-sm="true"
+               placeholder="Buscar documentos"
                (keyup.enter)="onFilterChange()" [(ngModel)]="filter">
-        &nbsp; &nbsp; &nbsp;  &nbsp;
+        &nbsp; &nbsp; &nbsp;
         <button class="btn-action"
                 (click)="openCreateDocumentWizard()" i18n>Nuevo</button>
 
@@ -23,44 +23,24 @@
 
   <div class="card-body">
 
-      <div *ngFor="let instrument of instrumentList | async"
-           class="list-item" matRipple [matRippleTrigger]="trigger"
-           [class.list-item-selected]="isSelected(instrument)">
+    <div *ngFor="let instrument of instrumentList | async"
+          class="list-item" matRipple [matRippleTrigger]="trigger"
+          [class.list-item-selected]="isSelected(instrument)">
 
-        <div class="list-item-container">
+      <div class="list-item-container">
 
-          <div class="item-name">
-            <a #trigger
-               (click)="onSelect(instrument)">{{instrument.requestedBy}}</a>
-          </div>
-
-          <div class="list-item-columns">
-
-            <div class="column">
-              {{instrument.typeName}}
-            </div>
-
-            <div class="column nowrap">
-              <div i18n>Fecha:</div>
-              <div>
-                {{(instrument.issueDate || instrument.postingTime) | date:'dd/LLL/yyyy'}}
-              </div>
-            </div>
-
-            <div class="right-column expand">
-              <div i18n>Estado:</div>
-              <div>
-                {{instrument.status}} &nbsp;
-              </div>
-            </div>
-
-          </div>
-
+        <div class="item-name">
+          <b><a #trigger
+              (click)="onSelect(instrument)">{{instrument.requestedBy}}</a></b>
         </div>
+
+        <emp-land-instrument-list-item [instrument]="instrument"></emp-land-instrument-list-item>
 
       </div>
 
-  </div>
+    </div>
+
+  </div> <!--card-body-->
 
 </div>
 
@@ -68,8 +48,10 @@
 <emp-ng-modal-window *ngIf="displayCreateDocumentWizard"
                      [config]="{width:'840px', height:'900px', disableClose:true}"
                      (modalWindowClose)="closeCreateDocumentWizard()">
-    <emp-land-create-instrument-wizard
-        [showInstrumentTypeSelector]="true"
-        (wizardClose)="closeCreateDocumentWizard()">
-    </emp-land-create-instrument-wizard>
+
+  <emp-land-create-instrument-wizard
+      [showInstrumentTypeSelector]="true"
+      (wizardClose)="closeCreateDocumentWizard()">
+  </emp-land-create-instrument-wizard>
+
 </emp-ng-modal-window>

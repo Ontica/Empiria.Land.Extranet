@@ -18,7 +18,7 @@ import { View } from '@app/models/user-interface';
 @Component({
   selector: 'emp-land-instruments-main-page',
   templateUrl: './instruments-main-page.component.html',
-  styleUrls: ['./instruments-main-page.component.scss']
+  styleUrls: ['../../../styles/explorer.scss']
 })
 export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
 
@@ -52,6 +52,7 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
     this.selectedInstrument = instrument;
     this.displayEditor = true;
   }
+
 
   onEditorClose() {
     this.selectedInstrument = EmptyLegalInstrument;

@@ -10,9 +10,9 @@
         <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
       </div>
 
-      <img class="logo" src="assets/img/customer/secondary.logo.png" alt="Gobierno del Estado de Tlaxcala" />
+      <img fxHide.lt-lg="true" class="logo" src="assets/img/customer/secondary.logo.png" alt="Gobierno del Estado de Tlaxcala" />
 
-      <div style="margin-left:12px;margin-top:-4px">
+      <div fxHide.lt-lg="true" style="margin-left:12px;margin-top:-4px">
         Sistema para Notarías y Grandes Usuarios
         <div style="font-size:8pt">Registro Público de la Propiedad</div>
       </div>
@@ -25,7 +25,7 @@
 
     <div class="search-and-settings">
 
-      <emp-ng-search-box (searchBoxChange)="search($event)" style="width:340px"></emp-ng-search-box>
+      <emp-ng-search-box fxHide.lt-sm="true" (searchBoxChange)="search($event)" style="width:100%"></emp-ng-search-box>
 
       <!-- <div>
         <i class="fa fa-bell disabled" aria-hidden="true"></i>
