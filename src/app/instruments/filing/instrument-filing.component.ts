@@ -58,8 +58,8 @@ export class InstrumentFilingComponent implements OnChanges {
     const formModel = this.form.value;
 
     const data = {
-      rfc: formModel.rfc,
-      sendTo: formModel.sendTo
+      rfc: (formModel.rfc as string).toUpperCase(),
+      sendTo: (formModel.sendTo as string).toLowerCase()
     };
 
     return data;

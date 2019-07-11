@@ -279,6 +279,32 @@ input[type=number]:disabled {
   @include disabled-element;
 }
 
+.primary-text {
+  color: $primary-color;
+}
+
+
+.label {
+  opacity: 0.40
+}
+
+
+.lowercase {
+  text-transform: lowercase;
+}
+
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+
 select:disabled {
   @include disabled-element;
 }
@@ -293,6 +319,7 @@ button:disabled button:hover:disabled {
 i.disabled {
   opacity: 0.25;
 }
+
 
 .main-icon a {
   color: $primary-color-light;

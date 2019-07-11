@@ -9,8 +9,8 @@
       <tr>
         <td>Solicitante:</td>
         <td colspan="3" style="width:100%">
-          <input type="text" class="text-box" style="width:calc(100% - 120px)"
-                formControlName="requestedBy" [value]="form.get('requestedBy').value | uppercase">
+          <input type="text" class="text-box uppercase" style="width:calc(100% - 120px)"
+                formControlName="requestedBy">
           &nbsp; &nbsp; &nbsp;
           <button *ngIf="!readonly" type="button" class="right"
                   [class.btn]="!form.valid || form.pristine" [class.btn-action]="form.valid && !form.pristine"
@@ -24,9 +24,8 @@
       <tr>
         <td>Folio real:</td>
         <td>
-          <input type="text" class="text-box" style="width:170px" maxlength="19"
-                 formControlName="propertyUID"
-                 [value]="form.get('propertyUID').value | uppercase">
+          <input type="text" class="text-box uppercase" style="width:170px" maxlength="19"
+                 formControlName="propertyUID">
           <button type="button" *ngIf="!readonly" class="btn" [disabled]="readonly"
                   (click)="onReadRealEstateData()">Leer</button>
         </td>
@@ -73,9 +72,8 @@
       </tr>
       <tr>
         <td colspan="4">
-          <textarea class="text-area" rows="10"
-              formControlName="projectedOperation"
-              [value]="form.get('projectedOperation').value | uppercase"></textarea>
+          <textarea class="text-area uppercase" rows="10"
+                    formControlName="projectedOperation"></textarea>
         </td>
       </tr>
     </table>

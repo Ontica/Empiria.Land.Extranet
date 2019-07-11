@@ -19,15 +19,15 @@
           <label i18n>Correo electrónico:</label>
         </td>
         <td>
-          <input type="email" class="text-box" style="width: 200px"
-                 formControlName="sendTo" [value]="form.get('sendTo').value | lowercase">
+          <input type="email" class="text-box lowercase" style="width: 200px"
+                 formControlName="sendTo">
         </td>
         <td>
           <label>RFC facturación:</label>
         </td>
         <td>
-          <input type="text" class="text-box" style="width: 200px" maxlength="15"
-                 formControlName="rfc" [value]="form.get('rfc').value | uppercase">
+          <input type="text" class="text-box uppercase" style="width: 200px"
+                 maxlength="15" formControlName="rfc">
         </td>
       </tr>
       <tr *ngIf="!instrument.transaction.uid">

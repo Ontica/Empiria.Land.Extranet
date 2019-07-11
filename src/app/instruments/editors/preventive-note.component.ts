@@ -94,9 +94,9 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
     const formModel = this.form.value;
 
     const data = {
-      requestedBy: formModel.requestedBy,
-      propertyUID: this.realEstate.uid,
-      projectedOperation: formModel.projectedOperation
+      requestedBy: (formModel.requestedBy as string).toUpperCase(),
+      propertyUID: this.realEstate.uid.toUpperCase(),
+      projectedOperation: (formModel.projectedOperation as string).toUpperCase()
     };
 
     return data;
@@ -132,8 +132,8 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
     const data = this.getFormData();
 
     this.store.updatePreventiveNote(this.preventiveNote, data)
-      .then(x => {
-        this.preventiveNote = x;
+      .then(() => {
+        this.resetForm();
         this.preventiveNoteChange.emit(this.preventiveNote);
       });
   }
