@@ -7,7 +7,7 @@
 
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 
-import { InstrumentService } from '@app/services/instrument.service';
+import { InstrumentStore } from '@app/store';
 
 import { LegalInstrument } from '@app/models/registration';
 
@@ -28,7 +28,7 @@ export class InstrumentSignRequestComponent implements OnChanges {
 
   revokeMode = false;
 
-  constructor(private service: InstrumentService) { }
+  constructor(private store: InstrumentStore) { }
 
   ngOnChanges() {
     this.revokeMode = false;
@@ -40,7 +40,7 @@ export class InstrumentSignRequestComponent implements OnChanges {
       this.revokeSign('revocationToken');
       this.revokeMode = false;
     } else {
-      this.doSignRequest(token);
+      this.sign(token);
     }
   }
 
@@ -53,21 +53,18 @@ export class InstrumentSignRequestComponent implements OnChanges {
   // private members
 
 
-  private doSignRequest(signToken: string) {
-    this.service.signInstrument(this.instrument, signToken)
-        .toPromise()
-        .then(x => {
-          this.instrument = x;
+  private revokeSign(revocationToken: string) {
+    this.store.revokeInstrumentSign(this.instrument, revocationToken)
+        .then(() => {
+          // this.instrument = x;
           this.instrumentChange.emit(this.instrument);
         });
   }
 
 
-  private revokeSign(revocationToken: string) {
-    this.service.revokeInstrumentSign(this.instrument, revocationToken)
-        .toPromise()
-        .then(x => {
-          this.instrument = x;
+  private sign(signToken: string) {
+    this.store.signInstrument(this.instrument, signToken)
+        .then(() => {
           this.instrumentChange.emit(this.instrument);
         });
   }

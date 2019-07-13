@@ -54,6 +54,36 @@ export class InstrumentStore {
   }
 
 
+  revokeInstrumentSign(instrument: LegalInstrument,
+                       revocationToken: string): Promise<LegalInstrument> {
+    Assertion.assertValue(instrument, 'instrument');
+    Assertion.assertValue(revocationToken, 'revocationToken');
+
+    return this.service.revokeInstrumentSign(instrument, revocationToken)
+      .toPromise()
+      .then(x => {
+        Object.assign(instrument, x);
+
+        return x;
+    });
+  }
+
+
+  signInstrument(instrument: LegalInstrument,
+                 signToken: string): Promise<LegalInstrument> {
+    Assertion.assertValue(instrument, 'instrument');
+    Assertion.assertValue(signToken, 'signToken');
+
+    return this.service.signInstrument(instrument, signToken)
+      .toPromise()
+      .then(x => {
+        Object.assign(instrument, x);
+
+        return x;
+    });
+  }
+
+
   updatePreventiveNote(preventiveNote: PreventiveNote,
                        data: PreventiveNoteRequest): Promise<PreventiveNote> {
     Assertion.assertValue(preventiveNote, 'preventiveNote');
