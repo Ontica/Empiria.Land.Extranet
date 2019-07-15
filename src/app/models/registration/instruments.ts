@@ -23,6 +23,7 @@ export interface Transaction {
   sendTo: string;
   rfc: string;
   receiptNo: string;
+  total: number;
   presentationDate: DateString;
 }
 
@@ -62,6 +63,7 @@ export interface Deed extends LegalInstrument {
   recordingActs: RecordingAct[];
 }
 
+
 export const EmptyTransaction: Transaction = {
   id: 0,
   uid: '',
@@ -69,8 +71,10 @@ export const EmptyTransaction: Transaction = {
   sendTo: '',
   rfc: '',
   receiptNo: '',
+  total: 0,
   presentationDate: ''
 };
+
 
 export const EmptyLegalInstrument: LegalInstrument = {
   uid: '',

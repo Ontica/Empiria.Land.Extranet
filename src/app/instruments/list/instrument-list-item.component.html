@@ -2,22 +2,22 @@
 
   <div fxFlex="10%">
     <div class="label">Documento</div>
-    <div class="primary-text nowrap">{{instrument.typeName}}</div>
+    <div class="primary-text nowrap"><b>{{instrument.typeName}}</b></div>
     {{(instrument.issueDate || instrument.postingTime) | date:'dd/LLL/yyyy'}}
   </div>
 
   <div *ngIf="instrument.property && instrument.property.uid" fxFlex="auto">
     <div class="label">Folio real del predio</div>
-    <div class="primary-text nowrap">{{instrument.property.uid}}</div>
+    <div class="primary-text nowrap"><b>{{instrument.property.uid}}</b></div>
     <div>{{instrument.property.name}}</div>
   </div>
 
   <div fxFlex="15%">
     <div *ngIf="instrument.transaction.uid">
-      <div class="label">Trámite ante el RPP</div>
+      <div class="label">Trámite RPP</div>
       <div>
-        <div class="primary-text nowrap">{{instrument.transaction.uid}}</div>
-        <div>Amount</div>
+        <div class="primary-text nowrap"><b>{{instrument.transaction.uid}}</b></div>
+        <div>{{instrument.transaction.total | currency }}</div>
       </div>
     </div>
   </div>
