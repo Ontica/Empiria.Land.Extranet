@@ -5,14 +5,16 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import { InstrumentStore } from '@app/store';
 
-import { LegalInstrument, EmptyLegalInstrument } from '@app/models/registration';
-import { View } from '@app/models/user-interface';
+import { LegalInstrument, EmptyLegalInstrument,
+         LegalInstrumentFilter, LegalInstrumentStatus } from '@app/models/registration';
 
+import { View } from '@app/models/user-interface';
+import { Assertion } from '@app/core';
 
 
 @Component({
@@ -23,13 +25,13 @@ import { View } from '@app/models/user-interface';
     '../../../styles/list.scss'
   ]
 })
-export class InstrumentListComponent implements OnInit {
+export class InstrumentListComponent implements OnChanges {
 
   @Input() view: View;
   @Output() instrumentSelected = new EventEmitter<LegalInstrument>();
 
   hint = 'Ningún documento encontrado';
-  filter = '';
+  keywords = '';
 
   instrumentList: Observable<LegalInstrument[]> = of([]);
   selectedInstrument: LegalInstrument = EmptyLegalInstrument;
@@ -38,7 +40,9 @@ export class InstrumentListComponent implements OnInit {
 
   constructor(private store: InstrumentStore) { }
 
-  ngOnInit() {
+
+  ngOnChanges() {
+    this.setFilter();
     this.instrumentList = this.store.getInstruments();
   }
 
@@ -57,13 +61,46 @@ export class InstrumentListComponent implements OnInit {
     this.displayCreateDocumentWizard = false;
   }
 
-  onFilterChange() {
 
+  onFilterChange() {
+    this.setFilter();
   }
+
 
   onSelect(instrument: LegalInstrument) {
     this.selectedInstrument = instrument;
     this.instrumentSelected.emit(this.selectedInstrument);
+  }
+
+
+  // private methods
+
+
+  private buildFilter(): LegalInstrumentFilter {
+    return { status: this.getStatusFilter(), keywords: this.keywords };
+  }
+
+
+  private getStatusFilter(): LegalInstrumentStatus {
+    switch (this.view.name) {
+      case 'Instruments.Pending':
+        return 'Pending';
+      case 'Instruments.Signed':
+        return 'Signed';
+      case 'Instruments.Requested':
+        return 'Requested';
+      case 'Instruments.All':
+        return 'All';
+      default:
+        throw Assertion.assertNoReachThisCode();
+    }
+  }
+
+
+  private setFilter() {
+    const filter = this.buildFilter();
+
+    this.store.setFilter(filter);
   }
 
 }

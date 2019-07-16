@@ -10,24 +10,26 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { InstrumentService, PropertyService } from '@app/services';
 
-import { LegalInstrument, PreventiveNote, PreventiveNoteRequest, RealEstate } from '@app/models/registration';
+import { LegalInstrument, LegalInstrumentFilter, EmptyLegalInstrumentFilter,
+         PreventiveNote, PreventiveNoteRequest, RealEstate, } from '@app/models/registration';
+
 import { Assertion } from '@app/core';
 
 
 @Injectable()
 export class InstrumentStore {
 
-  private inProcessInstruments: BehaviorSubject<LegalInstrument[]> = new BehaviorSubject([]);
+  private instrumentsList: BehaviorSubject<LegalInstrument[]> = new BehaviorSubject([]);
+
+  private filter = EmptyLegalInstrumentFilter;
 
 
   constructor(private service: InstrumentService,
-              private propertyService: PropertyService) {
-    this.loadInitialData();
-  }
+              private propertyService: PropertyService) { }
 
 
   getInstruments(): Observable<LegalInstrument[]> {
-    return this.inProcessInstruments.asObservable();
+    return this.instrumentsList.asObservable();
   }
 
 
@@ -36,6 +38,14 @@ export class InstrumentStore {
 
     return this.propertyService.getRealEstate(propertyUID)
                .toPromise();
+  }
+
+
+  setFilter(filter: LegalInstrumentFilter) {
+    Assertion.assertValue(filter, 'filter');
+
+    this.filter = filter;
+    this.loadInstruments();
   }
 
 
@@ -48,7 +58,7 @@ export class InstrumentStore {
     return this.service.createPreventiveNote(data)
                .toPromise()
                .then(x => {
-                  this.loadInProcessInstruments();
+                  this.loadInstruments();
                   return x;
               });
   }
@@ -102,18 +112,13 @@ export class InstrumentStore {
   // private methods
 
 
-  private loadInitialData() {
-    this.loadInProcessInstruments();
-  }
-
-
-  private loadInProcessInstruments() {
-    this.service.getInstruments()
+  private loadInstruments() {
+    this.service.getInstruments(this.filter.status, this.filter.keywords)
         .subscribe(
             data => {
-              this.inProcessInstruments.next(data);
+              this.instrumentsList.next(data);
             },
-            err => console.log('Error reading in-process instruments data.', err)
+            err => console.log('Error reading instruments data.', err)
         );
   }
 

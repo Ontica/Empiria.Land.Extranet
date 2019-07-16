@@ -12,7 +12,7 @@
 
         <input type="search" class="text-box" style="width:auto" fxHide.lt-sm="true"
                placeholder="Buscar documentos"
-               (keyup.enter)="onFilterChange()" [(ngModel)]="filter">
+               (search)="onFilterChange()" [(ngModel)]="keywords">
         &nbsp; &nbsp; &nbsp;
         <button class="btn-action"
                 (click)="openCreateDocumentWizard()" i18n>Nuevo</button>

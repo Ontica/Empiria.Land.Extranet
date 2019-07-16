@@ -16,6 +16,7 @@ export interface ESignData {
   sign: string;
 }
 
+
 export interface Transaction {
   id: number;
   uid: string;
@@ -28,6 +29,9 @@ export interface Transaction {
 }
 
 
+export type LegalInstrumentStatus = 'Pending' | 'Signed' | 'Requested' | 'Returned' | 'Finished' | 'All';
+
+
 export interface LegalInstrument extends Identifiable, PartitionedType {
   typeName: string;
   number: string;
@@ -36,7 +40,8 @@ export interface LegalInstrument extends Identifiable, PartitionedType {
   issuedBy: Contact;
   issueDate: DateString;
   summary: string;
-  status: string;
+  status: LegalInstrumentStatus;
+  statusName: string;
   postingTime: DateString;
   postedBy: Contact;
   isSigned: boolean;
@@ -87,10 +92,23 @@ export const EmptyLegalInstrument: LegalInstrument = {
   issuedBy: Empty,
   issueDate: '',
   summary: '',
-  status: '',
+  status: 'Pending',
+  statusName: '',
   postingTime: '',
   postedBy: Empty,
   isSigned: false,
   isRequested: false,
   transaction: EmptyTransaction
+};
+
+
+export interface LegalInstrumentFilter {
+  status: LegalInstrumentStatus;
+  keywords: string;
+}
+
+
+export const EmptyLegalInstrumentFilter: LegalInstrumentFilter = {
+  status: 'All',
+  keywords: '',
 };

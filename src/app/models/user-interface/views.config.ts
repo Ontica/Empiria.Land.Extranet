@@ -22,7 +22,7 @@ export const InstrumentsViews: View[] = [
     url: '/documents/signed'
   },
   {
-    name: 'Instruments.Sent',
+    name: 'Instruments.Requested',
     title: 'Documentos tramitados',
     menuTitle: 'Tramitados',
     url: '/documents/requested'

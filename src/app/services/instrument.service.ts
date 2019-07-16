@@ -10,7 +10,8 @@ import { Observable } from 'rxjs';
 
 import { Assertion, HttpService } from '@app/core';
 
-import { PreventiveNote, LegalInstrument, PreventiveNoteRequest } from '@app/models/registration';
+import { LegalInstrument, LegalInstrumentStatus,
+         PreventiveNote, PreventiveNoteRequest } from '@app/models/registration';
 
 
 @Injectable()
@@ -28,8 +29,19 @@ export class InstrumentService {
   }
 
 
-  getInstruments(): Observable<LegalInstrument[]> {
-    const path = `v2/extranet/instruments`;
+  getInstruments(status?: LegalInstrumentStatus,
+                 keywords?: string): Observable<LegalInstrument[]> {
+    let path = `v2/extranet/instruments`;
+
+    if (status && keywords) {
+      path += `/?status=${status}&keywords=${keywords}`;
+    } else if (status && !keywords) {
+      path += `/?status=${status}`;
+    } else if (!status && keywords) {
+      path += `/?keywords=${keywords}`;
+    } else {
+      // no-op
+    }
 
     return this.http.get<LegalInstrument[]>(path);
   }
