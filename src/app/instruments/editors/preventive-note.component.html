@@ -13,8 +13,7 @@
                 formControlName="requestedBy">
           &nbsp; &nbsp; &nbsp;
           <button *ngIf="!readonly" type="button" class="right"
-                  [class.btn]="!form.valid || form.pristine" [class.btn-action]="form.valid && !form.pristine"
-                  [disabled]="!form.valid || form.pristine"
+                  [disabled]="!isReadyForSave" [class.btn]="!isReadyForSave" [class.btn-action]="isReadyForSave"
                   (click)="onSave()">Guardar</button>
         </td>
       </tr>

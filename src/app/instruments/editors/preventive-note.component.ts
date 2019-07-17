@@ -12,10 +12,15 @@ import {
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+import { Assertion } from '@app/core';
+import { CommandInvoker } from '@app/shared/services';
+
 import { InstrumentStore } from '@app/store';
 
 import { EmptyRealEstate, PreventiveNote, PreventiveNoteRequest } from '@app/models/registration';
-import { MessageBoxService } from '@app/shared/services';
 
 
 @Component({
@@ -32,6 +37,8 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
   @Output() preventiveNoteChange = new EventEmitter<PreventiveNote>();
 
+  realEstate = EmptyRealEstate;
+
   readonly = false;
 
   form = new FormGroup({
@@ -41,36 +48,53 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
   });
 
 
-  realEstate = EmptyRealEstate;
-
   constructor(private store: InstrumentStore,
-              private msgBoxService: MessageBoxService) {
+              private commandInvoker: CommandInvoker) {
+    this.commandInvoker.attachHandler(this);
+  }
 
+
+  get isReadyForSave() {
+    return this.form.valid && !this.form.pristine && !this.readonly;
   }
 
 
   ngOnInit() {
     this.realEstate = EmptyRealEstate;
+    this.readonly = false;
   }
 
 
   ngOnChanges() {
     this.readonly = this.preventiveNote.isSigned;
     this.resetForm();
-    this.getRealEstateData();
   }
 
 
   onReadRealEstateData() {
-    this.getRealEstateData();
+    this.updateRealEstateData();
   }
 
 
   onSave() {
     if (!this.preventiveNote.uid) {
-      this.createPreventiveNote();
+      this.commandInvoker.execute('createPreventiveNote');
     } else {
-      this.updatePreventiveNote();
+      this.commandInvoker.execute('updatePreventiveNote');
+    }
+  }
+
+
+  execute(commandName: string): Observable<any> {
+    switch (commandName) {
+      case 'createPreventiveNote':
+        return this.createPreventiveNote();
+
+      case 'updatePreventiveNote':
+        return this.updatePreventiveNote();
+
+      default:
+        Assertion.assertNoReachThisCode(`Invalid requested command ${commandName}.`);
     }
   }
 
@@ -78,19 +102,23 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
   // private members
 
 
-  private createPreventiveNote() {
+  private createPreventiveNote(): Observable<PreventiveNote> {
     const data = this.getFormData();
 
-    this.store.createPreventiveNote(data)
-      .then(x => {
-        this.preventiveNote = x;
-        this.resetForm();
-        this.preventiveNoteChange.emit(this.preventiveNote);
-      });
+    return this.store.createPreventiveNote(data)
+      .pipe(
+        tap(x => {
+          this.preventiveNote = x;
+          this.preventiveNoteChange.emit(this.preventiveNote);
+        })
+      );
   }
 
 
   private getFormData(): PreventiveNoteRequest {
+    Assertion.assert(this.form.valid,
+      'Programming error: form must be validated before command execution.');
+
     const formModel = this.form.value;
 
     const data = {
@@ -103,22 +131,14 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
   }
 
 
-  private getRealEstateData() {
-    if (!this.form.value.propertyUID) {
-      return;
-    }
-    this.store.getRealEstate(this.form.value.propertyUID)
-      .then(x => this.realEstate = x)
-      .catch(e => this.msgBoxService.showError(e));
-  }
-
-
   private resetForm() {
     this.form.reset({
       requestedBy: this.preventiveNote.requestedBy,
       propertyUID: this.preventiveNote.property ? this.preventiveNote.property.uid : '',
       projectedOperation: this.preventiveNote.projectedOperation
     });
+
+    this.updateRealEstateData();
 
     if (this.readonly) {
       this.form.disable();
@@ -128,14 +148,30 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
   }
 
 
-  private updatePreventiveNote() {
+  private updatePreventiveNote(): Observable<PreventiveNote> {
     const data = this.getFormData();
 
-    this.store.updatePreventiveNote(this.preventiveNote, data)
-      .then(() => {
-        this.resetForm();
-        this.preventiveNoteChange.emit(this.preventiveNote);
-      });
+    return this.store.updatePreventiveNote(this.preventiveNote, data)
+      .pipe(
+        tap(() => this.preventiveNoteChange.emit(this.preventiveNote))
+      );
+  }
+
+
+  private updateRealEstateData() {
+    if (!this.form.value.propertyUID) {
+      this.realEstate = EmptyRealEstate;
+      return;
+    }
+
+    const propertyUID = this.form.value.propertyUID.toUpperCase();
+
+    this.store.getRealEstate(propertyUID)
+      .subscribe(
+        x => this.realEstate = x,
+        err => console.log('Display something with real estate not found error', JSON.stringify(err))
+      );
+
   }
 
 }

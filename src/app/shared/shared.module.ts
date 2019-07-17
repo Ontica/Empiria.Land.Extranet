@@ -35,6 +35,7 @@ import { AngularMaterialModule } from './angular-material.module';
 import { MessageBoxService } from './message-box/message.box.service';
 import { SharedService } from './shared.service';
 import { SpinnerService } from './spinner/spinner.service';
+import { CommandInvoker } from './command-invoker';
 
 
 @NgModule({
@@ -88,6 +89,7 @@ import { SpinnerService } from './spinner/spinner.service';
   ],
 
   providers: [
+    CommandInvoker,
     MessageBoxService,
     SharedService,
     SpinnerService

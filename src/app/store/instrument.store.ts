@@ -6,14 +6,17 @@
  */
 
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+import { Assertion } from '@app/core';
 
 import { InstrumentService, PropertyService } from '@app/services';
 
-import { LegalInstrument, LegalInstrumentFilter, EmptyLegalInstrumentFilter,
-         PreventiveNote, PreventiveNoteRequest, RealEstate, } from '@app/models/registration';
-
-import { Assertion } from '@app/core';
+import {
+  LegalInstrument, LegalInstrumentFilter, EmptyLegalInstrumentFilter,
+  PreventiveNote, PreventiveNoteRequest, RealEstate,
+} from '@app/models/registration';
 
 
 @Injectable()
@@ -33,11 +36,10 @@ export class InstrumentStore {
   }
 
 
-  getRealEstate(propertyUID: string): Promise<RealEstate> {
+  getRealEstate(propertyUID: string): Observable<RealEstate> {
     Assertion.assertValue(propertyUID, 'propertyUID');
 
-    return this.propertyService.getRealEstate(propertyUID)
-               .toPromise();
+    return this.propertyService.getRealEstate(propertyUID);
   }
 
 
@@ -52,60 +54,49 @@ export class InstrumentStore {
   // update methods
 
 
-  createPreventiveNote(data: PreventiveNoteRequest): Promise<PreventiveNote> {
+  createPreventiveNote(data: PreventiveNoteRequest): Observable<PreventiveNote> {
     Assertion.assertValue(data, 'data');
 
     return this.service.createPreventiveNote(data)
-               .toPromise()
-               .then(x => {
-                  this.loadInstruments();
-                  return x;
-              });
+      .pipe(
+        tap(() => this.loadInstruments())
+      );
   }
 
 
   revokeInstrumentSign(instrument: LegalInstrument,
-                       revocationToken: string): Promise<LegalInstrument> {
+                       revocationToken: string): Observable<LegalInstrument> {
     Assertion.assertValue(instrument, 'instrument');
     Assertion.assertValue(revocationToken, 'revocationToken');
 
     return this.service.revokeInstrumentSign(instrument, revocationToken)
-      .toPromise()
-      .then(x => {
-        Object.assign(instrument, x);
-
-        return x;
-    });
+      .pipe(
+        tap(x => Object.assign(instrument, x))
+      );
   }
 
 
   signInstrument(instrument: LegalInstrument,
-                 signToken: string): Promise<LegalInstrument> {
+                 signToken: string): Observable<LegalInstrument> {
     Assertion.assertValue(instrument, 'instrument');
     Assertion.assertValue(signToken, 'signToken');
 
     return this.service.signInstrument(instrument, signToken)
-      .toPromise()
-      .then(x => {
-        Object.assign(instrument, x);
-
-        return x;
-    });
+      .pipe(
+        tap(x => Object.assign(instrument, x))
+      );
   }
 
 
   updatePreventiveNote(preventiveNote: PreventiveNote,
-                       data: PreventiveNoteRequest): Promise<PreventiveNote> {
+                       data: PreventiveNoteRequest): Observable<PreventiveNote> {
     Assertion.assertValue(preventiveNote, 'preventiveNote');
     Assertion.assertValue(data, 'data');
 
     return this.service.updatePreventiveNote(preventiveNote, data)
-               .toPromise()
-               .then(x => {
-                  Object.assign(preventiveNote, x);
-
-                  return x;
-               });
+      .pipe(
+        tap(x => Object.assign(preventiveNote, x))
+      );
   }
 
 
@@ -114,12 +105,12 @@ export class InstrumentStore {
 
   private loadInstruments() {
     this.service.getInstruments(this.filter.status, this.filter.keywords)
-        .subscribe(
-            data => {
-              this.instrumentsList.next(data);
-            },
-            err => console.log('Error reading instruments data.', err)
-        );
+      .subscribe(
+        data => {
+          this.instrumentsList.next(data);
+        },
+        err => console.log('Error reading instruments data.', err)
+      );
   }
 
 }

@@ -55,15 +55,16 @@ export class InstrumentSignRequestComponent implements OnChanges {
 
   private revokeSign(revocationToken: string) {
     this.store.revokeInstrumentSign(this.instrument, revocationToken)
-        .then(() => {
-          // this.instrument = x;
-          this.instrumentChange.emit(this.instrument);
-        });
+      .toPromise()
+      .then(() => {
+        this.instrumentChange.emit(this.instrument);
+      });
   }
 
 
   private sign(signToken: string) {
     this.store.signInstrument(this.instrument, signToken)
+        .toPromise()
         .then(() => {
           this.instrumentChange.emit(this.instrument);
         });
