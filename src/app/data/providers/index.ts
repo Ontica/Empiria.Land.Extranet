@@ -6,5 +6,5 @@
  */
 
 
-export * from './instrument.service';
-export * from './property.service';
+export * from './interfaces/instrument.data.provider';
+export * from './interfaces/property.data.provider';
