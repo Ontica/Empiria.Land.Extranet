@@ -12,7 +12,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CoreModule } from './core/core.module';
 import { StoreModule } from './store/store.module';
-import { ServicesModule } from './services/services.module';
 import { SharedModule } from './shared/shared.module';
 
 import { InstrumentsModule } from './instruments/instruments.module';
@@ -27,6 +26,7 @@ import { AppRoutingModule } from './app-routing.module';
 // Define global exception handler provider
 import { ErrorHandler } from '@angular/core';
 import { ExceptionHandler } from './core/general/exception-handler';
+
 
 const EXCEPTION_HANDLER_PROVIDER = { provide: ErrorHandler, useClass: ExceptionHandler };
 
@@ -44,7 +44,6 @@ const EXCEPTION_HANDLER_PROVIDER = { provide: ErrorHandler, useClass: ExceptionH
     BrowserAnimationsModule,
 
     CoreModule,
-    ServicesModule,
     StoreModule,
     SecurityUIModule,
 
