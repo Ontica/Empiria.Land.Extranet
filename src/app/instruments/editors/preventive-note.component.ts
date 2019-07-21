@@ -18,7 +18,7 @@ import { tap } from 'rxjs/operators';
 import { Assertion } from '@app/core';
 import { CommandInvoker } from '@app/shared/services';
 
-import { InstrumentStore } from '@app/store';
+import { InstrumentData, PropertyData } from '@app/data';
 
 import { EmptyRealEstate, PreventiveNote, PreventiveNoteRequest } from '@app/models/registration';
 
@@ -48,7 +48,8 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
   });
 
 
-  constructor(private store: InstrumentStore,
+  constructor(private data: InstrumentData,
+              private propertyData: PropertyData,
               private commandInvoker: CommandInvoker) {
     this.commandInvoker.attachHandler(this);
   }
@@ -105,7 +106,7 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
   private createPreventiveNote(): Observable<PreventiveNote> {
     const data = this.getFormData();
 
-    return this.store.createPreventiveNote(data)
+    return this.data.createPreventiveNote(data)
       .pipe(
         tap(x => {
           this.preventiveNote = x;
@@ -151,9 +152,12 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
   private updatePreventiveNote(): Observable<PreventiveNote> {
     const data = this.getFormData();
 
-    return this.store.updatePreventiveNote(this.preventiveNote, data)
+    return this.data.updatePreventiveNote(this.preventiveNote, data)
       .pipe(
-        tap(() => this.preventiveNoteChange.emit(this.preventiveNote))
+        tap(() => {
+          this.resetForm();
+          this.preventiveNoteChange.emit(this.preventiveNote);
+        })
       );
   }
 
@@ -166,7 +170,7 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
     const propertyUID = this.form.value.propertyUID.toUpperCase();
 
-    this.store.getRealEstate(propertyUID)
+    this.propertyData.getRealEstate(propertyUID)
       .subscribe(
         x => this.realEstate = x,
         err => console.log('Display something with real estate not found error', JSON.stringify(err))

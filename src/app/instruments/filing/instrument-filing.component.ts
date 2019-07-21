@@ -7,11 +7,12 @@
 
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { InstrumentService } from '@app/services/instrument.service';
+import { InstrumentData } from '@app/data';
 
 import { LegalInstrument } from '@app/models/registration';
+
 
 
 @Component({
@@ -29,11 +30,11 @@ export class InstrumentFilingComponent implements OnChanges {
   @Output() instrumentChange = new EventEmitter<LegalInstrument>();
 
   form = new FormGroup({
-    sendTo: new FormControl(''),
+    sendTo: new FormControl('', Validators.email),
     rfc: new FormControl(''),
   });
 
-  constructor(private service: InstrumentService) { }
+  constructor(private service: InstrumentData) { }
 
 
   onRequestPaymentOrder() {
@@ -83,12 +84,6 @@ export class InstrumentFilingComponent implements OnChanges {
       sendTo: this.instrument.transaction.sendTo || '',
       rfc: this.instrument.transaction.rfc || ''
     });
-
-    // if (this.readonly) {
-    //   this.form.disable();
-    // } else {
-    //   this.form.enable();
-    // }
   }
 
 
