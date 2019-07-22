@@ -15,7 +15,7 @@ import { InstrumentDataProvider } from '../providers';
 
 import {
   LegalInstrument, LegalInstrumentFilter, EmptyLegalInstrumentFilter,
-  PreventiveNote, PreventiveNoteRequest, RealEstate,
+  PreventiveNote, PreventiveNoteRequest,
 } from '@app/models/registration';
 
 
@@ -61,10 +61,7 @@ export class InstrumentData {
     Assertion.assertValue(instrument, 'instrument');
     Assertion.assertValue(revocationToken, 'revocationToken');
 
-    return this.dataProvider.revokeInstrumentSign(instrument, revocationToken)
-      .pipe(
-        tap(x => Object.assign(instrument, x))
-      );
+    return this.dataProvider.revokeInstrumentSign(instrument, revocationToken);
   }
 
 
@@ -73,10 +70,7 @@ export class InstrumentData {
     Assertion.assertValue(instrument, 'instrument');
     Assertion.assertValue(signToken, 'signToken');
 
-    return this.dataProvider.signInstrument(instrument, signToken)
-      .pipe(
-        tap(x => Object.assign(instrument, x))
-      );
+    return this.dataProvider.signInstrument(instrument, signToken);
   }
 
 

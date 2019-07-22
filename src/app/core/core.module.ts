@@ -11,6 +11,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 import { DataModule } from '@app/data/data.module';
+import { ServicesModule } from '@app/services/services.module';
+
 
 import { CoreService } from './core.service';
 import { ExceptionHandler } from './general/exception-handler';
@@ -38,7 +40,8 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
   imports: [
     CommonModule,
     HttpClientModule,
-    DataModule
+    DataModule,
+    ServicesModule
   ],
 
   declarations: [],
