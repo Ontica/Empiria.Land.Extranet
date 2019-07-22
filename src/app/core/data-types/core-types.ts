@@ -17,21 +17,16 @@ export interface EventData {
   payload?: any;
 }
 
+
 export function createAction(type: string, payload?: any): Action {
-  const action: Action = {
-    type: type,
-    payload: payload
-  };
+  const action: Action = { type, payload };
 
   return action;
 }
 
 
-export function createEventData(type: string, payload?: any): EventData {
-  const event: EventData = {
-    type: type,
-    payload: payload
-  };
+export function createEvent(type: string, payload?: any): EventData {
+  const event: EventData = { type, payload };
 
   return event;
 }

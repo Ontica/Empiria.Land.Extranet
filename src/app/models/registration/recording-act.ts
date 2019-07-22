@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Identifiable, PartitionedType, Money } from '../core';
+import { Identifiable, PartitionedType, Money } from '@app/core';
 
 import { Property } from './property';
 import { RoledParty } from './party';

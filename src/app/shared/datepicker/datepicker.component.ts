@@ -9,7 +9,8 @@ import { Component, EventEmitter,
          Input, Output, forwardRef } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { DateString, DateStringLibrary } from '@app/models/core/date-string-library';
+
+import { DateString, DateStringLibrary } from '@app/core';
 
 import { isMoment } from 'moment';
 

@@ -5,12 +5,12 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-export { KeyValue, KeyValue_Empty } from '@app/core/data-types/key-value';
+export * from './core-types';
+
+export { KeyValue, KeyValue_Empty } from './key-value';
 
 export { DateString, DateStringLibrary } from './date-string-library';
 
 export { StringLibrary } from './string-library';
-
-export * from './core-types';
 
 export * from './contact';

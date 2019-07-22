@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Identifiable, PartitionedType, Quantity, EmptyQuantity, Empty } from '../core/core-types';
+import { Identifiable, PartitionedType, Quantity, EmptyQuantity, Empty } from '@app/core';
 
 
 export interface Property extends Identifiable, PartitionedType {

@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Contact, DateString, Identifiable, PartitionedType, Empty } from '../core';
+import { Contact, DateString, Identifiable, PartitionedType, Empty } from '@app/core';
 
 import { RealEstate } from './property';
 import { RecordingAct } from './recording-act';

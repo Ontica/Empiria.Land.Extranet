@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Identifiable, PartitionedType, Quantity } from '../core/core-types';
+import { Identifiable, PartitionedType, Quantity } from '@app/core';
 
 
 export interface Party extends Identifiable, PartitionedType {
