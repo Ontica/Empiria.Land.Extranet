@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 
 import { DataModule } from '@app/data/data.module';
 import { ServicesModule } from '@app/services/services.module';
+import { PresentationModule } from './presentation/presentation.module';
 
 
 import { CoreService } from './core.service';
@@ -41,7 +42,8 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
     CommonModule,
     HttpClientModule,
     DataModule,
-    ServicesModule
+    ServicesModule,
+    PresentationModule
   ],
 
   declarations: [],
