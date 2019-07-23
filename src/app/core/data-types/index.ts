@@ -5,6 +5,8 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
+export * from './command';
+
 export * from './core-types';
 
 export { KeyValue, KeyValue_Empty } from './key-value';
