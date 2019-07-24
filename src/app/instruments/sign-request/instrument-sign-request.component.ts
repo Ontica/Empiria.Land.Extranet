@@ -5,9 +5,9 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 
-import { InstrumentData } from '@app/data';
+import { FrontController } from '@app/core/presentation';
 
 import { LegalInstrument } from '@app/models/registration';
 
@@ -28,7 +28,7 @@ export class InstrumentSignRequestComponent implements OnChanges {
 
   revokeMode = false;
 
-  constructor(private data: InstrumentData) { }
+  constructor(private frontController: FrontController) { }
 
   ngOnChanges() {
     this.revokeMode = false;
@@ -37,7 +37,7 @@ export class InstrumentSignRequestComponent implements OnChanges {
 
   onSignTokenReceived(token: string) {
     if (this.revokeMode) {
-      this.revokeSign('revocationToken');
+      this.revokeSign(token);
       this.revokeMode = false;
     } else {
       this.sign(token);
@@ -54,20 +54,34 @@ export class InstrumentSignRequestComponent implements OnChanges {
 
 
   private revokeSign(revocationToken: string) {
-    this.data.revokeInstrumentSign(this.instrument, revocationToken)
-      .toPromise()
-      .then(() => {
+    const payload = {
+      instrument: this.instrument,
+      token: revocationToken
+    };
+
+    const action = this.frontController.createAction('LAND.LEGAL.INSTRUMENT.SIGN.REVOKED', payload);
+
+    this.frontController.dispatch(action)
+      .then(x => {
+        this.instrument = x;
         this.instrumentChange.emit(this.instrument);
       });
   }
 
 
   private sign(signToken: string) {
-    this.data.signInstrument(this.instrument, signToken)
-        .toPromise()
-        .then(() => {
-          this.instrumentChange.emit(this.instrument);
-        });
+    const payload = {
+      instrument: this.instrument,
+      token: signToken
+    };
+
+    const action = this.frontController.createAction('LAND.LEGAL.INSTRUMENT.SIGNED', payload);
+
+    this.frontController.dispatch(action)
+      .then((x: LegalInstrument) => {
+        this.instrument = x;
+        this.instrumentChange.emit(this.instrument);
+      });
   }
 
 }
