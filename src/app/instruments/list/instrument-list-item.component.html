@@ -2,29 +2,29 @@
 
   <div fxFlex="10%">
     <div class="label">Documento</div>
-    <div class="primary-text nowrap"><b>{{instrument.typeName}}</b></div>
-    {{(instrument.issueDate || instrument.postingTime) | date:'dd/LLL/yyyy'}}
+    <div class="primary-text nowrap"><b>{{preventiveNote.typeName}}</b></div>
+    {{(preventiveNote.issueDate || preventiveNote.postingTime) | date:'dd/LLL/yyyy'}}
   </div>
 
-  <div *ngIf="instrument.property && instrument.property.uid" fxFlex="auto">
+  <div *ngIf="preventiveNote.property && preventiveNote.property.uid" fxFlex="auto">
     <div class="label">Folio real del predio</div>
-    <div class="primary-text nowrap"><b>{{instrument.property.uid}}</b></div>
-    <div>{{instrument.property.name}}</div>
+    <div class="primary-text nowrap"><b>{{preventiveNote.property.uid}}</b></div>
+    <div>{{preventiveNote.property.name}}</div>
   </div>
 
   <div fxFlex="15%">
     <div *ngIf="instrument.transaction.uid">
       <div class="label">Trámite RPP</div>
       <div>
-        <div class="primary-text nowrap"><b>{{instrument.transaction.uid}}</b></div>
-        <div>{{instrument.transaction.total | currency }}</div>
+        <div class="primary-text nowrap"><b>{{preventiveNote.transaction.uid}}</b></div>
+        <div>{{preventiveNote.transaction.total | currency }}</div>
       </div>
     </div>
   </div>
 
   <div fxFlex="8%">
     <div class="label">Estado:</div>
-    <div>{{instrument.statusName}}</div>
+    <div>{{preventiveNote.statusName}}</div>
   </div>
 
 </div>

@@ -7,7 +7,7 @@
 
 import { Component, Input } from '@angular/core';
 
-import { LegalInstrument } from '@app/models/registration';
+import { LegalInstrument, PreventiveNote } from '@app/models/registration';
 
 
 @Component({
@@ -17,5 +17,10 @@ import { LegalInstrument } from '@app/models/registration';
 export class InstrumentListItemComponent {
 
   @Input() instrument: LegalInstrument;
+
+
+  get preventiveNote() {
+    return (this.instrument as PreventiveNote);
+  }
 
 }
