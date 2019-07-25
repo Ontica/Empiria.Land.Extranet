@@ -11,7 +11,7 @@ import { LegalInstrument, LegalInstrumentStatus,
          PreventiveNote, PreventiveNoteRequest } from '@app/models/registration';
 
 
-export abstract class InstrumentDataProvider {
+export abstract class InstrumentApiProvider {
 
 
   abstract getInstrument(uid: string): Observable<LegalInstrument>;

@@ -5,6 +5,6 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
+export * from './instrument.api.provider';
+export * from './property.api.provider';
 
-export * from './interfaces/instrument.data.provider';
-export * from './interfaces/property.data.provider';

@@ -10,14 +10,14 @@ import { Observable } from 'rxjs';
 
 import { Assertion, HttpService } from '@app/core';
 
-import { InstrumentDataProvider } from '../interfaces/instrument.data.provider';
+import { InstrumentApiProvider } from '@app/domain/providers';
 
 import { LegalInstrument, LegalInstrumentStatus,
          PreventiveNote, PreventiveNoteRequest } from '@app/models/registration';
 
 
 @Injectable()
-export class InstrumentHttpDataProvider extends InstrumentDataProvider {
+export class InstrumentApiHttpProvider extends InstrumentApiProvider {
 
   constructor(private http: HttpService) {
     super();
