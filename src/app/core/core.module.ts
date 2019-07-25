@@ -10,29 +10,27 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { CommonModule } from '@angular/common';
 
-import { DataModule } from '@app/data/data.module';
+import { DomainModule } from '@app/domain/domain.module';
 import { ServicesModule } from '@app/services/services.module';
+
 import { PresentationModule } from './presentation/presentation.module';
 
-
 import { CoreService } from './core.service';
+
 import { ExceptionHandler } from './general/exception-handler';
-
 import { SessionService } from './general/session.service';
-
+import { LoggerService } from './general/logger.service';
 import { ApplicationSettingsService } from './general/application-settings.service';
+
 import { DirectoryService } from './http/directory.service';
-
-
 import { HttpHandler } from './http/http-handler';
 import { HttpService } from './http/http.service';
 import { HttpErrorInterceptor } from './http/http-error-interceptor';
 
-import { LoggerService } from './general/logger.service';
-
 import { SecurityDataService } from './security/security-data.service';
 import { AuthenticationService } from './security/authentication.service';
 import { SecurityGuardService } from './security/security-guard.service';
+
 import { throwIfAlreadyLoaded } from './module-import-guard';
 
 
@@ -41,7 +39,7 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
   imports: [
     CommonModule,
     HttpClientModule,
-    DataModule,
+    DomainModule,
     ServicesModule,
     PresentationModule
   ],

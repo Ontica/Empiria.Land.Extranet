@@ -11,7 +11,7 @@ import { tap } from 'rxjs/operators';
 
 import { Assertion } from '@app/core';
 
-import { InstrumentDataProvider } from '../providers';
+import { InstrumentApiProvider } from './providers';
 
 import {
   LegalInstrument, LegalInstrumentFilter, EmptyLegalInstrumentFilter,
@@ -20,14 +20,14 @@ import {
 
 
 @Injectable()
-export class InstrumentData {
+export class InstrumentMethods {
 
   private instrumentsList: BehaviorSubject<LegalInstrument[]> = new BehaviorSubject([]);
 
   private filter = EmptyLegalInstrumentFilter;
 
 
-  constructor(private dataProvider: InstrumentDataProvider) { }
+  constructor(private backend: InstrumentApiProvider) { }
 
 
   getInstruments(): Observable<LegalInstrument[]> {
@@ -49,7 +49,7 @@ export class InstrumentData {
   createPreventiveNote(data: PreventiveNoteRequest): Observable<PreventiveNote> {
     Assertion.assertValue(data, 'data');
 
-    return this.dataProvider.createPreventiveNote(data)
+    return this.backend.createPreventiveNote(data)
       .pipe(
         tap(() => this.loadInstruments())
       );
@@ -61,7 +61,7 @@ export class InstrumentData {
     Assertion.assertValue(instrument, 'instrument');
     Assertion.assertValue(revocationToken, 'revocationToken');
 
-    return this.dataProvider.revokeInstrumentSign(instrument, revocationToken);
+    return this.backend.revokeInstrumentSign(instrument, revocationToken);
   }
 
 
@@ -70,7 +70,7 @@ export class InstrumentData {
     Assertion.assertValue(instrument, 'instrument');
     Assertion.assertValue(signToken, 'signToken');
 
-    return this.dataProvider.signInstrument(instrument, signToken);
+    return this.backend.signInstrument(instrument, signToken);
   }
 
 
@@ -79,7 +79,7 @@ export class InstrumentData {
     Assertion.assertValue(preventiveNote, 'preventiveNote');
     Assertion.assertValue(data, 'data');
 
-    return this.dataProvider.updatePreventiveNote(preventiveNote, data)
+    return this.backend.updatePreventiveNote(preventiveNote, data)
       .pipe(
         tap(x => Object.assign(preventiveNote, x))
       );
@@ -89,14 +89,14 @@ export class InstrumentData {
   requestPaymentOrder(instrument: LegalInstrument, data: any): Observable<LegalInstrument> {
     Assertion.assertValue(instrument, 'instrument');
 
-    return this.dataProvider.requestPaymentOrder(instrument, data);
+    return this.backend.requestPaymentOrder(instrument, data);
   }
 
 
   requestRecording(instrument: LegalInstrument, data: any) {
     Assertion.assertValue(instrument, 'instrument');
 
-    return this.dataProvider.requestRecording(instrument, data);
+    return this.backend.requestRecording(instrument, data);
   }
 
 
@@ -104,7 +104,7 @@ export class InstrumentData {
 
 
   private loadInstruments() {
-    this.dataProvider.getInstruments(this.filter.status, this.filter.keywords)
+    this.backend.getInstruments(this.filter.status, this.filter.keywords)
       .subscribe(
         data => this.instrumentsList.next(data)
       );

@@ -8,7 +8,7 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { InstrumentData } from '@app/data';
+import { InstrumentMethods } from '@app/domain';
 
 import { LegalInstrument, EmptyLegalInstrument,
          LegalInstrumentFilter, LegalInstrumentStatus } from '@app/models/registration';
@@ -38,12 +38,12 @@ export class InstrumentListComponent implements OnChanges {
 
   displayCreateDocumentWizard = false;
 
-  constructor(private data: InstrumentData) { }
+  constructor(private domain: InstrumentMethods) { }
 
 
   ngOnChanges() {
     this.setFilter();
-    this.instrumentList = this.data.getInstruments();
+    this.instrumentList = this.domain.getInstruments();
   }
 
 
@@ -100,7 +100,7 @@ export class InstrumentListComponent implements OnChanges {
   private setFilter() {
     const filter = this.buildFilter();
 
-    this.data.setFilter(filter);
+    this.domain.setFilter(filter);
   }
 
 }

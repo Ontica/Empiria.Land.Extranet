@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 
 import { Assertion } from '@app/core';
 
-import { InstrumentData } from '@app/data';
+import { InstrumentMethods } from '@app/domain';
 
 import { LegalInstrument } from '@app/models/registration';
 
@@ -18,7 +18,7 @@ import { LegalInstrument } from '@app/models/registration';
 @Injectable()
 export class ElectronicSignService {
 
-  constructor(private data: InstrumentData) { }
+  constructor(private domain: InstrumentMethods) { }
 
 
   signInstrument(instrument: LegalInstrument,
@@ -26,7 +26,7 @@ export class ElectronicSignService {
     Assertion.assertValue(instrument, 'instrument');
     Assertion.assertValue(signToken, 'signToken');
 
-    return this.data.signInstrument(instrument, signToken);
+    return this.domain.signInstrument(instrument, signToken);
   }
 
 
@@ -35,7 +35,7 @@ export class ElectronicSignService {
     Assertion.assertValue(instrument, 'instrument');
     Assertion.assertValue(revocationToken, 'revocationToken');
 
-    return this.data.revokeInstrumentSign(instrument, revocationToken);
+    return this.domain.revokeInstrumentSign(instrument, revocationToken);
 
   }
 

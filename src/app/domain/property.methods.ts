@@ -13,16 +13,16 @@ import { Assertion } from '@app/core';
 
 import { RealEstate, Property } from '@app/models/registration';
 
-import { PropertyDataProvider } from '../providers';
+import { PropertyApiProvider } from './providers';
 
 
 @Injectable()
-export class PropertyData {
+export class PropertyMethods {
 
   private cache = new Map<string, Property>();
 
 
-  constructor(private dataProvider: PropertyDataProvider) { }
+  constructor(private backend: PropertyApiProvider) { }
 
 
   getRealEstate(propertyUID: string): Observable<RealEstate> {
@@ -32,7 +32,7 @@ export class PropertyData {
       return of(this.cache.get(propertyUID) as RealEstate);
     }
 
-    return this.dataProvider.getRealEstate(propertyUID)
+    return this.backend.getRealEstate(propertyUID)
       .pipe(
         tap(x => {
           this.cache.set(x.uid, x);

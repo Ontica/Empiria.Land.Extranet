@@ -9,7 +9,7 @@ import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { InstrumentData } from '@app/data';
+import { InstrumentMethods } from '@app/domain';
 
 import { LegalInstrument } from '@app/models/registration';
 
@@ -34,7 +34,7 @@ export class InstrumentFilingComponent implements OnChanges {
     rfc: new FormControl(''),
   });
 
-  constructor(private service: InstrumentData) { }
+  constructor(private domain: InstrumentMethods) { }
 
 
   onRequestPaymentOrder() {
@@ -70,7 +70,7 @@ export class InstrumentFilingComponent implements OnChanges {
   private requestPaymentOrder() {
     const data = this.getFormData();
 
-    this.service.requestPaymentOrder(this.instrument, data)
+    this.domain.requestPaymentOrder(this.instrument, data)
         .toPromise()
         .then(x => {
           this.instrument = x;
@@ -88,7 +88,7 @@ export class InstrumentFilingComponent implements OnChanges {
 
 
   private requestRecording() {
-    this.service.requestRecording(this.instrument, {})
+    this.domain.requestRecording(this.instrument, {})
         .toPromise()
         .then(x => {
           this.instrument = x;
