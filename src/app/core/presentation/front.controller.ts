@@ -12,7 +12,7 @@ import { Action, Assertion, CommandHandler, createAction as createActionAlias } 
 import { PresentationState } from './presentation.state';
 
 
-export const PRESENTATION_COMMAND_HANDLERS =
+export const COMMAND_HANDLERS =
                 new InjectionToken<CommandHandler[]>('PresentationCommandHandlers');
 
 
@@ -20,7 +20,7 @@ export const PRESENTATION_COMMAND_HANDLERS =
 export class FrontController {
 
   constructor(private presentation: PresentationState,
-              @Inject(PRESENTATION_COMMAND_HANDLERS) private handlers: CommandHandler[]) { }
+              @Inject(COMMAND_HANDLERS) private handlers: CommandHandler[]) { }
 
 
   createAction(type: string, payload?: any): Action {

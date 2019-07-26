@@ -7,7 +7,7 @@
 
 import { NgModule } from '@angular/core';
 
-import { PRESENTATION_COMMAND_HANDLERS } from '@app/core/presentation/front.controller';
+import { COMMAND_HANDLERS } from '@app/core/presentation/front.controller';
 
 import { InstrumentCommandHandler } from './instrument.command.handler';
 import { ElectronicSignCommandHandler } from './electronic.sign.command.handler';
@@ -19,9 +19,9 @@ import { ElectronicSignCommandHandler } from './electronic.sign.command.handler'
     InstrumentCommandHandler,
     ElectronicSignCommandHandler,
 
-    { provide: PRESENTATION_COMMAND_HANDLERS, useClass: InstrumentCommandHandler, multi: true },
-    { provide: PRESENTATION_COMMAND_HANDLERS, useClass: ElectronicSignCommandHandler, multi: true },
+    { provide: COMMAND_HANDLERS, useClass: InstrumentCommandHandler, multi: true },
+    { provide: COMMAND_HANDLERS, useClass: ElectronicSignCommandHandler, multi: true },
   ]
 
 })
-export class PresentationCommandHandlersModule { }
+export class CommandHandlersModule { }

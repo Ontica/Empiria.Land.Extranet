@@ -11,12 +11,12 @@ import { FrontController } from './front.controller';
 
 import { PresentationState } from './presentation.state';
 
-import { PresentationCommandHandlersModule } from '@app/integration/presentation.command.handlers/presentation.command.handlers.module';
+import { CommandHandlersModule } from '@app/integration/command.handlers/command.handlers.module';
 
 @NgModule({
 
   imports: [
-    PresentationCommandHandlersModule
+    CommandHandlersModule
   ],
 
   providers: [
