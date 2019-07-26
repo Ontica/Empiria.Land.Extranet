@@ -8,7 +8,7 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { InstrumentMethods } from '@app/domain';
+import { InstrumentUseCases } from '@app/domain/use-cases';
 
 import { LegalInstrument, EmptyLegalInstrument,
          LegalInstrumentFilter, LegalInstrumentStatus } from '@app/models/registration';
@@ -38,7 +38,7 @@ export class InstrumentListComponent implements OnChanges {
 
   displayCreateDocumentWizard = false;
 
-  constructor(private domain: InstrumentMethods) { }
+  constructor(private domain: InstrumentUseCases) { }
 
 
   ngOnChanges() {

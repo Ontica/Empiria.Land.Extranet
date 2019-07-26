@@ -9,17 +9,17 @@ import { NgModule } from '@angular/core';
 
 import { PRESENTATION_COMMAND_HANDLERS } from '@app/core/presentation/front.controller';
 
-import { LegalInstrumentCommandHandler } from './legal.instrument.command.handler';
+import { InstrumentCommandHandler } from './instrument.command.handler';
 import { ElectronicSignCommandHandler } from './electronic.sign.command.handler';
 
 
 @NgModule({
 
   providers: [
-    LegalInstrumentCommandHandler,
+    InstrumentCommandHandler,
     ElectronicSignCommandHandler,
 
-    { provide: PRESENTATION_COMMAND_HANDLERS, useClass: LegalInstrumentCommandHandler, multi: true },
+    { provide: PRESENTATION_COMMAND_HANDLERS, useClass: InstrumentCommandHandler, multi: true },
     { provide: PRESENTATION_COMMAND_HANDLERS, useClass: ElectronicSignCommandHandler, multi: true },
   ]
 

@@ -6,5 +6,5 @@
  */
 
 
-export * from './instrument.methods';
-export * from './property.methods';
+export * from './instrument.use-cases';
+export * from './property.use-cases';

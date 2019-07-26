@@ -10,9 +10,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { CommonModule } from '@angular/common';
 
-import { DomainModule } from '@app/domain/domain.module';
-import { ServicesModule } from '@app/services/services.module';
-
+import { UseCasesModule } from '@app/domain/use-cases/use-cases.module';
 import { PresentationModule } from './presentation/presentation.module';
 
 import { CoreService } from './core.service';
@@ -39,8 +37,7 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
   imports: [
     CommonModule,
     HttpClientModule,
-    DomainModule,
-    ServicesModule,
+    UseCasesModule,
     PresentationModule
   ],
 

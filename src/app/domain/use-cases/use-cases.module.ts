@@ -9,8 +9,8 @@ import { NgModule } from '@angular/core';
 
 import { BackendProvidersModule } from '@app/integration/backend-providers/backend.providers.module';
 
-import { InstrumentMethods } from './instrument.methods';
-import { PropertyMethods } from './property.methods';
+import { InstrumentUseCases } from './instrument.use-cases';
+import { PropertyUseCases } from './property.use-cases';
 
 
 @NgModule({
@@ -20,9 +20,9 @@ import { PropertyMethods } from './property.methods';
   ],
 
   providers: [
-    InstrumentMethods,
-    PropertyMethods
+    InstrumentUseCases,
+    PropertyUseCases
   ]
 
 })
-export class DomainModule { }
+export class UseCasesModule { }

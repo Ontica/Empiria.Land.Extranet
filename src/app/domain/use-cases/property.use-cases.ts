@@ -13,11 +13,11 @@ import { Assertion } from '@app/core';
 
 import { RealEstate, Property } from '@app/models/registration';
 
-import { PropertyApiProvider } from './providers';
+import { PropertyApiProvider } from '../providers';
 
 
 @Injectable()
-export class PropertyMethods {
+export class PropertyUseCases {
 
   private cache = new Map<string, Property>();
 

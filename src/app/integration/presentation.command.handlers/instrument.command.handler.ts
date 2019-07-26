@@ -9,15 +9,15 @@ import { Injectable } from '@angular/core';
 
 import { Action, Assertion, CommandHandler } from '@app/core';
 
-import { ElectronicSignService } from '@app/services';
+import { InstrumentUseCases } from '@app/domain/use-cases';
 
 
 @Injectable()
-export class LegalInstrumentCommandHandler extends CommandHandler {
+export class InstrumentCommandHandler extends CommandHandler {
 
   readonly types = [];
 
-  constructor(private service: ElectronicSignService) {
+  constructor(private useCases: InstrumentUseCases) {
     super();
   }
 
@@ -25,7 +25,7 @@ export class LegalInstrumentCommandHandler extends CommandHandler {
     switch (action.type) {
 
       default:
-        const msg = `${LegalInstrumentCommandHandler.name} is not able to handle action ${action.type}.`;
+        const msg = `${InstrumentCommandHandler.name} is not able to handle action ${action.type}.`;
         throw Assertion.assertNoReachThisCode(msg);
     }
   }

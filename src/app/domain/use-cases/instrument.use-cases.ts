@@ -11,7 +11,7 @@ import { tap } from 'rxjs/operators';
 
 import { Assertion } from '@app/core';
 
-import { InstrumentApiProvider } from './providers';
+import { InstrumentApiProvider } from '../providers';
 
 import {
   LegalInstrument, LegalInstrumentFilter, EmptyLegalInstrumentFilter,
@@ -20,7 +20,7 @@ import {
 
 
 @Injectable()
-export class InstrumentMethods {
+export class InstrumentUseCases {
 
   private instrumentsList: BehaviorSubject<LegalInstrument[]> = new BehaviorSubject([]);
 

@@ -9,7 +9,7 @@ import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { InstrumentMethods } from '@app/domain';
+import { InstrumentUseCases } from '@app/domain/use-cases';
 
 import { LegalInstrument } from '@app/models/registration';
 
@@ -34,7 +34,7 @@ export class InstrumentFilingComponent implements OnChanges {
     rfc: new FormControl(''),
   });
 
-  constructor(private domain: InstrumentMethods) { }
+  constructor(private domain: InstrumentUseCases) { }
 
 
   onRequestPaymentOrder() {
