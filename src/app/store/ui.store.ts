@@ -11,30 +11,33 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Assertion, Exception } from '@app/core';
 
 import {
-  APP_LAYOUTS,
-  APP_VIEWS,
-  VALUE_SELECTOR,
   DefaultNavigationHeader,
   DefaultView,
   Layout,
   NavigationHeader,
   View,
-  buildNavigationHeader,
-  getValueSelectorDefaultValue
+  buildNavigationHeader
 } from '@app/user-interface/models';
+
+import {
+  APP_LAYOUTS,
+  APP_VIEWS,
+  VALUE_SELECTOR,
+  getValueSelectorDefaultValue
+} from '@app/user-interface/config';
 
 
 @Injectable()
 export class UserInterfaceStore {
 
-  private _currentLayout: BehaviorSubject<Layout> = new BehaviorSubject<Layout>(APP_LAYOUTS['Home']);
+  private currentLayoutSubject: BehaviorSubject<Layout> = new BehaviorSubject<Layout>(APP_LAYOUTS[0]);
 
-  private _currentView: BehaviorSubject<View> = new BehaviorSubject<View>(DefaultView);
+  private currentViewSubject: BehaviorSubject<View> = new BehaviorSubject<View>(DefaultView);
 
-  private _navigationHeader:
+  private navigationHeaderSubject:
                 BehaviorSubject<NavigationHeader> = new BehaviorSubject(DefaultNavigationHeader);
 
-  private _valuesMap = new Map<string, BehaviorSubject<any>>();
+  private valuesMap = new Map<string, BehaviorSubject<any>>();
 
 
   constructor() { }
@@ -43,23 +46,23 @@ export class UserInterfaceStore {
   // select methods
 
   get currentView(): Observable<View> {
-    return this._currentView.asObservable();
+    return this.currentViewSubject.asObservable();
   }
 
 
   get layout(): Observable<Layout> {
-    return this._currentLayout.asObservable();
+    return this.currentLayoutSubject.asObservable();
   }
 
 
   get navigationHeader(): Observable<NavigationHeader> {
-    return this._navigationHeader.asObservable();
+    return this.navigationHeaderSubject.asObservable();
   }
 
 
   getValue<T>(selector: VALUE_SELECTOR, defaultValue?: T): Observable<T> {
-    if (this._valuesMap.has(selector)) {
-      const subject = this._valuesMap.get(selector) as BehaviorSubject<T>;
+    if (this.valuesMap.has(selector)) {
+      const subject = this.valuesMap.get(selector) as BehaviorSubject<T>;
 
       return subject.asObservable();
 
@@ -67,7 +70,7 @@ export class UserInterfaceStore {
       defaultValue = defaultValue || getValueSelectorDefaultValue(selector) as T;
       const subject = new BehaviorSubject<T>(defaultValue);
 
-      this._valuesMap.set(selector, subject);
+      this.valuesMap.set(selector, subject);
 
       return subject.asObservable();
     }
@@ -77,7 +80,7 @@ export class UserInterfaceStore {
   // reduce methods
 
   setCurrentViewFromUrl(url: string) {
-    if (this._currentView.value.url !== url) {
+    if (this.currentViewSubject.value.url !== url) {
       const view = APP_VIEWS.find(x => x.url === url);
 
       if (!view) {
@@ -88,43 +91,43 @@ export class UserInterfaceStore {
 
       const viewLayout = this.getViewLayout(view);
 
-      if (this._currentLayout.value !== viewLayout) {
+      if (this.currentLayoutSubject.value !== viewLayout) {
         this.setLayout(viewLayout);
       }
 
       this.setNavigationHeader(view);
 
-      this._currentView.next(view);
+      this.currentViewSubject.next(view);
     }
   }
 
 
   setMainTitle(newTitle: string) {
-    const newHeader = Object.assign({}, this._navigationHeader.value, { title: newTitle });
+    const newHeader = Object.assign({}, this.navigationHeaderSubject.value, { title: newTitle });
 
     this.setNavigationHeader(newHeader);
   }
 
 
   setNavigationHeader(value: NavigationHeader | View) {
-    if (value && value['url']) {
-      const layout = APP_LAYOUTS.find(x => x.name === this._currentLayout.value.name);
+    if (value && 'url' in value) {
+      const layout = APP_LAYOUTS.find(x => x.name === this.currentLayoutSubject.value.name);
 
       const navHeader = buildNavigationHeader(layout, value.title);
 
-      this._navigationHeader.next(navHeader);
+      this.navigationHeaderSubject.next(navHeader);
 
     } else if (value) {
-      this._navigationHeader.next(value as NavigationHeader);
+      this.navigationHeaderSubject.next(value as NavigationHeader);
     }
   }
 
 
   setValue<T>(selector: VALUE_SELECTOR, value: T) {
-    if (!this._valuesMap.has(selector)) {
-      this._valuesMap.set(selector, new BehaviorSubject<T>(value));
+    if (!this.valuesMap.has(selector)) {
+      this.valuesMap.set(selector, new BehaviorSubject<T>(value));
     } else {
-      const subject = this._valuesMap.get(selector) as BehaviorSubject<T>;
+      const subject = this.valuesMap.get(selector) as BehaviorSubject<T>;
 
       subject.next(value);
     }
@@ -144,8 +147,8 @@ export class UserInterfaceStore {
 
 
   private setLayout(value: Layout) {
-    if (this._currentLayout.value !== value) {
-      this._currentLayout.next(value);
+    if (this.currentLayoutSubject.value !== value) {
+      this.currentLayoutSubject.next(value);
     }
   }
 

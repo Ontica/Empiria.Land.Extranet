@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { View, Layout } from './user-interface';
+import { View, Layout } from '../models/common';
 
 import { InstrumentsViews,
          TransactionsViews,
@@ -16,7 +16,7 @@ export type LayoutType = 'Instruments' | 'Transactions' | 'Search';
 
 
 export const APP_VIEWS: View[] = InstrumentsViews.concat(TransactionsViews,
-                                                       SearchViews);
+                                                         SearchViews);
 
 export const APP_LAYOUTS: Layout[] = [
   {
