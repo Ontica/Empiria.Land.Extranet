@@ -7,7 +7,7 @@
 
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 
-import { LegalInstrument, EmptyLegalInstrument } from '@app/models/registration';
+import { LegalInstrument, EmptyLegalInstrument } from '@app/domain/models';
 
 
 @Component({

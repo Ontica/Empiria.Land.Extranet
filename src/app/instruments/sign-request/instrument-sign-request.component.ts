@@ -9,7 +9,7 @@ import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core
 
 import { FrontController } from '@app/core/presentation';
 
-import { LegalInstrument } from '@app/models/registration';
+import { LegalInstrument } from '@app/domain/models';
 
 
 @Component({

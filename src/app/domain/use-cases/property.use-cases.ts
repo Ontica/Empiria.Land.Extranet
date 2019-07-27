@@ -11,7 +11,7 @@ import { tap } from 'rxjs/operators';
 
 import { Assertion } from '@app/core';
 
-import { RealEstate, Property } from '@app/models/registration';
+import { RealEstate, Property } from '@app/domain/models';
 
 import { PropertyApiProvider } from '../providers';
 

@@ -13,7 +13,7 @@ import { Assertion, HttpService } from '@app/core';
 import { InstrumentApiProvider } from '@app/domain/providers';
 
 import { LegalInstrument, LegalInstrumentStatus,
-         PreventiveNote, PreventiveNoteRequest } from '@app/models/registration';
+         PreventiveNote, PreventiveNoteRequest } from '@app/domain/entities';
 
 
 @Injectable()

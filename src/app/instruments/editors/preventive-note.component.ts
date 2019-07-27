@@ -20,7 +20,7 @@ import { CommandInvoker } from '@app/shared/services';
 
 import { InstrumentUseCases, PropertyUseCases } from '@app/domain/use-cases';
 
-import { EmptyRealEstate, PreventiveNote, PreventiveNoteRequest } from '@app/models/registration';
+import { EmptyRealEstate, PreventiveNote, PreventiveNoteRequest } from '@app/domain/models';
 
 
 @Component({

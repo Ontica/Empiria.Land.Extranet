@@ -31,6 +31,7 @@ export interface RealEstate extends Property {
   partitionOf: Identifiable;
 }
 
+
 export const EmptyRealEstate: RealEstate = {
   uid: '',
   name: '',

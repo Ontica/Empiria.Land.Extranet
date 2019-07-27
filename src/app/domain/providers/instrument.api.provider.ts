@@ -8,7 +8,7 @@
 import { Observable } from 'rxjs';
 
 import { LegalInstrument, LegalInstrumentStatus,
-         PreventiveNote, PreventiveNoteRequest } from '@app/models/registration';
+         PreventiveNote, PreventiveNoteRequest } from '@app/domain/entities';
 
 
 export abstract class InstrumentApiProvider {

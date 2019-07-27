@@ -12,7 +12,7 @@ import { Assertion, HttpService } from '@app/core';
 
 import { PropertyApiProvider } from '@app/domain/providers';
 
-import { RealEstate } from '@app/models/registration';
+import { RealEstate } from '@app/domain/entities';
 
 
 @Injectable()

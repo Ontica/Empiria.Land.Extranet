@@ -16,7 +16,7 @@ import { InstrumentApiProvider } from '../providers';
 import {
   LegalInstrument, LegalInstrumentFilter, EmptyLegalInstrumentFilter,
   PreventiveNote, PreventiveNoteRequest,
-} from '@app/models/registration';
+} from '@app/domain/models';
 
 
 @Injectable()

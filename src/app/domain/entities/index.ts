@@ -5,10 +5,10 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-export * from './party';
+ export * from './party';
 
-export * from './property';
+ export * from './property';
 
-export * from './recording-act';
+ export * from './recording-act';
 
-export * from './instruments';
+ export * from './instruments';

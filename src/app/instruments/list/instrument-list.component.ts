@@ -11,7 +11,7 @@ import { Observable, of } from 'rxjs';
 import { InstrumentUseCases } from '@app/domain/use-cases';
 
 import { LegalInstrument, EmptyLegalInstrument,
-         LegalInstrumentFilter, LegalInstrumentStatus } from '@app/models/registration';
+         LegalInstrumentFilter, LegalInstrumentStatus } from '@app/domain/models';
 
 import { View } from '@app/models/user-interface';
 import { Assertion } from '@app/core';

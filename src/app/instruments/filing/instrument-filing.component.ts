@@ -11,8 +11,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { InstrumentUseCases } from '@app/domain/use-cases';
 
-import { LegalInstrument } from '@app/models/registration';
-
+import { LegalInstrument } from '@app/domain/models';
 
 
 @Component({

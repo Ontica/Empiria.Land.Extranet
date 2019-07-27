@@ -7,7 +7,7 @@
 
 import { Component, Input } from '@angular/core';
 
-import { LegalInstrument, PreventiveNote } from '@app/models/registration';
+import { LegalInstrument, PreventiveNote } from '@app/domain/models';
 
 
 @Component({

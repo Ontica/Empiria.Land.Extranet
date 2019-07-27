@@ -7,7 +7,7 @@
 
 import { Observable } from 'rxjs';
 
-import { RealEstate } from '@app/models/registration';
+import { RealEstate } from '@app/domain/entities';
 
 
 export abstract class PropertyApiProvider {

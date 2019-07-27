@@ -10,6 +10,7 @@ import { Contact, DateString, Identifiable, PartitionedType, Empty } from '@app/
 import { RealEstate } from './property';
 import { RecordingAct } from './recording-act';
 
+
 export interface ESignData {
   hash: string;
   seal: string;
