@@ -13,7 +13,7 @@ import { InstrumentUseCases } from '@app/domain/use-cases';
 import { LegalInstrument, EmptyLegalInstrument,
          LegalInstrumentFilter, LegalInstrumentStatus } from '@app/domain/models';
 
-import { View } from '@app/models/user-interface';
+import { View } from '@app/user-interface/models';
 import { Assertion } from '@app/core';
 
 

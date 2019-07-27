@@ -12,7 +12,7 @@ import { UserInterfaceStore } from '@app/store/ui.store';
 
 import { LegalInstrument, EmptyLegalInstrument } from '@app/domain/models';
 
-import { View } from '@app/models/user-interface';
+import { View } from '@app/user-interface/models';
 
 
 @Component({

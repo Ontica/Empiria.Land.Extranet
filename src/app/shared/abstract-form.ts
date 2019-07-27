@@ -12,7 +12,7 @@ import { Assertion, Exception } from '@app/core';
 
 import { SpinnerService } from './spinner/spinner.service';
 
-import { Displayable } from '@app/models/user-interface';
+import { Displayable } from '@app/user-interface/models';
 
 
 export interface Command {

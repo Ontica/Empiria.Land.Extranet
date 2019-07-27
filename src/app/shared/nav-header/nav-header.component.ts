@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 
 import { UserInterfaceStore } from '@app/store/ui.store';
 
-import { MenuItem, NavigationHeader } from '@app/models/user-interface';
+import { MenuItem, NavigationHeader } from '@app/user-interface/models';
 
 
 @Component({

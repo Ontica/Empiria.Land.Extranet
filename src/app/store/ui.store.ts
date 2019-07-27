@@ -21,7 +21,7 @@ import {
   View,
   buildNavigationHeader,
   getValueSelectorDefaultValue
-} from '@app/models/user-interface';
+} from '@app/user-interface/models';
 
 
 @Injectable()
@@ -128,7 +128,6 @@ export class UserInterfaceStore {
 
       subject.next(value);
     }
-
   }
 
   // private methods
