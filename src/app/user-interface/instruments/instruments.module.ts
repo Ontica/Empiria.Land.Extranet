@@ -12,7 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from '@app/shared/angular-material.module';
 import { AngularFlexLayoutModule } from '@app/shared/angular-flex-layout.module';
 import { SharedModule } from '@app/shared/shared.module';
-import { SecurityUIModule } from '@app/security-ui/security-ui.module';
+import { SecurityUIModule } from '@app/user-interface/security/security-ui.module';
 
 import { InstrumentsRoutingModule } from './instruments-routing.module';
 

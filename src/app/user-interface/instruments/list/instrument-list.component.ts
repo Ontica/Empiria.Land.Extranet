@@ -21,8 +21,8 @@ import { Assertion } from '@app/core';
   selector: 'emp-land-instrument-list',
   templateUrl: './instrument-list.component.html',
   styleUrls: [
-    '../../../styles/card.scss',
-    '../../../styles/list.scss'
+    '../../../../styles/card.scss',
+    '../../../../styles/list.scss'
   ]
 })
 export class InstrumentListComponent implements OnChanges {

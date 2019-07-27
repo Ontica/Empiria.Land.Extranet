@@ -27,8 +27,8 @@ import { EmptyRealEstate, PreventiveNote, PreventiveNoteRequest } from '@app/dom
   selector: 'emp-land-preventive-note',
   templateUrl: './preventive-note.component.html',
   styleUrls: [
-    '../../../styles/general-styles.scss',
-    '../../../styles/form.scss'
+    '../../../../styles/general-styles.scss',
+    '../../../../styles/form.scss'
   ]
 })
 export class PreventiveNoteComponent implements OnInit, OnChanges {

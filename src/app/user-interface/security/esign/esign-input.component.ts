@@ -14,8 +14,8 @@ import { Cryptography } from '@app/core/security/cryptography';
   selector: 'emp-ng-esign-input',
   templateUrl: './esign-input.component.html',
   styleUrls: [
-    '../../../styles/general-styles.scss',
-    '../../../styles/form.scss'
+    '../../../../styles/general-styles.scss',
+    '../../../../styles/form.scss'
   ]
 })
 export class ESignInputComponent {
@@ -26,7 +26,7 @@ export class ESignInputComponent {
 
   esign = '';
 
-  onESign() {
+  onSubmit() {
     const esignToken = this.esign;
 
     // const token = 'abracadabra';

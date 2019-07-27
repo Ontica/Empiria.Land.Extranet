@@ -1,4 +1,4 @@
-<form class="form-container">
+<form class="form-container" (submit)="onSubmit()">
 
   <fieldset>
 
@@ -22,7 +22,7 @@
 
         </td>
         <td>
-          <button type="submit" [class.btn]="!esign" [class.btn-action]="esign" [disabled]="!esign" (click)="onESign()" i18n>
+          <button type="submit" [class.btn]="!esign" [class.btn-action]="esign" [disabled]="!esign" i18n>
             {{revokeMode ? 'Revocar la firma' : 'Firmar el documento'}}
           </button>
         </td>

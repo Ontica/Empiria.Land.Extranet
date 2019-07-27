@@ -14,10 +14,10 @@ import { CoreModule } from './core/core.module';
 import { StoreModule } from './store/store.module';
 import { SharedModule } from './shared/shared.module';
 
-import { InstrumentsModule } from './instruments/instruments.module';
-import { SearchModule } from './search/search.module';
-import { SecurityUIModule } from './security-ui/security-ui.module';
-import { TransactionsModule } from './transactions/transactions.module';
+import { InstrumentsModule } from './user-interface/instruments/instruments.module';
+import { SearchModule } from './user-interface/search/search.module';
+import { SecurityUIModule } from './user-interface/security/security-ui.module';
+import { TransactionsModule } from './user-interface/transactions/transactions.module';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';

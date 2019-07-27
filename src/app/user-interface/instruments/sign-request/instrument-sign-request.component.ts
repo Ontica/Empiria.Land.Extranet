@@ -16,8 +16,8 @@ import { LegalInstrument } from '@app/domain/models';
   selector: 'emp-land-instrument-sign-request',
   templateUrl: './instrument-sign-request.component.html',
   styleUrls: [
-    '../../../styles/general-styles.scss',
-    '../../../styles/form.scss'
+    '../../../../styles/general-styles.scss',
+    '../../../../styles/form.scss'
   ]
 })
 export class InstrumentSignRequestComponent implements OnChanges {
