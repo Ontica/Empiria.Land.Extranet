@@ -15,7 +15,7 @@ import { InstrumentApiProvider } from '../providers';
 
 import {
   LegalInstrument, LegalInstrumentFilter, EmptyLegalInstrumentFilter,
-  PreventiveNote, PreventiveNoteRequest,
+  PreventiveNote, PreventiveNoteEditionData,
 } from '@app/domain/models';
 
 
@@ -46,7 +46,7 @@ export class InstrumentUseCases {
   // update methods
 
 
-  createPreventiveNote(data: PreventiveNoteRequest): Observable<PreventiveNote> {
+  createPreventiveNote(data: PreventiveNoteEditionData): Observable<PreventiveNote> {
     Assertion.assertValue(data, 'data');
 
     return this.backend.createPreventiveNote(data)
@@ -75,7 +75,7 @@ export class InstrumentUseCases {
 
 
   updatePreventiveNote(preventiveNote: PreventiveNote,
-                       data: PreventiveNoteRequest): Observable<PreventiveNote> {
+                       data: PreventiveNoteEditionData): Observable<PreventiveNote> {
     Assertion.assertValue(preventiveNote, 'preventiveNote');
     Assertion.assertValue(data, 'data');
 

@@ -13,7 +13,7 @@ import { Assertion, HttpService } from '@app/core';
 import { InstrumentApiProvider } from '@app/domain/providers';
 
 import { LegalInstrument, LegalInstrumentStatus,
-         PreventiveNote, PreventiveNoteRequest } from '@app/domain/entities';
+         PreventiveNote, PreventiveNoteEditionData } from '@app/domain/entities';
 
 
 @Injectable()
@@ -51,7 +51,7 @@ export class InstrumentApiHttpProvider extends InstrumentApiProvider {
   }
 
 
-  createPreventiveNote(data: PreventiveNoteRequest): Observable<PreventiveNote> {
+  createPreventiveNote(data: PreventiveNoteEditionData): Observable<PreventiveNote> {
     Assertion.assertValue(data, 'data');
 
     const path = `v2/extranet/instruments/create-preventive-note`;
@@ -101,7 +101,7 @@ export class InstrumentApiHttpProvider extends InstrumentApiProvider {
 
 
   updatePreventiveNote(preventiveNote: PreventiveNote,
-                       data: PreventiveNoteRequest): Observable<PreventiveNote> {
+                       data: PreventiveNoteEditionData): Observable<PreventiveNote> {
     Assertion.assertValue(preventiveNote, 'preventiveNote');
     Assertion.assertValue(data, 'data');
 

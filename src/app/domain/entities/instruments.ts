@@ -58,7 +58,7 @@ export interface PreventiveNote extends LegalInstrument {
 }
 
 
-export interface PreventiveNoteRequest {
+export interface PreventiveNoteEditionData {
   requestedBy: string;
   propertyUID: string;
   projectedOperation: string;

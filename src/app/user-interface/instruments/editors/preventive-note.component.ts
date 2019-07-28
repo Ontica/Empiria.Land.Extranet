@@ -5,22 +5,16 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import {
-  Component, EventEmitter, Input,
-  OnChanges, OnInit, Output
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-
 import { Assertion } from '@app/core';
-import { CommandInvoker } from '@app/shared/services';
+import { FrontController } from '@app/core/presentation';
 
-import { InstrumentUseCases, PropertyUseCases } from '@app/domain/use-cases';
+import { PropertyUseCases } from '@app/domain/use-cases';
 
-import { EmptyRealEstate, PreventiveNote, PreventiveNoteRequest } from '@app/domain/models';
+import { EmptyRealEstate, PreventiveNote, PreventiveNoteEditionData } from '@app/domain/models';
 
 
 @Component({
@@ -48,11 +42,8 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
   });
 
 
-  constructor(private useCases: InstrumentUseCases,
-              private propertyUseCases: PropertyUseCases,
-              private commandInvoker: CommandInvoker) {
-    this.commandInvoker.attachHandler(this);
-  }
+  constructor(private frontController: FrontController,
+              private propertyUseCases: PropertyUseCases) { }
 
 
   get isReadyForSave() {
@@ -73,29 +64,15 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
 
   onReadRealEstateData() {
-    this.updateRealEstateData();
+    this.loadRealEstateData();
   }
 
 
   onSave() {
     if (!this.preventiveNote.uid) {
-      this.commandInvoker.execute('createPreventiveNote');
+      this.createPreventiveNote();
     } else {
-      this.commandInvoker.execute('updatePreventiveNote');
-    }
-  }
-
-
-  execute(commandName: string): Observable<any> {
-    switch (commandName) {
-      case 'createPreventiveNote':
-        return this.createPreventiveNote();
-
-      case 'updatePreventiveNote':
-        return this.updatePreventiveNote();
-
-      default:
-        Assertion.assertNoReachThisCode(`Invalid requested command ${commandName}.`);
+      this.updatePreventiveNote();
     }
   }
 
@@ -103,20 +80,22 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
   // private members
 
 
-  private createPreventiveNote(): Observable<PreventiveNote> {
-    const data = this.getFormData();
+  private createPreventiveNote() {
+    const payload = {
+      data: this.getFormData()
+    };
 
-    return this.useCases.createPreventiveNote(data)
-      .pipe(
-        tap(x => {
-          this.preventiveNote = x;
-          this.preventiveNoteChange.emit(this.preventiveNote);
-        })
-      );
+    const action = this.frontController.createAction('LAND.PREVENTIVE.NOTE.CREATE', payload);
+
+    this.frontController.dispatch(action)
+      .then(x => {
+        this.preventiveNote = x;
+        this.preventiveNoteChange.emit(this.preventiveNote);
+      });
   }
 
 
-  private getFormData(): PreventiveNoteRequest {
+  private getFormData(): PreventiveNoteEditionData {
     Assertion.assert(this.form.valid,
       'Programming error: form must be validated before command execution.');
 
@@ -139,7 +118,7 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
       projectedOperation: this.preventiveNote.projectedOperation
     });
 
-    this.updateRealEstateData();
+    this.loadRealEstateData();
 
     if (this.readonly) {
       this.form.disable();
@@ -149,20 +128,23 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
   }
 
 
-  private updatePreventiveNote(): Observable<PreventiveNote> {
-    const data = this.getFormData();
+  private updatePreventiveNote() {
+    const payload = {
+      instrument: this.preventiveNote,
+      data: this.getFormData()
+    };
 
-    return this.useCases.updatePreventiveNote(this.preventiveNote, data)
-      .pipe(
-        tap(() => {
-          this.resetForm();
-          this.preventiveNoteChange.emit(this.preventiveNote);
-        })
-      );
+    const action = this.frontController.createAction('LAND.PREVENTIVE.NOTE.UPDATE', payload);
+
+    this.frontController.dispatch(action)
+      .then(x => {
+        this.resetForm();
+        this.preventiveNoteChange.emit(this.preventiveNote);
+      });
   }
 
 
-  private updateRealEstateData() {
+  private loadRealEstateData() {
     if (!this.form.value.propertyUID) {
       this.realEstate = EmptyRealEstate;
       return;
@@ -173,7 +155,7 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
     this.propertyUseCases.getRealEstate(propertyUID)
       .subscribe(
         x => this.realEstate = x,
-        err => console.log('Display something with real estate not found error', JSON.stringify(err))
+        err => console.log('Display something when real estate not found error', JSON.stringify(err))
       );
 
   }
