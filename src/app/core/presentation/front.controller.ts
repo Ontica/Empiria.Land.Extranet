@@ -19,8 +19,15 @@ export const COMMAND_HANDLERS =
 @Injectable()
 export class FrontController {
 
-  constructor(private presentation: PresentationState,
-              @Inject(COMMAND_HANDLERS) private handlers: CommandHandler[]) { }
+  private processing = false;
+
+  constructor(@Inject(COMMAND_HANDLERS) private handlers: CommandHandler[],
+              private presentation: PresentationState) { }
+
+
+  get isProcessing() {
+    return this.processing;
+  }
 
 
   createCommand(type: string, payload?: any): Command {
@@ -31,13 +38,41 @@ export class FrontController {
   dispatch(command: Command): Promise<any> {
     Assertion.assertValue(command, 'command');
 
-    const commandHandler: CommandHandler = this.selectCommandHandler(command);
+    if (this.isProcessing) {
+      throw new Error('FrontController is processing a previous command. Please try again later.');
+    }
 
-    const promise = commandHandler.execute(command);
+    try {
+      this.startProcessing();
 
-    promise.then(() => this.presentation.dispatch(command));
+      const commandHandler: CommandHandler = this.selectCommandHandler(command);
 
-    return promise;
+      return commandHandler.execute(command)
+      .then(() =>
+        this.afterCommandExecution(command)
+
+      ).catch(e =>
+        this.whenCommandExecutionFails(command, e)
+
+      );
+
+    } catch (e) {
+      this.endProcessing();
+      throw e;
+    }
+  }
+
+  // private methods
+
+  private afterCommandExecution(command: Command) {
+    this.presentation.dispatch(command);
+    this.endProcessing();
+  }
+
+
+  private endProcessing(): void {
+    this.processing = false;
+    document.body.style.cursor = 'default';
   }
 
 
@@ -48,6 +83,21 @@ export class FrontController {
       }
     }
     throw Assertion.assertNoReachThisCode(`There is not defined a command handler for command type '${command.type}'.`);
+  }
+
+
+  private startProcessing(): void {
+    this.processing = true;
+    document.body.style.cursor = 'wait';
+  }
+
+
+  private whenCommandExecutionFails(command: Command, error: any) {
+    this.endProcessing();
+
+    console.log(`There was a problem executing command ${command.type} in FrontController.`, error);
+
+    throw error;
   }
 
 }

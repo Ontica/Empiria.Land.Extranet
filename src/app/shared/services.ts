@@ -7,8 +7,6 @@
 
 export { AbstractForm } from './abstract-form';
 
-export { CommandInvoker } from './command-invoker';
-
 export { SharedService } from './shared.service';
 
 export { MessageBoxService } from './message-box/message.box.service';
