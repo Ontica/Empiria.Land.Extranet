@@ -7,7 +7,7 @@
 
 import { Injectable } from '@angular/core';
 
-import { Action, Assertion, CommandHandler} from '@app/core';
+import { Command, Assertion, CommandHandler} from '@app/core';
 
 import { InstrumentUseCases } from '@app/domain/use-cases';
 
@@ -23,19 +23,19 @@ export class ElectronicSignCommandHandler extends CommandHandler {
   }
 
 
-  execute(action: Action): Promise<any> {
-    switch (action.type) {
+  execute(command: Command): Promise<any> {
+    switch (command.type) {
 
       case 'LAND.LEGAL.INSTRUMENT.SIGNED':
-        return this.useCases.signInstrument(action.payload.instrument, action.payload.token)
+        return this.useCases.signInstrument(command.payload.instrument, command.payload.token)
           .toPromise();
 
       case 'LAND.LEGAL.INSTRUMENT.SIGN.REVOKED':
-        return this.useCases.revokeInstrumentSign(action.payload.instrument, action.payload.token)
+        return this.useCases.revokeInstrumentSign(command.payload.instrument, command.payload.token)
           .toPromise();
 
       default:
-        const msg = `${ElectronicSignCommandHandler.name} is not able to handle action ${action.type}.`;
+        const msg = `${ElectronicSignCommandHandler.name} is not able to handle command ${command.type}.`;
         throw Assertion.assertNoReachThisCode(msg);
     }
   }

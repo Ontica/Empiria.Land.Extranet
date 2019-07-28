@@ -7,7 +7,7 @@
 
 import { Injectable } from '@angular/core';
 
-import { Action, Assertion, CommandHandler } from '@app/core';
+import { Command, Assertion, CommandHandler } from '@app/core';
 
 import { InstrumentUseCases } from '@app/domain/use-cases';
 
@@ -21,19 +21,19 @@ export class InstrumentCommandHandler extends CommandHandler {
     super();
   }
 
-  execute(action: Action): Promise<any> {
-    switch (action.type) {
+  execute(command: Command): Promise<any> {
+    switch (command.type) {
 
       case 'LAND.PREVENTIVE.NOTE.CREATE':
-        return this.useCases.createPreventiveNote(action.payload.data)
+        return this.useCases.createPreventiveNote(command.payload.data)
           .toPromise();
 
       case 'LAND.PREVENTIVE.NOTE.UPDATE':
-        return this.useCases.updatePreventiveNote(action.payload.instrument, action.payload.data)
+        return this.useCases.updatePreventiveNote(command.payload.instrument, command.payload.data)
           .toPromise();
 
       default:
-        const msg = `${InstrumentCommandHandler.name} is not able to handle action ${action.type}.`;
+        const msg = `${InstrumentCommandHandler.name} is not able to handle command ${command.type}.`;
         throw Assertion.assertNoReachThisCode(msg);
     }
   }

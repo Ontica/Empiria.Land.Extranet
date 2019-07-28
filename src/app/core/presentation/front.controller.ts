@@ -7,7 +7,7 @@
 
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 
-import { Action, Assertion, CommandHandler, createAction as createActionAlias } from '@app/core';
+import { Command, Assertion, CommandHandler, createCommand as createCommandAlias } from '@app/core';
 
 import { PresentationState } from './presentation.state';
 
@@ -23,31 +23,31 @@ export class FrontController {
               @Inject(COMMAND_HANDLERS) private handlers: CommandHandler[]) { }
 
 
-  createAction(type: string, payload?: any): Action {
-    return createActionAlias(type, payload);
+  createCommand(type: string, payload?: any): Command {
+    return createCommandAlias(type, payload);
   }
 
 
-  dispatch(action: Action): Promise<any> {
-    Assertion.assertValue(action, 'action');
+  dispatch(command: Command): Promise<any> {
+    Assertion.assertValue(command, 'command');
 
-    const commandHandler: CommandHandler = this.selectActionCommandHandler(action);
+    const commandHandler: CommandHandler = this.selectCommandHandler(command);
 
-    const promise = commandHandler.execute(action);
+    const promise = commandHandler.execute(command);
 
-    promise.then(() => this.presentation.dispatch(action));
+    promise.then(() => this.presentation.dispatch(command));
 
     return promise;
   }
 
 
-  private selectActionCommandHandler(action: Action): CommandHandler {
+  private selectCommandHandler(command: Command): CommandHandler {
     for (const handler of this.handlers) {
-      if (handler.types.includes(action.type)) {
+      if (handler.types.includes(command.type)) {
         return handler;
       }
     }
-    throw Assertion.assertNoReachThisCode();
+    throw Assertion.assertNoReachThisCode(`There is not defined a command handler for command type '${command.type}'.`);
   }
 
 }

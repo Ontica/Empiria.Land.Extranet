@@ -6,16 +6,16 @@
  */
 
 
-export interface Action {
+export interface Command {
   readonly type: string;
   payload?: any;
 }
 
 
-export function createAction(type: string, payload?: any): Action {
-  const action: Action = { type, payload };
+export function createCommand(type: string, payload?: any): Command {
+  const command: Command = { type, payload };
 
-  return action;
+  return command;
 }
 
 
@@ -23,6 +23,6 @@ export abstract class CommandHandler {
 
   abstract types: string[];
 
-  abstract execute(action: Action): Promise<any>;
+  abstract execute(command: Command): Promise<any>;
 
 }

@@ -59,9 +59,9 @@ export class InstrumentSignRequestComponent implements OnChanges {
       token: revocationToken
     };
 
-    const action = this.frontController.createAction('LAND.LEGAL.INSTRUMENT.SIGN.REVOKED', payload);
+    const command = this.frontController.createCommand('LAND.LEGAL.INSTRUMENT.SIGN.REVOKED', payload);
 
-    this.frontController.dispatch(action)
+    this.frontController.dispatch(command)
       .then(x => {
         this.instrument = x;
         this.instrumentChange.emit(this.instrument);
@@ -75,9 +75,9 @@ export class InstrumentSignRequestComponent implements OnChanges {
       token: signToken
     };
 
-    const action = this.frontController.createAction('LAND.LEGAL.INSTRUMENT.SIGNED', payload);
+    const command = this.frontController.createCommand('LAND.LEGAL.INSTRUMENT.SIGNED', payload);
 
-    this.frontController.dispatch(action)
+    this.frontController.dispatch(command)
       .then((x: LegalInstrument) => {
         this.instrument = x;
         this.instrumentChange.emit(this.instrument);

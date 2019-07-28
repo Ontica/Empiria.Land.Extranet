@@ -85,9 +85,9 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
       data: this.getFormData()
     };
 
-    const action = this.frontController.createAction('LAND.PREVENTIVE.NOTE.CREATE', payload);
+    const command = this.frontController.createCommand('LAND.PREVENTIVE.NOTE.CREATE', payload);
 
-    this.frontController.dispatch(action)
+    this.frontController.dispatch(command)
       .then(x => {
         this.preventiveNote = x;
         this.preventiveNoteChange.emit(this.preventiveNote);
@@ -134,9 +134,9 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
       data: this.getFormData()
     };
 
-    const action = this.frontController.createAction('LAND.PREVENTIVE.NOTE.UPDATE', payload);
+    const command = this.frontController.createCommand('LAND.PREVENTIVE.NOTE.UPDATE', payload);
 
-    this.frontController.dispatch(action)
+    this.frontController.dispatch(command)
       .then(x => {
         this.resetForm();
         this.preventiveNoteChange.emit(this.preventiveNote);
@@ -155,7 +155,7 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
     this.propertyUseCases.getRealEstate(propertyUID)
       .subscribe(
         x => this.realEstate = x,
-        err => console.log('Display something when real estate not found error', JSON.stringify(err))
+        err => console.log('Display something with real estate not found error', JSON.stringify(err))
       );
 
   }

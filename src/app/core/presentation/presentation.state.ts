@@ -8,7 +8,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 
-import { Action, Assertion } from '@app/core';
+import { Command, Assertion } from '@app/core';
 
 
 @Injectable()
@@ -19,16 +19,16 @@ export class PresentationState {
   constructor() { }
 
 
-  dispatch(action: Action): void {
-    Assertion.assertValue(action, 'action');
+  dispatch(command: Command): void {
+    Assertion.assertValue(command, 'command');
 
-    switch (action.type) {
+    switch (command.type) {
       case '':
         return;
       default:
-        this.setValue(action.type, action.payload);
+        this.setValue(command.type, command.payload);
     }
-    console.log('Action dispatched to PresentationLayer', action);
+    console.log('Command dispatched to PresentationLayer', command);
   }
 
 
