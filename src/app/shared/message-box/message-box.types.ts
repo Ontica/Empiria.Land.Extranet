@@ -11,6 +11,7 @@ import { MatDialogConfig } from '@angular/material/dialog';
 export type ConfirmMessageBoxType = 'Accept' | 'AcceptCancel' | 'DeleteCancel';
 
 
+// tslint:disable-next-line:no-empty-interface
 export interface MessageBoxConfig extends MatDialogConfig {
 
 }

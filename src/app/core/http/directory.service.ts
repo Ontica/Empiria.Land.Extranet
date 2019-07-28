@@ -21,13 +21,15 @@ export class DirectoryService {
 
   private servicesList: Observable<Service[]>;
 
+
   constructor(private httpHandler: HttpHandler) {
     this.servicesList = this.getServicesList();
   }
 
+
   getService(servicePathOrUID: string,
              method?: HttpMethod): Observable<Service> {
-             Assertion.assertValue(servicePathOrUID, 'servicePathOrUID');
+    Assertion.assertValue(servicePathOrUID, 'servicePathOrUID');
 
     if (servicePathOrUID.includes('http://') || servicePathOrUID.includes('https://')) {
       return of<Service>(undefined);
@@ -36,7 +38,9 @@ export class DirectoryService {
     }
   }
 
+
   // Private methods
+
 
   private getServiceFromList(servicePathOrUID: string,
                              method: HttpMethod): Observable<Service> {
@@ -72,6 +76,7 @@ export class DirectoryService {
       }
     }));
   }
+
 
   private getServicesList(): Observable<Service[]> {
     return this.httpHandler.get<Service[]>('v1/system/service-directory');

@@ -9,7 +9,7 @@ export * from './command';
 
 export * from './core-types';
 
-export { KeyValue, KeyValue_Empty } from './key-value';
+export { KeyValue, EmptyKeyValue } from './key-value';
 
 export { DateString, DateStringLibrary } from './date-string-library';
 

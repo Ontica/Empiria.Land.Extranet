@@ -5,14 +5,12 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { ReflectiveInjector } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 
 import { Assertion, Exception } from '@app/core';
 
-import { SpinnerService } from './spinner/spinner.service';
-
 import { Displayable } from '@app/user-interface/models';
+import { SpinnerService } from './spinner/spinner.service';
 
 
 export interface Command {
@@ -90,7 +88,7 @@ export abstract class AbstractForm {
 
   form: FormGroup;
 
-  private spinner: Displayable;
+  private spinner: Displayable = new SpinnerService();
 
   private currentCommand: Command = { name: '' };
   private disabledFlag = false;
@@ -272,11 +270,7 @@ export abstract class AbstractForm {
 
 
   private setDefaultSpinner() {
-    const providers = ReflectiveInjector.resolve([SpinnerService]);
-
-    const injector = ReflectiveInjector.fromResolvedProviders(providers);
-
-    this.spinner = injector.get(SpinnerService) as SpinnerService;
+    console.log('abstract formL: setDefaultSpinner() called.');
   }
 
 

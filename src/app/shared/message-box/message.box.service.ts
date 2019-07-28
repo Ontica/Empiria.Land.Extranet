@@ -30,14 +30,14 @@ export class MessageBoxService {
 
     const data: MessageBoxData = {
       messageBoxType: messageBoxType || 'AcceptCancel',
-      message: message,
+      message,
       title: title || 'Tengo una pregunta',
       mainButtonText: mainButtonText || 'Aceptar'
     };
 
-    const _observable = this.openMessageBox(config, data);
+    const observable = this.openMessageBox(config, data);
 
-    _observable.subscribe(
+    observable.subscribe(
       result => {
         if (result) {
           return of<boolean>(true);
@@ -47,7 +47,7 @@ export class MessageBoxService {
       }
     );
 
-    return _observable;
+    return observable;
   }
 
 
@@ -56,16 +56,16 @@ export class MessageBoxService {
 
     const data: MessageBoxData = {
       messageBoxType: 'Accept',
-      message: message,
-      title: title,
+      message,
+      title,
       mainButtonText: 'Aceptar'
     };
 
-    const _observable = this.openMessageBox(config, data);
+    const observable = this.openMessageBox(config, data);
 
-    _observable.subscribe( () => of<void>() );
+    observable.subscribe( () => of<void>() );
 
-    return _observable;
+    return observable;
   }
 
 
@@ -79,11 +79,11 @@ export class MessageBoxService {
       mainButtonText: 'Aceptar'
     };
 
-    const _observable = this.openMessageBox(config, data);
+    const observable = this.openMessageBox(config, data);
 
-    _observable.subscribe( () => of<void>() );
+    observable.subscribe( () => of<void>() );
 
-    return _observable;
+    return observable;
   }
 
 
@@ -123,6 +123,7 @@ export class MessageBoxService {
 
     } else if (typeof(error) === 'string') {
       return error;
+
     } else {
       return JSON.stringify(error).toString();
     }

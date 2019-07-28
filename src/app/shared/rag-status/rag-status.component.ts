@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 
 
 export enum RagStatus {
@@ -25,22 +25,18 @@ export enum RagStatus {
   `,
   styleUrls: ['./rag-status.component.scss']
 })
-export class RagStatusComponent {
+export class RagStatusComponent implements OnChanges {
+
+  statusColorCssClass = '';
 
   @Output() statusChange = new EventEmitter<RagStatus>();
 
-  @Input()
-  get status(): RagStatus { return this._status; }
+  @Input() status: RagStatus = RagStatus.NoColor;
 
-  set status(status: RagStatus) {
-    this._status = status;
 
+  ngOnChanges() {
     this.applyStatusColorCssClass();
   }
-  private _status: RagStatus = RagStatus.NoColor;
-
-
-  statusColorCssClass = '';
 
 
   onclick() {
@@ -51,6 +47,7 @@ export class RagStatusComponent {
 
 
   // private methods
+
 
   private applyStatusColorCssClass() {
     switch (this.status) {

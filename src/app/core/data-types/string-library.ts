@@ -65,7 +65,7 @@ export class StringLibrary {
     let temp = source.toLowerCase();
 
     const replaceable: string[] = ['á', 'à', 'é', 'è', 'í', 'ó', 'ú', 'ü', 'ù', 'ñ'];
-    const replaceBy:   string[] = ['a', 'a', 'e', 'e', 'i', 'o', 'u', 'u', 'ù', 'n'];
+    const replaceBy: string[] = ['a', 'a', 'e', 'e', 'i', 'o', 'u', 'u', 'ù', 'n'];
 
     for (let i = 0; i < replaceable.length; i++) {
       temp = temp.replace(replaceable[i], replaceBy[i]);
@@ -86,8 +86,8 @@ export class StringLibrary {
                               '?', '*', '$', '&', '+', '(', ')', '{', '}', '[', ']', '^', '¬',
                               '°', '%', '#', '¿', '!', '¡', '`', '~', '|'];
 
-    for (let i = 0; i < chars.length; i++) {
-      temp = temp.replace(chars[i], ' ');
+    for (const char of chars) {
+      temp = temp.replace(char, ' ');
     }
 
     return StringLibrary.trimAll(temp);

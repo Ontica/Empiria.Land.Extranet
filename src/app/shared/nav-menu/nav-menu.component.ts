@@ -5,8 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Component, EventEmitter,
-         Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 
 import { MenuItem } from '@app/user-interface/models';
 
@@ -16,25 +15,23 @@ import { MenuItem } from '@app/user-interface/models';
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.scss']
 })
-export class NavigationMenuComponent {
+export class NavigationMenuComponent implements OnChanges {
 
-  @Input()
-  get items(): MenuItem[] { return this._items; }
-  set items(value: MenuItem[]) {
-    if (!value) {
-      return;
-    }
-    this._items = value;
-
-    const selected = value.find(x => x.selected) || this.items[0];
-
-    this.onClick(selected);
-
-  }
-  private _items: MenuItem[];
+  @Input() items: MenuItem[];
 
 
   @Output() navMenuItemClick = new EventEmitter<MenuItem>();
+
+
+  ngOnChanges() {
+    if (!this.items) {
+      return;
+    }
+
+    const selected = this.items.find(x => x.selected) || this.items[0];
+
+    this.onClick(selected);
+  }
 
 
   onClick(menuItem: MenuItem) {
@@ -51,10 +48,10 @@ export class NavigationMenuComponent {
     if (!menuItem) {
       return;
     }
-    this.items.filter(x => x.selected )
-              .map(x => x.unselect());
+    this.items.filter(x => x.selected)
+      .map(x => x.unselect());
 
-     menuItem.select();
+    menuItem.select();
   }
 
 }

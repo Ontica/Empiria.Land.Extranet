@@ -8,18 +8,14 @@
 
 export class Validate {
 
-  // #region Static methods
 
-  /** Returns false if the object value is equal to null, undefined, NaN, an empty
-      string or an empty object.
-    * @param object The object to check its value.
-    */
   static hasValue(object: any): boolean {
-    if (object === null || object === undefined || object === {} || object === NaN || object === '') {
+    if (object === null || object === undefined || object === {} || object === '') {
       return false;
     }
     return true;
   }
+
 
   static isEmail(value: string): boolean {
     if (!this.hasValue(value)) {
@@ -31,17 +27,17 @@ export class Validate {
     return test;
   }
 
+
   static isTrue(value: boolean): boolean {
     return value === true;
   }
 
+
   static notNull(value: any): boolean {
-    if ((value === null) || (value === undefined) || value === NaN || value === {}) {
+    if ((value === null) || (value === undefined) || value === {}) {
       return false;
     }
     return true;
   }
 
-  // #endregion Static methods
-
-}  // class Validate
+}

@@ -13,8 +13,6 @@ import { CommonModule } from '@angular/common';
 import { UseCasesModule } from '@app/domain/use-cases/use-cases.module';
 import { PresentationModule } from './presentation/presentation.module';
 
-import { CoreService } from './core.service';
-
 import { ExceptionHandler } from './general/exception-handler';
 import { SessionService } from './general/session.service';
 import { LoggerService } from './general/logger.service';
@@ -46,7 +44,6 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
   exports: [],
 
   providers: [
-    CoreService,
     ExceptionHandler,
     SessionService,
     ApplicationSettingsService,

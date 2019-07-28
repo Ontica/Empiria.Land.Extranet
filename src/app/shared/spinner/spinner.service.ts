@@ -19,24 +19,23 @@ export interface SpinnerState {
 @Injectable()
 export class SpinnerService implements Displayable {
 
-
   id = Math.random();
 
-  private _spinnerSubject = new Subject<SpinnerState>();
+  private spinnerSubject = new Subject<SpinnerState>();
 
 
   get spinnerState(): Observable<SpinnerState> {
-    return this._spinnerSubject.asObservable();
+    return this.spinnerSubject.asObservable();
   }
 
 
   show() {
-    this._spinnerSubject.next(<SpinnerState> { show: true });
+    this.spinnerSubject.next({ show: true });
   }
 
 
   hide() {
-    this._spinnerSubject.next(<SpinnerState> { show: false });
+    this.spinnerSubject.next({ show: false });
   }
 
 }

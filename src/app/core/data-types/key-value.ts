@@ -12,7 +12,7 @@ export interface KeyValue {
 }
 
 
-export const KeyValue_Empty: KeyValue = {
+export const EmptyKeyValue: KeyValue = {
   key: 'Empty',
   value: 'Sin valor',
 };

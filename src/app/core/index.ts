@@ -5,8 +5,6 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-export { CoreService } from './core.service';
-
 export * from './data-types';
 
 export { ExceptionHandler } from './general/exception-handler';

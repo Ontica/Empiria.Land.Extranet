@@ -87,14 +87,14 @@ export class HttpException extends Exception {
   readonly request: any;
   readonly response: any;
 
-  constructor(message: string, innerException?: Error, _initData?: HttpExceptionData) {
+  constructor(message: string, innerException?: Error, initData?: HttpExceptionData) {
     super(message, innerException);
 
     // This line is because a TypeScript to ECMA5 issue: https://goo.gl/jtiFyy
     Object.setPrototypeOf(this, HttpException.prototype);
 
-    this.request = _initData.request;
-    this.response = _initData.response;
+    this.request = initData.request;
+    this.response = initData.response;
   }
 
 }
