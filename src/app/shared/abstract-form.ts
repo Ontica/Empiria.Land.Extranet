@@ -9,7 +9,7 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 
 import { Assertion, Exception } from '@app/core';
 
-import { Displayable } from '@app/user-interface/models';
+import { Displayable } from '@app/shared/common-models';
 import { SpinnerService } from './spinner/spinner.service';
 
 

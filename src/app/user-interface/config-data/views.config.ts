@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { View } from '../models/common';
+import { View } from '../../shared/common-models/common';
 
 
 export const InstrumentsViews: View[] = [

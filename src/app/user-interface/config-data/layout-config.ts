@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { View, Layout } from '../models/common';
+import { View, Layout } from '../../shared/common-models/common';
 
 import { InstrumentsViews,
          TransactionsViews,

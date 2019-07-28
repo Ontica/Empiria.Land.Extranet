@@ -10,21 +10,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { Assertion, Exception } from '@app/core';
 
-import {
-  DefaultNavigationHeader,
-  DefaultView,
-  Layout,
-  NavigationHeader,
-  View,
-  buildNavigationHeader
-} from '@app/user-interface/models';
+import { DefaultNavigationHeader, DefaultView, Layout,
+         NavigationHeader, View, buildNavigationHeader } from '@app/shared/common-models';
 
-import {
-  APP_LAYOUTS,
-  APP_VIEWS,
-  VALUE_SELECTOR,
-  getValueSelectorDefaultValue
-} from '@app/user-interface/config';
+
+import { APP_LAYOUTS, APP_VIEWS,
+         VALUE_SELECTOR, getValueSelectorDefaultValue } from '@app/user-interface/config-data';
 
 
 @Injectable()
