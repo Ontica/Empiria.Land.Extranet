@@ -11,7 +11,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SecurityUIRoutingModule } from './security-ui-routing.module';
 import { UserLoginComponent } from './user-login/user-login.component';
-import { ESignInputComponent } from './esign/esign-input.component';
 
 
 @NgModule({
@@ -25,13 +24,10 @@ import { ESignInputComponent } from './esign/esign-input.component';
   ],
 
   declarations: [
-    ESignInputComponent,
     UserLoginComponent
   ],
 
-  exports: [
-    ESignInputComponent,
-  ]
+  exports: []
 
 })
 export class SecurityUIModule { }

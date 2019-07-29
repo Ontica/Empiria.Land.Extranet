@@ -12,20 +12,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from '@app/shared/angular-material.module';
 import { AngularFlexLayoutModule } from '@app/shared/angular-flex-layout.module';
 import { SharedModule } from '@app/shared/shared.module';
-import { SecurityUIModule } from '@app/user-interface/security/security-ui.module';
+
+import { CreateInstrumentWizardComponent } from './create-wizard/create-instrument-wizard.component';
+import { DeedComponent } from './editors/deed.component';
+import { DefinitiveNoteComponent } from './editors/definitive-note.component';
+import { FolioRealRequestComponent } from './editors/folio-real-request.component';
+import { InstrumentFilingComponent } from './filing/instrument-filing.component';
+import { InstrumentListComponent } from './list/instrument-list.component';
+import { InstrumentListItemComponent } from './list/instrument-list-item.component';
+import { InstrumentsMainPageComponent } from './main-page/instruments-main-page.component';
+import { InstrumentSignRequestComponent } from './sign-request/instrument-sign-request.component';
+import { PreventiveNoteComponent } from './editors/preventive-note.component';
 
 import { InstrumentsRoutingModule } from './instruments-routing.module';
-
-import { InstrumentsMainPageComponent } from './main-page/instruments-main-page.component';
-import { InstrumentListComponent } from './list/instrument-list.component';
-import { CreateInstrumentWizardComponent } from './create-wizard/create-instrument-wizard.component';
-import { PreventiveNoteComponent } from './editors/preventive-note.component';
-import { DefinitiveNoteComponent } from './editors/definitive-note.component';
-import { DeedComponent } from './editors/deed.component';
-import { FolioRealRequestComponent } from './editors/folio-real-request.component';
-import { InstrumentSignRequestComponent } from './sign-request/instrument-sign-request.component';
-import { InstrumentFilingComponent } from './filing/instrument-filing.component';
-import { InstrumentListItemComponent } from './list/instrument-list-item.component';
 
 
 @NgModule({
@@ -37,26 +36,23 @@ import { InstrumentListItemComponent } from './list/instrument-list-item.compone
     AngularMaterialModule,
     AngularFlexLayoutModule,
     SharedModule,
-    SecurityUIModule,
     InstrumentsRoutingModule
   ],
 
   declarations: [
-    InstrumentsMainPageComponent,
-    InstrumentListComponent,
     CreateInstrumentWizardComponent,
-    PreventiveNoteComponent,
-    DefinitiveNoteComponent,
     DeedComponent,
+    DefinitiveNoteComponent,
     FolioRealRequestComponent,
-    InstrumentSignRequestComponent,
     InstrumentFilingComponent,
-    InstrumentListItemComponent
+    InstrumentListComponent,
+    InstrumentListItemComponent,
+    InstrumentsMainPageComponent,
+    InstrumentSignRequestComponent,
+    PreventiveNoteComponent
   ],
 
-  exports: [
-    InstrumentsMainPageComponent
-  ]
+  exports: []
 
 })
 export class InstrumentsModule { }

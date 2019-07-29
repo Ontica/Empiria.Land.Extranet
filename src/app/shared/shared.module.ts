@@ -9,12 +9,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+
+import { AngularMaterialModule } from './angular-material.module';
 import { AngularFlexLayoutModule } from './angular-flex-layout.module';
 
+import { CardComponent } from './card/card.component';
 import { DatepickerComponent } from './datepicker/datepicker.component';
 import { FileControlComponent } from './file-control/file-control.component';
-
-import { CardComponent } from './card/card.component';
 import { InlineEditorComponent } from './inline-editor/inline-editor.component';
 import { MessageBoxComponent } from './message-box/message-box.component';
 import { ModalWindowComponent } from './modal-window/modal-window';
@@ -25,12 +26,13 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 
-import { AngularMaterialModule } from './angular-material.module';
+import { ESignInputComponent } from './esign/esign-input.component';
 
 import { MessageBoxService } from './message-box/message.box.service';
 import { SpinnerService } from './spinner/spinner.service';
 
 import { NoContentComponent } from './no-content.component';
+
 
 @NgModule({
 
@@ -58,6 +60,8 @@ import { NoContentComponent } from './no-content.component';
     SearchBoxComponent,
     SpinnerComponent,
 
+    ESignInputComponent,
+
     NoContentComponent
   ],
 
@@ -74,6 +78,8 @@ import { NoContentComponent } from './no-content.component';
     SafeUrlPipe,
     SearchBoxComponent,
     SpinnerComponent,
+
+    ESignInputComponent,
 
     NoContentComponent,
   ],
