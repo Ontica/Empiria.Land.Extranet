@@ -16,9 +16,9 @@ import { SharedModule } from '@app/shared/shared.module';
 
 import { MainLayoutComponent } from './main-layout.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
-
 import { NavigationHeaderComponent } from './nav-header/nav-header.component';
 import { NavigationMenuComponent } from './nav-menu/nav-menu.component';
+import { NoContentComponent } from './no-content.component';
 
 
 @NgModule({
@@ -35,13 +35,14 @@ import { NavigationMenuComponent } from './nav-menu/nav-menu.component';
   declarations: [
     MainLayoutComponent,
     MainMenuComponent,
-
     NavigationHeaderComponent,
-    NavigationMenuComponent
+    NavigationMenuComponent,
+    NoContentComponent
   ],
 
   exports: [
-    MainLayoutComponent
+    MainLayoutComponent,
+    NoContentComponent
   ],
 
   providers: []

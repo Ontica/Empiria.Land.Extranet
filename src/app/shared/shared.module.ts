@@ -31,8 +31,6 @@ import { ESignInputComponent } from './esign/esign-input.component';
 import { MessageBoxService } from './message-box/message.box.service';
 import { SpinnerService } from './spinner/spinner.service';
 
-import { NoContentComponent } from './no-content.component';
-
 
 @NgModule({
 
@@ -46,10 +44,9 @@ import { NoContentComponent } from './no-content.component';
   ],
 
   declarations: [
+    CardComponent,
     DatepickerComponent,
     FileControlComponent,
-
-    CardComponent,
     InlineEditorComponent,
     MessageBoxComponent,
     ModalWindowComponent,
@@ -60,9 +57,7 @@ import { NoContentComponent } from './no-content.component';
     SearchBoxComponent,
     SpinnerComponent,
 
-    ESignInputComponent,
-
-    NoContentComponent
+    ESignInputComponent
   ],
 
   exports: [
@@ -79,9 +74,7 @@ import { NoContentComponent } from './no-content.component';
     SearchBoxComponent,
     SpinnerComponent,
 
-    ESignInputComponent,
-
-    NoContentComponent,
+    ESignInputComponent
   ],
 
   providers: [
