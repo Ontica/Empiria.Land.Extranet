@@ -11,7 +11,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '@app/shared/shared.module';
 
-import { SearchRoutingModule } from './search-routing.module';
+import { SearchServicesRoutingModule } from './search-services-routing.module';
+import { SearchServicesMainPageComponent } from './main-page/search-services-main-page.component';
 
 
 @NgModule({
@@ -21,16 +22,15 @@ import { SearchRoutingModule } from './search-routing.module';
     ReactiveFormsModule,
 
     SharedModule,
-    SearchRoutingModule
+
+    SearchServicesRoutingModule
   ],
 
   declarations: [
 
-  ],
+  SearchServicesMainPageComponent],
 
-  exports: [
-
-  ]
+  exports: []
 
 })
-export class SearchModule { }
+export class SearchServicesModule { }

@@ -81,44 +81,44 @@ export const SearchViews: View[] = [
     name: 'Search.All',
     title: 'Búsqueda general',
     menuTitle: 'Todo',
-    url: '/search/all'
+    url: '/search-services/all'
   },
   {
     name: 'Search.RealEstate',
     title: 'Índice de propiedades',
     menuTitle: 'Propiedades',
-    url: '/search/real-estate'
+    url: '/search-services/real-estate'
   },
   {
     name: 'Search.Persons',
     title: 'Índice de personas',
     menuTitle: 'Personas',
-    url: '/search/persons'
+    url: '/search-services/persons'
   },
   {
     name: 'Search.Associations',
     title: 'Asociaciones y sociedades civiles',
     menuTitle: 'Asociaciones',
-    url: '/search/associations'
+    url: '/search-services/associations'
   },
   {
     name: 'Search.Documents',
     title: 'Documentos',
-    url: '/search/documents'
+    url: '/search-services/documents'
   },
   {
     name: 'Search.Certificates',
     title: 'Certificados',
-    url: '/search/certificates'
+    url: '/search-services/certificates'
   },
   {
     name: 'Search.Transactions',
     title: 'Trámites',
-    url: '/search/transactions'
+    url: '/search-services/transactions'
   },
   {
     name: 'Search.Books',
     title: 'Libros',
-    url: '/search/books'
+    url: '/search-services/books'
   }
 ];

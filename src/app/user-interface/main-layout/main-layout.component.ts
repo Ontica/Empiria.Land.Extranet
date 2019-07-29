@@ -39,7 +39,7 @@ export class MainLayoutComponent {
 
   search(keywords: string) {
     if (keywords) {
-      this.router.navigate(['/search/all', { keywords } ]);
+      this.router.navigate(['/search-services/all', { keywords } ]);
     }
   }
 

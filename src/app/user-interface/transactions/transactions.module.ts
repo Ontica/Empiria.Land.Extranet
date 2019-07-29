@@ -12,6 +12,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TransactionsRoutingModule } from './transactions-routing.module';
 import { SharedModule } from '@app/shared/shared.module';
 
+import { TransactionsMainPageComponent } from './main-page/transactions-main-page.component';
+
 
 @NgModule({
 
@@ -19,10 +21,13 @@ import { SharedModule } from '@app/shared/shared.module';
     CommonModule,
     ReactiveFormsModule,
     SharedModule,
+
     TransactionsRoutingModule
   ],
 
-  declarations: [],
+  declarations: [
+    TransactionsMainPageComponent
+  ],
 
   exports: []
 

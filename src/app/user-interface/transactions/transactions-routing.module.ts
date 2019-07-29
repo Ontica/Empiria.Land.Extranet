@@ -8,16 +8,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { NoContentComponent } from '@app/shared/no-content.component';
+import { TransactionsMainPageComponent } from './main-page/transactions-main-page.component';
 
 
 const routes: Routes = [
-  { path: 'pending', component: NoContentComponent },
-  { path: 'payment', component: NoContentComponent },
-  { path: 'process', component: NoContentComponent },
-  { path: 'finished', component: NoContentComponent },
-  { path: 'returned', component: NoContentComponent },
-  { path: 'all', component: NoContentComponent },
+  { path: 'pending', component: TransactionsMainPageComponent },
+  { path: 'payment', component: TransactionsMainPageComponent },
+  { path: 'process', component: TransactionsMainPageComponent },
+  { path: 'finished', component: TransactionsMainPageComponent },
+  { path: 'returned', component: TransactionsMainPageComponent },
+  { path: 'all', component: TransactionsMainPageComponent },
   { path: '', redirectTo: 'pending', pathMatch: 'full' }
 ];
 
