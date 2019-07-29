@@ -8,13 +8,14 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
+import { Assertion } from '@app/core';
+
 import { InstrumentUseCases } from '@app/domain/use-cases';
 
 import { LegalInstrument, EmptyLegalInstrument,
          LegalInstrumentFilter, LegalInstrumentStatus } from '@app/domain/models';
 
-import { View } from '@app/shared/common-models';
-import { Assertion } from '@app/core';
+import { View } from '@app/user-interface/main-layout';
 
 
 @Component({

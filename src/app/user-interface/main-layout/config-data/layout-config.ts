@@ -5,11 +5,13 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { View, Layout } from '../../shared/common-models/common';
+import { View, Layout } from '../common-models/common';
 
-import { InstrumentsViews,
-         TransactionsViews,
-         SearchViews } from './views.config';
+import {
+  InstrumentsViews,
+  TransactionsViews,
+  SearchViews
+} from './views.config';
 
 
 export type LayoutType = 'Instruments' | 'Transactions' | 'Search';

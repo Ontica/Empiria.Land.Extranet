@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { View } from '../../shared/common-models/common';
+import { View } from '../common-models/common';
 
 
 export const InstrumentsViews: View[] = [
@@ -77,6 +77,12 @@ export const TransactionsViews: View[] = [
 
 
 export const SearchViews: View[] = [
+  {
+    name: 'Search.All',
+    title: 'Búsqueda general',
+    menuTitle: 'Todo',
+    url: '/search/all'
+  },
   {
     name: 'Search.RealEstate',
     title: 'Índice de propiedades',

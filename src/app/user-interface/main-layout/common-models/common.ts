@@ -28,31 +28,3 @@ export const DefaultView: View = {
   title: 'Default view',
   url: '/',
 };
-
-
-export interface ISelectable {
-  selected: boolean;
-}
-
-
-export interface Displayable {
-  show(): void;
-  hide(): void;
-}
-
-
-// card settings
-
-export class CardSettings {
-  showTitle = true;
-  flat = false;
-  readonly = false;
-}
-
-
-// colored tag
-
-export interface ColoredTag extends ISelectable {
-  name: string;
-  color: string;
-}
