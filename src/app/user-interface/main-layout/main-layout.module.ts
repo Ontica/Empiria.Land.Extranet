@@ -12,13 +12,15 @@ import { RouterModule } from '@angular/router';
 import { AngularMaterialModule } from '@app/shared/angular-material.module';
 import { AngularFlexLayoutModule } from '@app/shared/angular-flex-layout.module';
 
-import { SharedModule } from '@app/shared/shared.module';
+
+import { SharedFormControlsModule } from '@app/shared/form-controls/shared-form-controls.module';
 
 import { MainLayoutComponent } from './main-layout.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { NavigationHeaderComponent } from './nav-header/nav-header.component';
 import { NavigationMenuComponent } from './nav-menu/nav-menu.component';
 import { NoContentComponent } from './no-content.component';
+
 
 
 @NgModule({
@@ -29,7 +31,8 @@ import { NoContentComponent } from './no-content.component';
 
     AngularMaterialModule,
     AngularFlexLayoutModule,
-    SharedModule
+
+    SharedFormControlsModule
   ],
 
   declarations: [

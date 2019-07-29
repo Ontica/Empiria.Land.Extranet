@@ -11,7 +11,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AngularMaterialModule } from '@app/shared/angular-material.module';
 import { AngularFlexLayoutModule } from '@app/shared/angular-flex-layout.module';
-import { SharedModule } from '@app/shared/shared.module';
+
+import { SharedContainersModule } from '@app/shared/containers/shared-containers.module';
+import { SharedFormControlsModule } from '@app/shared/form-controls/shared-form-controls.module';
 
 import { CreateInstrumentWizardComponent } from './create-wizard/create-instrument-wizard.component';
 import { DeedComponent } from './editors/deed.component';
@@ -35,7 +37,10 @@ import { InstrumentsRoutingModule } from './instruments-routing.module';
     ReactiveFormsModule,
     AngularMaterialModule,
     AngularFlexLayoutModule,
-    SharedModule,
+
+    SharedContainersModule,
+    SharedFormControlsModule,
+
     InstrumentsRoutingModule
   ],
 

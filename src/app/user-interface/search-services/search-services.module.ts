@@ -9,8 +9,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { SharedModule } from '@app/shared/shared.module';
-
 import { SearchServicesRoutingModule } from './search-services-routing.module';
 import { SearchServicesMainPageComponent } from './main-page/search-services-main-page.component';
 
@@ -21,14 +19,12 @@ import { SearchServicesMainPageComponent } from './main-page/search-services-mai
     CommonModule,
     ReactiveFormsModule,
 
-    SharedModule,
-
     SearchServicesRoutingModule
   ],
 
   declarations: [
-
-  SearchServicesMainPageComponent],
+    SearchServicesMainPageComponent
+  ],
 
   exports: []
 

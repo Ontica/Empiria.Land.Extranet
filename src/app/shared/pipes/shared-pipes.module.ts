@@ -7,26 +7,27 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 
-import { SecurityUIRoutingModule } from './security-ui-routing.module';
-import { UserLoginComponent } from './user-login/user-login.component';
+import { SafeHtmlPipe } from './safe-html.pipe';
+import { SafeUrlPipe } from './safe-url.pipe';
 
 
 @NgModule({
 
   imports: [
     CommonModule,
-    ReactiveFormsModule,
-
-    SecurityUIRoutingModule,
   ],
 
   declarations: [
-    UserLoginComponent
+    SafeHtmlPipe,
+    SafeUrlPipe,
   ],
 
-  exports: []
+  exports: [
+    SafeHtmlPipe,
+    SafeUrlPipe
+  ],
+
 
 })
-export class SecurityUIModule { }
+export class SharedPipesModule { }
