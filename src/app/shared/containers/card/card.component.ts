@@ -11,7 +11,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'emp-ng-card',
   templateUrl: './card.component.html',
-  styleUrls: ['./../../../styles/card.scss']
+  styleUrls: ['../../../../styles/card.scss']
 })
 export class CardComponent {
 

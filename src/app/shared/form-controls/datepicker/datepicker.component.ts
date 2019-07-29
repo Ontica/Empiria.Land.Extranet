@@ -17,7 +17,7 @@ import { isMoment } from 'moment';
 @Component({
   selector: 'emp-ng-datepicker',
   templateUrl: 'datepicker.component.html',
-  styleUrls: ['datepicker.component.scss'],
+  styleUrls: ['./datepicker.component.scss'],
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => DatepickerComponent), multi: true },
   ]

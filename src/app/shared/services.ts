@@ -7,6 +7,4 @@
 
 export { AbstractForm } from './abstract-form';
 
-export { MessageBoxService } from './message-box/message.box.service';
-
-export { SpinnerService, SpinnerState } from './spinner/spinner.service';
+export { SpinnerService, SpinnerState } from './indicators/spinner/spinner.service';
