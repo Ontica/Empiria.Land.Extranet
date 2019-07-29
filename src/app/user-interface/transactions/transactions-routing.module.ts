@@ -6,34 +6,24 @@
  */
 
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
-import { SecurityGuardService } from '@app/core';
+import { NoContentComponent } from '@app/shared/no-content.component';
 
-import { MainLayoutComponent } from '@app/shared';
-import { NoContentComponent } from '@app/shared/no-content/no-content.component';
+
+const routes: Routes = [
+  { path: 'pending', component: NoContentComponent },
+  { path: 'payment', component: NoContentComponent },
+  { path: 'process', component: NoContentComponent },
+  { path: 'finished', component: NoContentComponent },
+  { path: 'returned', component: NoContentComponent },
+  { path: 'all', component: NoContentComponent },
+  { path: '', redirectTo: 'pending', pathMatch: 'full' }
+];
 
 
 @NgModule({
-
-  imports: [
-    RouterModule.forChild([
-      {
-        path: 'transactions', component: MainLayoutComponent,
-        canActivate: [SecurityGuardService],
-        children: [
-          { path: 'pending', component: NoContentComponent },
-          { path: 'payment', component: NoContentComponent },
-          { path: 'process', component: NoContentComponent },
-          { path: 'finished', component: NoContentComponent },
-          { path: 'returned', component: NoContentComponent },
-          { path: 'all', component: NoContentComponent },
-          { path: '', redirectTo: 'pending', pathMatch: 'full' }
-        ]
-      }
-    ])],
-
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
-
 })
 export class TransactionsRoutingModule { }

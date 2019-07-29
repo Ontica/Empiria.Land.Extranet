@@ -14,9 +14,6 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { ESignInputComponent } from './esign/esign-input.component';
 
 
-/**
- * Do not specify providers for modules that might be imported by a lazy loaded module.
- */
 @NgModule({
 
   imports: [
@@ -34,7 +31,6 @@ import { ESignInputComponent } from './esign/esign-input.component';
 
   exports: [
     ESignInputComponent,
-    UserLoginComponent
   ]
 
 })

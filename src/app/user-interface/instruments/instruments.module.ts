@@ -27,9 +27,7 @@ import { InstrumentSignRequestComponent } from './sign-request/instrument-sign-r
 import { InstrumentFilingComponent } from './filing/instrument-filing.component';
 import { InstrumentListItemComponent } from './list/instrument-list-item.component';
 
-/**
- * Do not specify providers for modules that might be imported by a lazy loaded module.
- */
+
 @NgModule({
 
   imports: [
@@ -57,7 +55,7 @@ import { InstrumentListItemComponent } from './list/instrument-list-item.compone
   ],
 
   exports: [
-
+    InstrumentsMainPageComponent
   ]
 
 })

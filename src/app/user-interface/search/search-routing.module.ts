@@ -6,35 +6,26 @@
  */
 
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
-import { SecurityGuardService } from '@app/core';
+import { NoContentComponent } from '@app/shared/no-content.component';
 
-import { MainLayoutComponent } from '@app/shared';
-import { NoContentComponent } from '@app/shared/no-content/no-content.component';
+
+const routes: Routes = [
+  { path: 'all', component: NoContentComponent },
+  { path: 'real-estate', component: NoContentComponent },
+  { path: 'associations', component: NoContentComponent },
+  { path: 'persons', component: NoContentComponent },
+  { path: 'documents', component: NoContentComponent },
+  { path: 'certificates', component: NoContentComponent },
+  { path: 'transactions', component: NoContentComponent },
+  { path: 'books', component: NoContentComponent },
+  { path: '', redirectTo: 'all', pathMatch: 'full' }
+];
+
 
 @NgModule({
-
-  imports: [
-    RouterModule.forChild([
-      {
-        path: 'search', component: MainLayoutComponent,
-        canActivate: [SecurityGuardService],
-        children: [
-          { path: 'all', component: NoContentComponent },
-          { path: 'real-estate', component: NoContentComponent },
-          { path: 'associations', component: NoContentComponent },
-          { path: 'persons', component: NoContentComponent },
-          { path: 'documents', component: NoContentComponent },
-          { path: 'certificates', component: NoContentComponent },
-          { path: 'transactions', component: NoContentComponent },
-          { path: 'books', component: NoContentComponent },
-          { path: '', redirectTo: 'all', pathMatch: 'full' }
-        ]
-      }
-    ])],
-
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
-
 })
 export class SearchRoutingModule { }

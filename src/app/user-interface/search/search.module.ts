@@ -9,17 +9,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { SharedModule } from '@app/shared/shared.module';
+
 import { SearchRoutingModule } from './search-routing.module';
 
-/**
- * Do not specify providers for modules that might be imported by a lazy loaded module.
- */
+
 @NgModule({
 
   imports: [
     CommonModule,
     ReactiveFormsModule,
 
+    SharedModule,
     SearchRoutingModule
   ],
 

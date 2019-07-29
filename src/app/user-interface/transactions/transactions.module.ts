@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { TransactionsRoutingModule } from './transactions-routing.module';
+import { SharedModule } from '@app/shared/shared.module';
 
 
 @NgModule({
@@ -17,17 +18,13 @@ import { TransactionsRoutingModule } from './transactions-routing.module';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-
+    SharedModule,
     TransactionsRoutingModule
   ],
 
-  declarations: [
+  declarations: [],
 
-  ],
-
-  exports: [
-
-  ]
+  exports: []
 
 })
 export class TransactionsModule { }
