@@ -10,7 +10,6 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'emp-land-transactions-main-page',
-  templateUrl: './transactions-main-page.component.html',
-  styleUrls: []
+  templateUrl: './transactions-main-page.component.html'
 })
 export class TransactionsMainPageComponent { }

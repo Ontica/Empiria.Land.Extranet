@@ -12,11 +12,7 @@ import { Cryptography } from '@app/core/security/cryptography';
 
 @Component({
   selector: 'emp-ng-esign-input',
-  templateUrl: './esign-input.component.html',
-  styleUrls: [
-    '../../../../styles/general-styles.scss',
-    '../../../../styles/form.scss'
-  ]
+  templateUrl: './esign-input.component.html'
 })
 export class ESignInputComponent {
 

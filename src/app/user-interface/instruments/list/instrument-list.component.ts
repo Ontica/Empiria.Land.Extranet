@@ -20,11 +20,7 @@ import { View } from '@app/user-interface/main-layout';
 
 @Component({
   selector: 'emp-land-instrument-list',
-  templateUrl: './instrument-list.component.html',
-  styleUrls: [
-    '../../../../styles/card.scss',
-    '../../../../styles/list.scss'
-  ]
+  templateUrl: './instrument-list.component.html'
 })
 export class InstrumentListComponent implements OnChanges {
 

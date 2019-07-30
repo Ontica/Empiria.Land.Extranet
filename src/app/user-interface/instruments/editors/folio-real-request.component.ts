@@ -10,8 +10,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'emp-land-folio-real-request',
-  templateUrl: './folio-real-request.component.html',
-  styleUrls: ['./folio-real-request.component.scss']
+  templateUrl: './folio-real-request.component.html'
 })
 export class FolioRealRequestComponent implements OnInit {
 

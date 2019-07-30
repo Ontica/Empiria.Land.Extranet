@@ -10,8 +10,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'emp-land-definitive-note',
-  templateUrl: './definitive-note.component.html',
-  styleUrls: ['./definitive-note.component.scss']
+  templateUrl: './definitive-note.component.html'
 })
 export class DefinitiveNoteComponent implements OnInit {
 

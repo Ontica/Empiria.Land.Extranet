@@ -16,11 +16,7 @@ import { LegalInstrument } from '@app/domain/models';
 
 @Component({
   selector: 'emp-land-instrument-filing',
-  templateUrl: './instrument-filing.component.html',
-  styleUrls: [
-    '../../../../styles/general-styles.scss',
-    '../../../../styles/form.scss'
-  ]
+  templateUrl: './instrument-filing.component.html'
 })
 export class InstrumentFilingComponent implements OnChanges {
 

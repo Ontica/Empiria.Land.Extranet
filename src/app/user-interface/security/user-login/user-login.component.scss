@@ -1,7 +1,6 @@
-@import "../../../../styles/former-form-style";
-//
-// User login scss
-//
+@import "../../../../styles/variables";
+
+
 .outer {
   align-items: center;
   display: flex;
@@ -11,11 +10,13 @@
   color: $primary-color;
 }
 
+
 .login-div {
   display: flex;
   height: 340px;
   width: 780px;
 }
+
 
 .left-column {
   height: 300px;
@@ -23,10 +24,12 @@
   font-size: 12pt;
 }
 
+
 .logo {
   padding-top: 36px;
   width: 220px;
 }
+
 
 .central-column {
   height: 340px;
@@ -34,11 +37,13 @@
   background-color: $secondary-color;
 }
 
+
 .right-column {
   height: 340px;
   width: 340px;
   margin-left: 30px;
 }
+
 
 .authentication-section-welcome {
   padding-top: 36px;
@@ -49,15 +54,18 @@
   line-height: 16pt;
 }
 
+
 .authentication-section-form {
   padding-left: 12px;
   padding-top: 12px;
   width: 75%;
 }
 
+
 .authentication-section-form input {
   margin-bottom: 20px;
 }
+
 
 .authentication-section-footer {
   margin-left: 20px;
@@ -65,15 +73,18 @@
   font-size: 10pt;
 }
 
+
 label {
   font-size: 10pt;
   font-weight: 500;
   padding-top: 12px;
 }
 
+
 .hint {
   font-size: 10pt;
 }
+
 
 input:-webkit-autofill {
   box-shadow: 0 0 0 32px $control-background-color inset;

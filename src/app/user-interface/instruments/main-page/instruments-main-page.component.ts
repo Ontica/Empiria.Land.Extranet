@@ -17,8 +17,7 @@ import { View } from '@app/user-interface/main-layout';
 
 @Component({
   selector: 'emp-land-instruments-main-page',
-  templateUrl: './instruments-main-page.component.html',
-  styleUrls: ['../../../../styles/explorer.scss']
+  templateUrl: './instruments-main-page.component.html'
 })
 export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
 

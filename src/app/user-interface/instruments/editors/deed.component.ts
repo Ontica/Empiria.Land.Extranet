@@ -10,8 +10,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'emp-land-deed',
-  templateUrl: './deed.component.html',
-  styleUrls: ['./deed.component.scss']
+  templateUrl: './deed.component.html'
 })
 export class DeedComponent implements OnInit {
 
