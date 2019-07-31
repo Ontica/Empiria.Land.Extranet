@@ -19,11 +19,7 @@ import { EmptyRealEstate, PreventiveNote, PreventiveNoteEditionData } from '@app
 
 @Component({
   selector: 'emp-land-preventive-note',
-  templateUrl: './preventive-note.component.html',
-  styleUrls: [
-    '../../../../styles/general-styles.scss',
-    '../../../../styles/form.scss'
-  ]
+  templateUrl: './preventive-note.component.html'
 })
 export class PreventiveNoteComponent implements OnInit, OnChanges {
 
@@ -87,11 +83,7 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
     const command = this.frontController.createCommand('LAND.PREVENTIVE.NOTE.CREATE', payload);
 
-    this.frontController.dispatch(command)
-      .then(x => {
-        this.preventiveNote = x;
-        this.preventiveNoteChange.emit(this.preventiveNote);
-      });
+    this.frontController.dispatch(command);
   }
 
 
@@ -136,11 +128,7 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
     const command = this.frontController.createCommand('LAND.PREVENTIVE.NOTE.UPDATE', payload);
 
-    this.frontController.dispatch(command)
-      .then(x => {
-        this.resetForm();
-        this.preventiveNoteChange.emit(this.preventiveNote);
-      });
+    this.frontController.dispatch(command);
   }
 
 

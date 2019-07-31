@@ -5,42 +5,65 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { Assertion } from '@app/core';
 
-import { InstrumentUseCases } from '@app/domain/use-cases';
+import { PresentationState } from '@app/core/presentation';
 
-import { LegalInstrument, EmptyLegalInstrument,
-         LegalInstrumentFilter, LegalInstrumentStatus } from '@app/domain/models';
+import { LegalInstrument, EmptyLegalInstrument, LegalInstrumentStatus } from '@app/domain/models';
 
 import { View } from '@app/user-interface/main-layout';
+
+import { InstrumentsStateHandler, SelectorType, ActionType } from '@app/integration/state.handlers/instruments.state.handler';
 
 
 @Component({
   selector: 'emp-land-instrument-list',
   templateUrl: './instrument-list.component.html'
 })
-export class InstrumentListComponent implements OnChanges {
+export class InstrumentListComponent implements OnInit, OnChanges {
 
   @Input() view: View;
+
   @Output() instrumentSelected = new EventEmitter<LegalInstrument>();
 
   hint = 'Ningún documento encontrado';
   keywords = '';
 
-  instrumentList: Observable<LegalInstrument[]> = of([]);
-  selectedInstrument: LegalInstrument = EmptyLegalInstrument;
+  instrumentList = of<LegalInstrument[]>([]);
+  selectedInstrument = EmptyLegalInstrument;
 
   displayCreateDocumentWizard = false;
 
-  constructor(private domain: InstrumentUseCases) { }
+  constructor(private store: PresentationState) { }
+
+
+  ngOnInit() {
+    console.log('ngOnInit');
+
+    this.instrumentList = this.store.select<LegalInstrument[]>(SelectorType.INSTRUMENT_LIST)
+      .pipe(
+        tap(x => {
+          if (this.selectedInstrument.uid) {
+            const newSelected = x.find(item => item.uid === this.selectedInstrument.uid);
+            if (newSelected) {
+              this.onSelect(newSelected);
+            }
+          }
+          this.hint = `${x.length} documentos encontrados`;
+
+          console.log('filter', x.length, this.store.getValue(SelectorType.LIST_FILTER));
+        })
+      );
+  }
 
 
   ngOnChanges() {
+    console.log('ngOnChanges');
     this.setFilter();
-    this.instrumentList = this.domain.getInstruments();
   }
 
 
@@ -66,6 +89,7 @@ export class InstrumentListComponent implements OnChanges {
 
   onSelect(instrument: LegalInstrument) {
     this.selectedInstrument = instrument;
+
     this.instrumentSelected.emit(this.selectedInstrument);
   }
 
@@ -73,12 +97,7 @@ export class InstrumentListComponent implements OnChanges {
   // private methods
 
 
-  private buildFilter(): LegalInstrumentFilter {
-    return { status: this.getStatusFilter(), keywords: this.keywords };
-  }
-
-
-  private getStatusFilter(): LegalInstrumentStatus {
+  private getInstrumentStatusForSelectedView(): LegalInstrumentStatus {
     switch (this.view.name) {
       case 'Instruments.Pending':
         return 'Pending';
@@ -89,15 +108,18 @@ export class InstrumentListComponent implements OnChanges {
       case 'Instruments.All':
         return 'All';
       default:
-        throw Assertion.assertNoReachThisCode();
+        throw Assertion.assertNoReachThisCode(`Unrecognized view with name '${this.view.name}'.`);
     }
   }
 
 
   private setFilter() {
-    const filter = this.buildFilter();
+    const filter = {
+      status: this.getInstrumentStatusForSelectedView(),
+      keywords: this.keywords
+    };
 
-    this.domain.setFilter(filter);
+    this.store.dispatch(ActionType.SET_INSTRUMENT_FILTER, { filter });
   }
 
 }
