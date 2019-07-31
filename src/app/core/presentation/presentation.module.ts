@@ -13,10 +13,13 @@ import { PresentationState } from './presentation.state';
 
 import { CommandHandlersModule } from '@app/integration/command.handlers/command.handlers.module';
 
+import { StateHandlersModule } from '@app/integration/state.handlers/state.handlers.module';
+
 @NgModule({
 
   imports: [
-    CommandHandlersModule
+    CommandHandlersModule,
+    StateHandlersModule
   ],
 
   providers: [

@@ -5,70 +5,99 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Injectable } from '@angular/core';
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import { Inject, Injectable, InjectionToken } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import { Command, Assertion } from '@app/core';
+import { Assertion, CommandResult } from '@app/core';
+
+import { StateHandler } from './state-handler';
+
+
+export const STATE_HANDLERS =
+                new InjectionToken<StateHandler[]>('PresentationStateHandlers');
 
 
 @Injectable()
 export class PresentationState {
 
-  private readonly state = new Map<string, BehaviorSubject<any>>();
-
-  constructor() { }
+  constructor(@Inject(STATE_HANDLERS) private registeredHandlers: StateHandler[]) { }
 
 
-  dispatch(command: Command): void {
+  applyEffects(command: CommandResult): void {
     Assertion.assertValue(command, 'command');
 
-    switch (command.type) {
-      case '':
-        return;
-      default:
-        this.setValue(command.type, command.payload);
-    }
-    console.log('Command dispatched to PresentationLayer', command);
-  }
+    try {
+      const stateHandler = this.tryGetStateHandlerForCommand(command);
 
+      if (stateHandler) {
+        stateHandler.applyEffects(command);
+      }
 
-  hasSelector(selector: string) {
-    return this.state.has(selector);
-  }
-
-
-  getValue<T>(selector: string, defaultValue?: T): T {
-    if (this.state.has(selector)) {
-      const subject = this.state.get(selector) as BehaviorSubject<T>;
-
-      return subject.value;
-
-    } else {
-      return defaultValue;
+    } catch (e) {
+      throw e;
     }
   }
 
 
-  setValue<T>(selector: string, value: T) {
-    if (!this.state.has(selector)) {
-      this.state.set(selector, new BehaviorSubject<T>(value));
-    } else {
-      const subject = this.state.get(selector) as BehaviorSubject<T>;
+  getValue<T>(selector: string): T {
+    Assertion.assertValue(selector, 'selector');
 
-      subject.next(value);
-    }
+    const stateHandler = this.getStateHandlerForSelector(selector);
+
+    return stateHandler.getValue<T>(selector);
   }
 
 
-  subscribe<T>(selector: string): Observable<T> {
-    if (this.state.has(selector)) {
-      const subject = this.state.get(selector) as BehaviorSubject<T>;
+  dispatch(actionType: string, payload?: any) {
+    Assertion.assertValue(actionType, 'actionType');
+    Assertion.assertValue(payload, 'payload');
 
-      return subject.asObservable();
+    const stateHandler = this.getStateHandlerForAction(actionType);
 
-    } else {
-      return of({}) as Observable<T>;
+    return stateHandler.dispatch(actionType, payload);
+  }
+
+
+  select<T>(selector: string): Observable<T> {
+    Assertion.assertValue(selector, 'selector');
+
+    const stateHandler = this.getStateHandlerForSelector(selector);
+
+    return stateHandler.select<T>(selector);
+  }
+
+
+  // private methods
+
+
+  private getStateHandlerForAction(actionType: string) {
+    for (const handler of this.registeredHandlers) {
+      if (handler.actions.includes(actionType)) {
+        return handler;
+      }
     }
+    throw Assertion.assertNoReachThisCode(`There is not defined a presentation state handler for action '${actionType}'.`);
+  }
+
+
+  private getStateHandlerForSelector(selector: string): StateHandler {
+    for (const handler of this.registeredHandlers) {
+      if (handler.selectors.includes(selector)) {
+        return handler;
+      }
+    }
+    throw Assertion.assertNoReachThisCode(`There is not defined a presentation state handler for selector '${selector}'.`);
+  }
+
+
+
+  private tryGetStateHandlerForCommand(command: CommandResult): StateHandler | undefined {
+    for (const handler of this.registeredHandlers) {
+      if (handler.effects.includes(command.type)) {
+        return handler;
+      }
+    }
+    return undefined;
   }
 
 }
