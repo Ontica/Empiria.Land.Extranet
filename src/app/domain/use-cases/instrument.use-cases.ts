@@ -6,40 +6,28 @@
  */
 
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { Assertion } from '@app/core';
 
 import { InstrumentApiProvider } from '../providers';
 
 import {
-  LegalInstrument, LegalInstrumentFilter, EmptyLegalInstrumentFilter,
-  PreventiveNote, PreventiveNoteEditionData,
+  LegalInstrument, LegalInstrumentFilter,
+  PreventiveNote, PreventiveNoteEditionData
 } from '@app/domain/models';
 
 
 @Injectable()
 export class InstrumentUseCases {
 
-  private instrumentsList: BehaviorSubject<LegalInstrument[]> = new BehaviorSubject([]);
-
-  private filter = EmptyLegalInstrumentFilter;
-
-
   constructor(private backend: InstrumentApiProvider) { }
 
 
-  getInstruments(): Observable<LegalInstrument[]> {
-    return this.instrumentsList.asObservable();
-  }
-
-
-  setFilter(filter: LegalInstrumentFilter) {
+  getInstruments(filter: LegalInstrumentFilter): Observable<LegalInstrument[]> {
     Assertion.assertValue(filter, 'filter');
 
-    this.filter = filter;
-    this.loadInstruments();
+    return this.backend.getInstruments(filter.status, filter.keywords);
   }
 
 
@@ -49,10 +37,7 @@ export class InstrumentUseCases {
   createPreventiveNote(data: PreventiveNoteEditionData): Observable<PreventiveNote> {
     Assertion.assertValue(data, 'data');
 
-    return this.backend.createPreventiveNote(data)
-      .pipe(
-        tap(() => this.loadInstruments())
-      );
+    return this.backend.createPreventiveNote(data);
   }
 
 
@@ -79,10 +64,7 @@ export class InstrumentUseCases {
     Assertion.assertValue(preventiveNote, 'preventiveNote');
     Assertion.assertValue(data, 'data');
 
-    return this.backend.updatePreventiveNote(preventiveNote, data)
-      .pipe(
-        tap(x => Object.assign(preventiveNote, x))
-      );
+    return this.backend.updatePreventiveNote(preventiveNote, data);
   }
 
 
@@ -97,17 +79,6 @@ export class InstrumentUseCases {
     Assertion.assertValue(instrument, 'instrument');
 
     return this.backend.requestRecording(instrument, data);
-  }
-
-
-  // private methods
-
-
-  private loadInstruments() {
-    this.backend.getInstruments(this.filter.status, this.filter.keywords)
-      .subscribe(
-        data => this.instrumentsList.next(data)
-      );
   }
 
 }
