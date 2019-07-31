@@ -7,7 +7,7 @@
 
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 
-import { Command, Assertion, CommandHandler, createCommand as createCommandAlias } from '@app/core';
+import { Command, Assertion, CommandHandler, createCommand as createCommandAlias, CommandResult } from '@app/core';
 
 import { PresentationState } from './presentation.state';
 
@@ -48,13 +48,14 @@ export class FrontController {
       const commandHandler: CommandHandler = this.selectCommandHandler(command);
 
       return commandHandler.execute(command)
-      .then(() =>
-        this.afterCommandExecution(command)
+        .then(x => {
+          this.afterCommandExecution(command, x);
+          return x;
 
-      ).catch(e =>
-        this.whenCommandExecutionFails(command, e)
+        }).catch(e =>
+          this.whenCommandExecutionFails(command, e)
 
-      );
+        );
 
     } catch (e) {
       this.endProcessing();
@@ -64,8 +65,10 @@ export class FrontController {
 
   // private methods
 
-  private afterCommandExecution(command: Command) {
-    this.presentation.dispatch(command);
+  private afterCommandExecution(command: Command, result: any) {
+    const commandResult: CommandResult = { ...command, result };
+
+    this.presentation.applyEffects(commandResult);
     this.endProcessing();
   }
 

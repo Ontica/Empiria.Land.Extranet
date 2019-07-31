@@ -8,7 +8,12 @@
 
 export interface Command {
   readonly type: string;
-  payload?: any;
+  readonly payload?: any;
+}
+
+
+export interface CommandResult extends Command {
+  readonly result: string;
 }
 
 
