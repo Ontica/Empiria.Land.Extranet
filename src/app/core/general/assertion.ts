@@ -6,7 +6,6 @@
  */
 
 import { Exception } from './exception';
-import { Validate } from './validate';
 
 
 export class Assertion {
@@ -20,7 +19,7 @@ export class Assertion {
    */
   static assert(condition: boolean, failMessage: string): void {
     if (!condition) {
-      throw new Error(failMessage);
+      throw new Exception(failMessage);
     }
   }
 
@@ -34,9 +33,7 @@ export class Assertion {
       'there are data with unexpected values. Please report this incident ' +
       'immediately to the system administrator or at support @ ontica.org.';
 
-    const msg = (failMessage && Validate.hasValue(failMessage)) ? failMessage : defaultMsg;
-
-    throw new Exception(msg);
+    throw new Exception(failMessage || defaultMsg);
   }
 
 
@@ -46,7 +43,7 @@ export class Assertion {
    */
   static assertValue(object: any, failMessage: string): void {
     if (object === null || object === undefined || object === {} || object === '') {
-      throw new Exception(failMessage);
+      throw new Exception(`Value of '${failMessage}' can not be null, undefined or an empty object.`);
     }
   }
 

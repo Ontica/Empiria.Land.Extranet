@@ -30,7 +30,7 @@ export class Exception extends Error {
       return new Exception(defaultMessage || `Error con valor 'undefined' o 'null'.`); // 'UNDEFINED_ERROR'
 
     } else if (sourceErr instanceof HttpErrorResponse) {
-      return new Exception(defaultMessage || sourceErr.error.message, sourceErr.error);
+      return new Exception('Http server error: ' + (defaultMessage || sourceErr.error.message), sourceErr.error);
 
     } else if (sourceErr instanceof Exception) {
       return new Exception(defaultMessage || sourceErr.message, sourceErr);
