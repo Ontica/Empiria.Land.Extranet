@@ -7,34 +7,48 @@
 
 import { Injectable } from '@angular/core';
 
-import { Command, Assertion, CommandHandler } from '@app/core';
+import { Command, CommandHandler } from '@app/core';
 
 import { InstrumentUseCases } from '@app/domain/use-cases';
+
+
+export enum CommandType {
+  CREATE_PREVENTIVE_NOTE = 'LAND.PREVENTIVE-NOTE.CREATE',
+  UPDATE_PREVENTIVE_NOTE = 'LAND.PREVENTIVE-NOTE.UPDATE',
+  SIGN_LEGAL_INSTRUMENT = 'LAND.LEGAL-INSTRUMENT.SIGN',
+  REVOKE_LEGAL_INSTRUMENT_SIGN = 'LAND.LEGAL-INSTRUMENT.REVOKE_SIGN'
+}
 
 
 @Injectable()
 export class InstrumentCommandHandler extends CommandHandler {
 
-  readonly types = ['LAND.PREVENTIVE.NOTE.CREATE', 'LAND.PREVENTIVE.NOTE.UPDATE'];
-
   constructor(private useCases: InstrumentUseCases) {
-    super();
+    super(CommandType);
   }
 
-  execute(command: Command): Promise<any> {
-    switch (command.type) {
 
-      case 'LAND.PREVENTIVE.NOTE.CREATE':
+  execute(command: Command): Promise<any> {
+    switch (command.type as CommandType) {
+
+      case CommandType.CREATE_PREVENTIVE_NOTE:
         return this.useCases.createPreventiveNote(command.payload.data)
           .toPromise();
 
-      case 'LAND.PREVENTIVE.NOTE.UPDATE':
+      case CommandType.UPDATE_PREVENTIVE_NOTE:
         return this.useCases.updatePreventiveNote(command.payload.instrument, command.payload.data)
           .toPromise();
 
+      case CommandType.SIGN_LEGAL_INSTRUMENT:
+        return this.useCases.signInstrument(command.payload.instrument, command.payload.token)
+          .toPromise();
+
+      case CommandType.REVOKE_LEGAL_INSTRUMENT_SIGN:
+        return this.useCases.revokeInstrumentSign(command.payload.instrument, command.payload.token)
+          .toPromise();
+
       default:
-        const msg = `${InstrumentCommandHandler.name} is not able to handle command ${command.type}.`;
-        throw Assertion.assertNoReachThisCode(msg);
+          throw this.unhandledCommand(command);
     }
   }
 
