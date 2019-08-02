@@ -8,6 +8,7 @@
 import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 
 import { FrontController } from '@app/core/presentation';
+import { InstrumentCommandType } from '@app/core/presentation/commands';
 
 import { LegalInstrument } from '@app/domain/models';
 
@@ -55,13 +56,7 @@ export class InstrumentSignRequestComponent implements OnChanges {
       token: revocationToken
     };
 
-    const command = this.frontController.createCommand('LAND.LEGAL.INSTRUMENT.SIGN.REVOKED', payload);
-
-    this.frontController.dispatch(command)
-      .then(x => {
-        this.instrument = x;
-        this.instrumentChange.emit(this.instrument);
-      });
+    this.frontController.dispatch(InstrumentCommandType.REVOKE_LEGAL_INSTRUMENT_SIGN, payload);
   }
 
 
@@ -71,13 +66,7 @@ export class InstrumentSignRequestComponent implements OnChanges {
       token: signToken
     };
 
-    const command = this.frontController.createCommand('LAND.LEGAL.INSTRUMENT.SIGNED', payload);
-
-    this.frontController.dispatch(command)
-      .then((x: LegalInstrument) => {
-        this.instrument = x;
-        this.instrumentChange.emit(this.instrument);
-      });
+    this.frontController.dispatch(InstrumentCommandType.SIGN_LEGAL_INSTRUMENT, payload);
   }
 
 }

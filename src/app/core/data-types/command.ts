@@ -5,6 +5,8 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
+import { Assertion } from '../general/assertion';
+
 
 export interface Command {
   readonly type: string;
@@ -13,7 +15,7 @@ export interface Command {
 
 
 export interface CommandResult extends Command {
-  readonly result: string;
+  readonly result: any;
 }
 
 
@@ -26,8 +28,23 @@ export function createCommand(type: string, payload?: any): Command {
 
 export abstract class CommandHandler {
 
-  abstract types: string[];
+  readonly commands: string[] = [];
+
+
+  constructor(commands: any) {
+    Assertion.assertValue(commands, 'commands');
+
+    this.commands = Object.keys(commands).map(k => commands[k as string]);
+  }
+
 
   abstract execute(command: Command): Promise<any>;
+
+
+  protected unhandledCommand(command: Command): never {
+    const msg = `${CommandHandler.name} is not able to handle command ${command.type}.`;
+
+    throw Assertion.assertNoReachThisCode(msg);
+  }
 
 }

@@ -11,6 +11,10 @@ import { Assertion } from '../general/assertion';
 
 import { CommandResult, KeyValue } from '../data-types';
 
+import { StateAction, StateSelector } from './actions.and.selectors';
+import { CommandType } from './commands';
+import { ɵConsole } from '@angular/core';
+
 
 export type StateValues = KeyValue[];
 
@@ -22,11 +26,12 @@ export interface StateHandler {
 
   applyEffects(command: CommandResult): void;
 
-  dispatch(actionType: string, payload?: any): void;
+  dispatch(actionType: StateAction, payload?: any): void;
+  dispatch<U>(actionType: StateAction, payload?: any): Promise<U>;
 
-  getValue<U>(selector: string): U;
+  getValue<U>(selector: StateSelector): U;
 
-  select<U>(selector: string): Observable<U>;
+  select<U>(selector: StateSelector): Observable<U>;
 
 }
 
@@ -46,47 +51,47 @@ export abstract class AbstractStateHandler<T> implements StateHandler {
 
     initialState.forEach(x => this.stateItems.set(x.key, new BehaviorSubject(x.value)));
 
-    this.selectors = Object.keys(selectors).map(k => selectors[k as string]);
+    this.selectors = Object.keys(selectors).map(k => selectors[k as StateSelector]);
 
     if (actions) {
-      this.actions = Object.keys(actions).map(k => actions[k as string]);
+      this.actions = Object.keys(actions).map(k => actions[k as StateAction]);
     }
 
     if (effects) {
-      this.effects = Object.keys(effects).map(k => effects[k as string]);
+      this.effects = Object.keys(effects).map(k => effects[k as CommandType]);
     }
   }
 
 
   abstract applyEffects(command: CommandResult): void;
 
-  abstract dispatch(actionType: string, payload?: any): void;
+  abstract dispatch<U>(actionType: StateAction, payload?: any): Promise<U>;
 
   abstract get state(): T;
 
 
-  getValue<U>(selector: string): U {
+  getValue<U>(selector: StateSelector): U {
     const stateItem = this.getStateMapItem(selector);
 
     return stateItem.value as U;
   }
 
 
-  protected getSubject<U>(selector: string): BehaviorSubject<U> {
+  protected getSubject<U>(selector: StateSelector): BehaviorSubject<U> {
     const stateItem = this.getStateMapItem(selector);
 
     return stateItem as BehaviorSubject<U>;
   }
 
 
-  select<U>(selector: string): Observable<U> {
+  select<U>(selector: StateSelector): Observable<U> {
     const stateItem = this.getStateMapItem(selector);
 
     return stateItem.asObservable() as Observable<U>;
   }
 
 
-  protected setValue(selector: string, value: any): void {
+  protected setValue(selector: StateSelector, value: any): void {
     const stateItem = this.getStateMapItem(selector);
 
     if (value instanceof Observable) {
@@ -97,10 +102,23 @@ export abstract class AbstractStateHandler<T> implements StateHandler {
   }
 
 
+  protected unhandledCommandOrActionType(commandOrActionType: CommandResult | string): never {
+    let msg = `${AbstractStateHandler.name} is not able to handle `;
+
+    if (typeof commandOrActionType === 'string') {
+      msg += `action '${commandOrActionType}.'`;
+    } else {
+      msg += `command '${commandOrActionType.type}.'`;
+    }
+
+    throw Assertion.assertNoReachThisCode(msg);
+  }
+
+
   // private methods
 
 
-  private getStateMapItem(selector: string) {
+  private getStateMapItem(selector: StateSelector) {
     if (this.stateItems.has(selector)) {
       return this.stateItems.get(selector);
     }

@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { Assertion, CommandResult } from '@app/core';
 
 import { StateHandler } from './state-handler';
+import { StateAction, StateSelector } from './actions.and.selectors';
 
 
 export const STATE_HANDLERS =
@@ -39,7 +40,7 @@ export class PresentationState {
   }
 
 
-  getValue<T>(selector: string): T {
+  getValue<T>(selector: StateSelector): T {
     Assertion.assertValue(selector, 'selector');
 
     const stateHandler = this.getStateHandlerForSelector(selector);
@@ -48,17 +49,17 @@ export class PresentationState {
   }
 
 
-  dispatch(actionType: string, payload?: any) {
+  dispatch<T>(actionType: StateAction, payload?: any): Promise<T> {
     Assertion.assertValue(actionType, 'actionType');
     Assertion.assertValue(payload, 'payload');
 
     const stateHandler = this.getStateHandlerForAction(actionType);
 
-    return stateHandler.dispatch(actionType, payload);
+    return stateHandler.dispatch<T>(actionType, payload);
   }
 
 
-  select<T>(selector: string): Observable<T> {
+  select<T>(selector: StateSelector): Observable<T> {
     Assertion.assertValue(selector, 'selector');
 
     const stateHandler = this.getStateHandlerForSelector(selector);
@@ -80,7 +81,7 @@ export class PresentationState {
   }
 
 
-  private getStateHandlerForSelector(selector: string): StateHandler {
+  private getStateHandlerForSelector(selector: StateSelector): StateHandler {
     for (const handler of this.registeredHandlers) {
       if (handler.selectors.includes(selector)) {
         return handler;

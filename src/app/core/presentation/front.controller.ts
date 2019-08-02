@@ -11,6 +11,8 @@ import { Command, Assertion, CommandHandler, createCommand as createCommandAlias
 
 import { PresentationState } from './presentation.state';
 
+import { CommandType } from './commands';
+
 
 export const COMMAND_HANDLERS =
                 new InjectionToken<CommandHandler[]>('PresentationCommandHandlers');
@@ -30,14 +32,40 @@ export class FrontController {
   }
 
 
-  createCommand(type: string, payload?: any): Command {
+  createCommand(type: CommandType, payload?: any): Command {
     return createCommandAlias(type, payload);
   }
 
 
-  dispatch(command: Command): Promise<any> {
+  dispatch(command: Command): Promise<any>;
+
+
+  dispatch(commandType: CommandType, payload?: any): Promise<any>;
+
+
+  dispatch(command: Command | CommandType, payload?: any): Promise<any> {
     Assertion.assertValue(command, 'command');
 
+    if (typeof command === 'string') {
+      return this.dispatchImplementation(this.createCommand(command as CommandType, payload));
+    } else {
+      return this.dispatchImplementation(command);
+    }
+  }
+
+
+  // private methods
+
+
+  private afterCommandExecution(command: Command, result: any) {
+    const commandResult: CommandResult = { ...command, result };
+
+    this.presentation.applyEffects(commandResult);
+    this.endProcessing();
+  }
+
+
+  private dispatchImplementation(command: Command): Promise<any> {
     if (this.isProcessing) {
       throw new Error('FrontController is processing a previous command. Please try again later.');
     }
@@ -63,15 +91,6 @@ export class FrontController {
     }
   }
 
-  // private methods
-
-  private afterCommandExecution(command: Command, result: any) {
-    const commandResult: CommandResult = { ...command, result };
-
-    this.presentation.applyEffects(commandResult);
-    this.endProcessing();
-  }
-
 
   private endProcessing(): void {
     this.processing = false;
@@ -81,7 +100,7 @@ export class FrontController {
 
   private selectCommandHandler(command: Command): CommandHandler {
     for (const handler of this.handlers) {
-      if (handler.types.includes(command.type)) {
+      if (handler.commands.includes(command.type)) {
         return handler;
       }
     }
