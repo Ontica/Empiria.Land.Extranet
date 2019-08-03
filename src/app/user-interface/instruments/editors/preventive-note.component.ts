@@ -10,11 +10,13 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Assertion } from '@app/core';
-import { FrontController } from '@app/core/presentation';
 
-import { PropertyUseCases } from '@app/domain/use-cases';
+import { FrontController, PresentationState } from '@app/core/presentation';
 
-import { EmptyRealEstate, PreventiveNote, PreventiveNoteEditionData } from '@app/domain/models';
+import { InstrumentCommandType } from '@app/core/presentation/commands';
+import { InstrumentsStateAction } from '@app/core/presentation/actions.and.selectors';
+
+import { EmptyRealEstate, PreventiveNote, PreventiveNoteEditionData, RealEstate } from '@app/domain/models';
 
 
 @Component({
@@ -38,8 +40,8 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
   });
 
 
-  constructor(private frontController: FrontController,
-              private propertyUseCases: PropertyUseCases) { }
+  constructor(private store: PresentationState,
+              private frontController: FrontController) { }
 
 
   get isReadyForSave() {
@@ -81,9 +83,7 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
       data: this.getFormData()
     };
 
-    const command = this.frontController.createCommand('LAND.PREVENTIVE.NOTE.CREATE', payload);
-
-    this.frontController.dispatch(command);
+    this.frontController.dispatch(InstrumentCommandType.CREATE_PREVENTIVE_NOTE, payload);
   }
 
 
@@ -126,9 +126,7 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
       data: this.getFormData()
     };
 
-    const command = this.frontController.createCommand('LAND.PREVENTIVE.NOTE.UPDATE', payload);
-
-    this.frontController.dispatch(command);
+    this.frontController.dispatch(InstrumentCommandType.UPDATE_PREVENTIVE_NOTE, payload);
   }
 
 
@@ -140,11 +138,9 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
     const propertyUID = this.form.value.propertyUID.toUpperCase();
 
-    this.propertyUseCases.getRealEstate(propertyUID)
-      .subscribe(
-        x => this.realEstate = x,
-        err => console.log('Display something with real estate not found error', JSON.stringify(err))
-      );
+    this.store.dispatch<RealEstate>(InstrumentsStateAction.GET_REAL_ESTATE, { uid: propertyUID })
+      .then(x => this.realEstate = x)
+      .catch(err => console.log('Display something with real estate not found error', JSON.stringify(err)));
 
   }
 

@@ -11,13 +11,15 @@ import { Assertion, CommandResult } from '@app/core';
 
 import { AbstractStateHandler, StateValues } from '@app/core/presentation/state-handler';
 
-import { InstrumentUseCases } from '@app/domain/use-cases';
+import { InstrumentUseCases, PropertyUseCases } from '@app/domain/use-cases';
 
 import { LegalInstrument, LegalInstrumentFilter, EmptyLegalInstrumentFilter } from '@app/domain/models';
+import { InstrumentCommandType } from '../command.handlers/commands';
 
 
 export enum ActionType {
   SET_INSTRUMENT_FILTER = 'LAND.LEGAL-INSTRUMENTS-LIST.SET-FILTER',
+  GET_REAL_ESTATE = 'LAND.REAL_ESTATE.LOAD_OR_GET_FROM_CACHE'
 }
 
 
@@ -26,13 +28,16 @@ export enum SelectorType {
   LIST_FILTER = 'LAND.LEGAL-INSTRUMENTS.FILTER'
 }
 
-export enum CommandEffectType {
-  CREATE_PREVENTIVE_NOTE = 'LAND.PREVENTIVE.NOTE.CREATE',
-  UPDATE_PREVENTIVE_NOTE = 'LAND.PREVENTIVE.NOTE.UPDATE'
+
+enum CommandEffectType {
+  CREATE_PREVENTIVE_NOTE = InstrumentCommandType.CREATE_PREVENTIVE_NOTE,
+  UPDATE_PREVENTIVE_NOTE = InstrumentCommandType.UPDATE_PREVENTIVE_NOTE,
+  SIGN_LEGAL_INSTRUMENT = InstrumentCommandType.SIGN_LEGAL_INSTRUMENT,
+  REVOKE_LEGAL_INSTRUMENT_SIGN = InstrumentCommandType.REVOKE_LEGAL_INSTRUMENT_SIGN,
 }
 
 
-export interface State {
+export interface InstrumentsState {
   readonly instrumentsList: LegalInstrument[];
   readonly listFilter: LegalInstrumentFilter;
 }
@@ -45,14 +50,16 @@ const stateMap: StateValues = [
 
 
 @Injectable()
-export class InstrumentsStateHandler extends AbstractStateHandler<State> {
+export class InstrumentsStateHandler extends AbstractStateHandler<InstrumentsState> {
 
-  constructor(private useCases: InstrumentUseCases) {
+
+  constructor(private useCases: InstrumentUseCases,
+              private propertyUseCases: PropertyUseCases) {
     super(stateMap, SelectorType, ActionType, CommandEffectType);
   }
 
 
-  get state(): State {
+  get state(): InstrumentsState {
     return {
       instrumentsList: this.getValue(SelectorType.INSTRUMENT_LIST),
       listFilter: this.getValue(SelectorType.LIST_FILTER)
@@ -61,37 +68,50 @@ export class InstrumentsStateHandler extends AbstractStateHandler<State> {
 
 
   applyEffects(command: CommandResult): void {
-    switch (command.type as CommandEffectType) {
+    switch ((command.type as any) as CommandEffectType) {
 
       case CommandEffectType.CREATE_PREVENTIVE_NOTE:
+        // this.updateStateUtils.appendToStart(SelectorType.INSTRUMENT_LIST, command.result);
+        // return;
+        return this.setValue(SelectorType.INSTRUMENT_LIST,
+                             [command.result].concat(this.state.instrumentsList));
+
       case CommandEffectType.UPDATE_PREVENTIVE_NOTE:
-        this.setValue(SelectorType.INSTRUMENT_LIST, this.getInstrumentsList());
+      case CommandEffectType.SIGN_LEGAL_INSTRUMENT:
+      case CommandEffectType.REVOKE_LEGAL_INSTRUMENT_SIGN:
+        // this.updateStateUtils.replaceEntity(SelectorType.INSTRUMENT_LIST, command.result);
+        // return;
+        const indexOf = this.state.instrumentsList.findIndex(x => x.uid === command.result.uid);
+        if (indexOf >= 0) {
+          const newList = this.state.instrumentsList;
+          newList[indexOf] = command.result;
+          this.setValue(SelectorType.INSTRUMENT_LIST, newList);
+        }
         return;
-
       default:
-        const msg = `${InstrumentsStateHandler.name} is not able to handle command ${command.type}.`;
-
-        throw Assertion.assertNoReachThisCode(msg);
+        throw this.unhandledCommandOrActionType(command);
     }
   }
 
 
-  dispatch(actionType: ActionType, payload?: any): void {
+  dispatch<U>(actionType: ActionType, payload?: any): Promise<any> {
     switch (actionType) {
-      case ActionType.SET_INSTRUMENT_FILTER:
-        console.log('dispatch', payload);
 
+      case ActionType.GET_REAL_ESTATE:
+        Assertion.assertValue(payload.uid, 'options.uid');
+
+        return this.propertyUseCases.getRealEstate(payload.uid).toPromise();
+
+      case ActionType.SET_INSTRUMENT_FILTER:
         Assertion.assertValue(payload.filter, 'payload.filter');
 
         this.setValue(SelectorType.LIST_FILTER, payload.filter);
         this.setValue(SelectorType.INSTRUMENT_LIST, this.getInstrumentsList());
 
-        return;
+        return Promise.resolve();
 
       default:
-        const msg = `${InstrumentsStateHandler.name} is not able to handle action ${actionType}.`;
-
-        throw Assertion.assertNoReachThisCode(msg);
+        throw this.unhandledCommandOrActionType(actionType);
     }
   }
 
