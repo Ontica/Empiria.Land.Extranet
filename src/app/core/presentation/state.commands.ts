@@ -5,6 +5,6 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-export * from '../../integration/state.handlers/actions';
+export * from '@app/integration/state.handlers/actions';
 
-export * from '../../integration/state.handlers/selectors';
+export * from '@app/integration/state.handlers/selectors';

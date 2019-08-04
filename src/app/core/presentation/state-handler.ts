@@ -11,7 +11,7 @@ import { Assertion } from '../general/assertion';
 
 import { CommandResult, KeyValue } from '../data-types';
 
-import { StateAction, StateSelector } from './actions.and.selectors';
+import { StateAction, StateSelector } from './state.commands';
 import { CommandType } from './commands';
 
 import { UpdateStateUtilities } from './update-state-utilities';

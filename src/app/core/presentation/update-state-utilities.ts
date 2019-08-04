@@ -8,7 +8,7 @@
 import { Assertion } from '../general/assertion';
 import { Entity } from '../data-types/core-types';
 
-import { StateSelector } from './actions.and.selectors';
+import { StateSelector } from './state.commands';
 import { StateHandler } from './state-handler';
 import { Exception } from '../general/exception';
 

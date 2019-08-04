@@ -14,7 +14,7 @@ import { Assertion } from '@app/core';
 import { FrontController, PresentationState } from '@app/core/presentation';
 
 import { InstrumentCommandType } from '@app/core/presentation/commands';
-import { InstrumentsStateAction } from '@app/core/presentation/actions.and.selectors';
+import { InstrumentsStateAction } from '@app/core/presentation/state.commands';
 
 import { EmptyRealEstate, PreventiveNote, PreventiveNoteEditionData, RealEstate } from '@app/domain/models';
 

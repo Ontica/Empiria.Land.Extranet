@@ -15,9 +15,9 @@ import { PresentationState } from '@app/core/presentation';
 
 import { LegalInstrument, EmptyLegalInstrument, LegalInstrumentStatus } from '@app/domain/models';
 
-import { View } from '@app/user-interface/main-layout';
+import { InstrumentStateSelector, InstrumentsStateAction } from '@app/core/presentation/state.commands';
 
-import { InstrumentsStateHandler, SelectorType, ActionType } from '@app/integration/state.handlers/instruments.state.handler';
+import { View } from '@app/user-interface/main-layout';
 
 
 @Component({
@@ -38,13 +38,12 @@ export class InstrumentListComponent implements OnInit, OnChanges {
 
   displayCreateDocumentWizard = false;
 
+
   constructor(private store: PresentationState) { }
 
 
   ngOnInit() {
-    console.log('ngOnInit');
-
-    this.instrumentList = this.store.select<LegalInstrument[]>(SelectorType.INSTRUMENT_LIST)
+    this.instrumentList = this.store.select<LegalInstrument[]>(InstrumentStateSelector.INSTRUMENT_LIST)
       .pipe(
         tap(x => {
           if (this.selectedInstrument.uid) {
@@ -54,15 +53,12 @@ export class InstrumentListComponent implements OnInit, OnChanges {
             }
           }
           this.hint = `${x.length} documentos encontrados`;
-
-          console.log('filter', x.length, this.store.getValue(SelectorType.LIST_FILTER));
         })
       );
   }
 
 
   ngOnChanges() {
-    console.log('ngOnChanges');
     this.setFilter();
   }
 
@@ -119,7 +115,7 @@ export class InstrumentListComponent implements OnInit, OnChanges {
       keywords: this.keywords
     };
 
-    this.store.dispatch(ActionType.SET_INSTRUMENT_FILTER, { filter });
+    this.store.dispatch(InstrumentsStateAction.SET_INSTRUMENT_FILTER, { filter });
   }
 
 }

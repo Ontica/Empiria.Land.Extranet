@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 import { Assertion, CommandResult } from '@app/core';
 
 import { StateHandler } from './state-handler';
-import { StateAction, StateSelector } from './actions.and.selectors';
+import { StateAction, StateSelector } from './state.commands';
 
 
 export const STATE_HANDLERS =
