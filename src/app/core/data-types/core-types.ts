@@ -6,8 +6,12 @@
  */
 
 
-export interface Identifiable {
+export interface Entity {
   readonly uid: string;
+}
+
+
+export interface Identifiable extends Entity {
   name: string;
 }
 
