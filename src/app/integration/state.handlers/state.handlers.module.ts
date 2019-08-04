@@ -17,7 +17,7 @@ import { InstrumentsStateHandler } from './instruments.state.handler';
   providers: [
     InstrumentsStateHandler,
 
-    { provide: STATE_HANDLERS, useClass: InstrumentsStateHandler, multi: true }
+    { provide: STATE_HANDLERS, useExisting: InstrumentsStateHandler, multi: true }
 
   ]
 
