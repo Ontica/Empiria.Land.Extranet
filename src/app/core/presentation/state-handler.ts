@@ -13,7 +13,8 @@ import { CommandResult, KeyValue } from '../data-types';
 
 import { StateAction, StateSelector } from './actions.and.selectors';
 import { CommandType } from './commands';
-import { ɵConsole } from '@angular/core';
+
+import { UpdateStateUtilities } from './update-state-utilities';
 
 
 export type StateValues = KeyValue[];
@@ -35,7 +36,6 @@ export interface StateHandler {
 
 }
 
-
 export abstract class AbstractStateHandler<T> implements StateHandler {
 
   private stateItems = new Map<string, BehaviorSubject<any>>();
@@ -43,6 +43,8 @@ export abstract class AbstractStateHandler<T> implements StateHandler {
   readonly selectors: string[] = [];
   readonly actions: string[] = [];
   readonly effects: string[] = [];
+
+  protected stateUpdater: UpdateStateUtilities;
 
 
   constructor(initialState: StateValues, selectors: any, actions: any, effects: any) {
@@ -60,6 +62,8 @@ export abstract class AbstractStateHandler<T> implements StateHandler {
     if (effects) {
       this.effects = Object.keys(effects).map(k => effects[k as CommandType]);
     }
+
+    this.stateUpdater = new UpdateStateUtilities(this, this.setValue);
   }
 
 

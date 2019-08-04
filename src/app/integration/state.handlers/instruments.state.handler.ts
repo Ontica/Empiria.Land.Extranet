@@ -43,19 +43,17 @@ export interface InstrumentsState {
 }
 
 
-const stateMap: StateValues = [
+const initialState: StateValues = [
   { key: SelectorType.INSTRUMENT_LIST, value: [] },
   { key: SelectorType.LIST_FILTER, value: EmptyLegalInstrumentFilter }
 ];
 
-
 @Injectable()
 export class InstrumentsStateHandler extends AbstractStateHandler<InstrumentsState> {
 
-
   constructor(private useCases: InstrumentUseCases,
               private propertyUseCases: PropertyUseCases) {
-    super(stateMap, SelectorType, ActionType, CommandEffectType);
+    super(initialState, SelectorType, ActionType, CommandEffectType);
   }
 
 
@@ -71,23 +69,14 @@ export class InstrumentsStateHandler extends AbstractStateHandler<InstrumentsSta
     switch ((command.type as any) as CommandEffectType) {
 
       case CommandEffectType.CREATE_PREVENTIVE_NOTE:
-        // this.updateStateUtils.appendToStart(SelectorType.INSTRUMENT_LIST, command.result);
-        // return;
-        return this.setValue(SelectorType.INSTRUMENT_LIST,
-                             [command.result].concat(this.state.instrumentsList));
+        this.stateUpdater.appendToStart(SelectorType.INSTRUMENT_LIST, command.result);
+        return;
 
       case CommandEffectType.UPDATE_PREVENTIVE_NOTE:
       case CommandEffectType.SIGN_LEGAL_INSTRUMENT:
       case CommandEffectType.REVOKE_LEGAL_INSTRUMENT_SIGN:
-        // this.updateStateUtils.replaceEntity(SelectorType.INSTRUMENT_LIST, command.result);
-        // return;
-        const indexOf = this.state.instrumentsList.findIndex(x => x.uid === command.result.uid);
-        if (indexOf >= 0) {
-          const newList = this.state.instrumentsList;
-          newList[indexOf] = command.result;
-          this.setValue(SelectorType.INSTRUMENT_LIST, newList);
-        }
-        return;
+        return this.stateUpdater.replaceEntity(SelectorType.INSTRUMENT_LIST, command.result);
+
       default:
         throw this.unhandledCommandOrActionType(command);
     }
@@ -100,7 +89,8 @@ export class InstrumentsStateHandler extends AbstractStateHandler<InstrumentsSta
       case ActionType.GET_REAL_ESTATE:
         Assertion.assertValue(payload.uid, 'options.uid');
 
-        return this.propertyUseCases.getRealEstate(payload.uid).toPromise();
+        return this.propertyUseCases.getRealEstate(payload.uid)
+          .toPromise();
 
       case ActionType.SET_INSTRUMENT_FILTER:
         Assertion.assertValue(payload.filter, 'payload.filter');
