@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 
 import { FrontController } from '@app/core/presentation';
 import { InstrumentCommandType } from '@app/core/presentation/commands';
@@ -20,8 +20,6 @@ import { LegalInstrument } from '@app/domain/models';
 export class InstrumentSignRequestComponent implements OnChanges {
 
   @Input() instrument: LegalInstrument;
-
-  @Output() instrumentChange = new EventEmitter<LegalInstrument>();
 
   revokeMode = false;
 
@@ -56,7 +54,7 @@ export class InstrumentSignRequestComponent implements OnChanges {
       token: revocationToken
     };
 
-    this.frontController.dispatch(InstrumentCommandType.REVOKE_LEGAL_INSTRUMENT_SIGN, payload);
+    this.frontController.dispatch(InstrumentCommandType.REVOKE_SIGN, payload);
   }
 
 
@@ -66,7 +64,7 @@ export class InstrumentSignRequestComponent implements OnChanges {
       token: signToken
     };
 
-    this.frontController.dispatch(InstrumentCommandType.SIGN_LEGAL_INSTRUMENT, payload);
+    this.frontController.dispatch(InstrumentCommandType.SIGN, payload);
   }
 
 }

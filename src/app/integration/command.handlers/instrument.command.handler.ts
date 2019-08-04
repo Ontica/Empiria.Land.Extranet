@@ -13,10 +13,12 @@ import { InstrumentUseCases } from '@app/domain/use-cases';
 
 
 export enum CommandType {
-  CREATE_PREVENTIVE_NOTE = 'LAND.PREVENTIVE-NOTE.CREATE',
-  UPDATE_PREVENTIVE_NOTE = 'LAND.PREVENTIVE-NOTE.UPDATE',
-  SIGN_LEGAL_INSTRUMENT = 'LAND.LEGAL-INSTRUMENT.SIGN',
-  REVOKE_LEGAL_INSTRUMENT_SIGN = 'LAND.LEGAL-INSTRUMENT.REVOKE_SIGN'
+  CREATE_PREVENTIVE_NOTE      = 'Land.PreventiveNote.Create',
+  UPDATE_PREVENTIVE_NOTE      = 'Land.PreventiveNote.Update',
+  SIGN                        = 'Land.LegalInstrument.Sign',
+  REVOKE_SIGN                 = 'Land.LegalInstrument.RevokeSign',
+  REQUEST_PAYMENT_ORDER       = 'Land.LegalInstrument.RequestPaymentOrder',
+  FILE_TO_RECORDING_AUTHORITY = 'Land.LegalInstrument.FileToRecordingAuthority'
 }
 
 
@@ -39,12 +41,20 @@ export class InstrumentCommandHandler extends CommandHandler {
         return this.useCases.updatePreventiveNote(command.payload.instrument, command.payload.data)
           .toPromise();
 
-      case CommandType.SIGN_LEGAL_INSTRUMENT:
+      case CommandType.SIGN:
         return this.useCases.signInstrument(command.payload.instrument, command.payload.token)
           .toPromise();
 
-      case CommandType.REVOKE_LEGAL_INSTRUMENT_SIGN:
+      case CommandType.REVOKE_SIGN:
         return this.useCases.revokeInstrumentSign(command.payload.instrument, command.payload.token)
+          .toPromise();
+
+      case CommandType.REQUEST_PAYMENT_ORDER:
+        return this.useCases.requestPaymentOrder(command.payload.instrument, command.payload.data)
+          .toPromise();
+
+      case CommandType.FILE_TO_RECORDING_AUTHORITY:
+        return this.useCases.requestRecording(command.payload.instrument, {})
           .toPromise();
 
       default:
