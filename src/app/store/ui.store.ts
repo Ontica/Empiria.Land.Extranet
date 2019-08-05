@@ -58,8 +58,9 @@ export class UserInterfaceStore {
       return subject.asObservable();
 
     } else {
-      defaultValue = defaultValue || getValueSelectorDefaultValue(selector) as T;
-      const subject = new BehaviorSubject<T>(defaultValue);
+      const initialValue = defaultValue || getValueSelectorDefaultValue(selector) as T;
+
+      const subject = new BehaviorSubject<T>(initialValue);
 
       this.valuesMap.set(selector, subject);
 

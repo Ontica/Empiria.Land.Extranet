@@ -73,10 +73,10 @@ export class HttpHandler {
       requestOptions.body = body;
     }
 
-    return forkJoin(
+    return forkJoin([
       this.getUrl(path, service),
       this.getHeaders(path, service)
-    ).pipe(
+    ]).pipe(
       flatMap(([url, headers]) => {
 
         requestOptions.headers = headers;
@@ -114,7 +114,7 @@ export class HttpHandler {
 
     let headers = new HttpHeaders();
     if (service && service.isProtected && principal.isAuthenticated) {
-      headers = headers.set('Authorization', 'bearer ' + principal.sessionToken.access_token);
+      headers = headers.set('Authorization', 'bearer ' + principal.sessionToken.accessToken);
 
     } else if (service && service.isProtected && !principal.isAuthenticated) {
       throw new Error('Unauthenticated user');
@@ -126,7 +126,7 @@ export class HttpHandler {
       // no-op
 
     } else if (principal.isAuthenticated) {
-      headers = headers.set('Authorization', 'bearer ' + principal.sessionToken.access_token);
+      headers = headers.set('Authorization', 'bearer ' + principal.sessionToken.accessToken);
 
     } else {
       headers = headers.set('ApplicationKey', settings.applicationKey);

@@ -5,12 +5,13 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
- export * from './party';
+export interface RequestPaymentOrderData {
+  rfc?: string;
+  sendTo?: string;
+}
 
- export * from './property';
 
- export * from './recording-act';
+export interface RequestRecordingData {
+  paymentReceiptNo?: string;
+}
 
- export * from './instruments';
-
- export * from './transaction';

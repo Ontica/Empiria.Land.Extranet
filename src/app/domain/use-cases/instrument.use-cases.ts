@@ -14,7 +14,8 @@ import { InstrumentApiProvider } from '../providers';
 
 import {
   LegalInstrument, LegalInstrumentFilter,
-  PreventiveNote, PreventiveNoteEditionData
+  PreventiveNote, PreventiveNoteEditionData,
+  RequestPaymentOrderData, RequestRecordingData
 } from '@app/domain/models';
 
 
@@ -38,6 +39,23 @@ export class InstrumentUseCases {
     Assertion.assertValue(data, 'data');
 
     return this.backend.createPreventiveNote(data);
+  }
+
+
+  fileToRegistryAuthority(instrument: LegalInstrument,
+                          data: RequestRecordingData): Observable<LegalInstrument> {
+    Assertion.assertValue(instrument, 'instrument');
+
+    return this.backend.fileToRegistryAuthority(instrument, data);
+  }
+
+
+  requestPaymentOrder(instrument: LegalInstrument,
+                      data: RequestPaymentOrderData): Observable<LegalInstrument> {
+    Assertion.assertValue(instrument, 'instrument');
+
+    return this.backend.requestPaymentOrder(instrument, data);
+
   }
 
 
@@ -67,18 +85,5 @@ export class InstrumentUseCases {
     return this.backend.updatePreventiveNote(preventiveNote, data);
   }
 
-
-  requestPaymentOrder(instrument: LegalInstrument, data: any): Observable<LegalInstrument> {
-    Assertion.assertValue(instrument, 'instrument');
-
-    return this.backend.requestPaymentOrder(instrument, data);
-  }
-
-
-  requestRecording(instrument: LegalInstrument, data: any) {
-    Assertion.assertValue(instrument, 'instrument');
-
-    return this.backend.requestRecording(instrument, data);
-  }
 
 }

@@ -62,7 +62,7 @@ export class UserLoginComponent extends AbstractForm implements OnInit {
   }
 
 
-  protected execute(): Promise<any> {
+  protected execute(): Promise<boolean> {
     switch (this.command.name) {
 
       case 'authenticate':
@@ -74,7 +74,7 @@ export class UserLoginComponent extends AbstractForm implements OnInit {
   }
 
 
-  protected validate(): Promise<any> {
+  protected validate(): Promise<void> {
     if (!this.valid) {
       this.addException(FormMessages.IncompleteLoginData);
     }

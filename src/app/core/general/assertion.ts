@@ -42,8 +42,19 @@ export class Assertion {
    *  @param failMessage The message to throw if the assertion fails.
    */
   static assertValue(object: any, failMessage: string): void {
-    if (object === null || object === undefined || object === {} || object === '') {
-      throw new Exception(`Value of '${failMessage}' can not be null, undefined or an empty object.`);
+    const e = new Exception(`Value of '${failMessage}' can not be null, undefined or an empty object.`);
+
+    if (object === null) {
+      throw e;
+    }
+    if (typeof object === 'undefined') {
+      throw e;
+    }
+    if (object === {}) {
+      throw e;
+    }
+    if (typeof object === 'string' && object === '') {
+      throw e;
     }
   }
 

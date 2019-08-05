@@ -23,9 +23,9 @@ export class MessageBoxService {
   constructor(private dialog: MatDialog) { }
 
 
-  confirm(message: string, title: string = '',
+  confirm(message: string, title: '',
           messageBoxType: ConfirmMessageBoxType = 'AcceptCancel',
-          mainButtonText: string = 'Aceptar',
+          mainButtonText = 'Aceptar',
           config?: MessageBoxConfig): Observable<boolean> {
 
     const data: MessageBoxData = {
@@ -51,7 +51,7 @@ export class MessageBoxService {
   }
 
 
-  show(message: string, title: string = '',
+  show(message: string, title = '',
        config?: MessageBoxConfig): Observable<void> {
 
     const data: MessageBoxData = {
@@ -92,22 +92,20 @@ export class MessageBoxService {
 
   private getDialogConfig(config: MessageBoxConfig,
                           messageBoxData: MessageBoxData): MatDialogConfig<MessageBoxData> {
-    if (!config) {
-      config = new MatDialogConfig<MessageBoxData>();
-    }
+    const msgBoxConfig = new MatDialogConfig<MessageBoxData>();
 
-    config.disableClose = config.disableClose || true;
-    config.autoFocus = config.autoFocus || true;
-    config.role = config.role || 'alertdialog';
+    msgBoxConfig.disableClose = config.disableClose || true;
+    msgBoxConfig.autoFocus = config.autoFocus || true;
+    msgBoxConfig.role = config.role || 'alertdialog';
 
-    config.minWidth = config.minWidth || '380px';
-    config.maxWidth = config.maxWidth || '500px';
+    msgBoxConfig.minWidth = config.minWidth || '380px';
+    msgBoxConfig.maxWidth = config.maxWidth || '500px';
 
-    config.width = config.width || '500px';
+    msgBoxConfig.width = config.width || '500px';
 
-    config.data = Object.assign(messageBoxData, config.data);
+    msgBoxConfig.data = Object.assign(messageBoxData, config.data);
 
-    return config;
+    return msgBoxConfig;
   }
 
 

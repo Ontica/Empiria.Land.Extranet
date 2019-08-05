@@ -49,10 +49,10 @@ export class DirectoryService {
     if (servicePathOrUID.includes('/')) {
       return of<Service>(undefined);
 
-    } else if (!servicePathOrUID.includes('/') && method === undefined) {
+    } else if (!servicePathOrUID.includes('/') && (typeof method === 'undefined')) {
       condition = (service: Service) => (service.uid === servicePathOrUID);
 
-    } else if (!servicePathOrUID.includes('/') && method !== undefined) {
+    } else if (!servicePathOrUID.includes('/') && (typeof method !== 'undefined')) {
       condition = (service: Service) => (service.uid === servicePathOrUID &&
         service.method.toString() === HttpMethod[method]);
 

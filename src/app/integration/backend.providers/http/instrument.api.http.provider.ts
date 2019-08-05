@@ -13,7 +13,8 @@ import { Assertion, HttpService } from '@app/core';
 import { InstrumentApiProvider } from '@app/domain/providers';
 
 import { LegalInstrument, LegalInstrumentStatus,
-         PreventiveNote, PreventiveNoteEditionData } from '@app/domain/entities';
+         PreventiveNote, PreventiveNoteEditionData,
+         RequestPaymentOrderData, RequestRecordingData} from '@app/domain/entities';
 
 
 @Injectable()
@@ -60,19 +61,21 @@ export class InstrumentApiHttpProvider extends InstrumentApiProvider {
   }
 
 
-  requestPaymentOrder(instrument: LegalInstrument, data: any): Observable<LegalInstrument> {
+  fileToRegistryAuthority(instrument: LegalInstrument,
+                          data: RequestRecordingData) {
     Assertion.assertValue(instrument, 'instrument');
 
-    const path = `v2/extranet/instruments/${instrument.uid}/request-payment-order`;
+    const path = `v2/extranet/instruments/${instrument.uid}/request-recording`;
 
     return this.http.post<LegalInstrument>(path, data);
   }
 
 
-  requestRecording(instrument: LegalInstrument, data: any) {
+  requestPaymentOrder(instrument: LegalInstrument,
+                      data: RequestPaymentOrderData): Observable<LegalInstrument> {
     Assertion.assertValue(instrument, 'instrument');
 
-    const path = `v2/extranet/instruments/${instrument.uid}/request-recording`;
+    const path = `v2/extranet/instruments/${instrument.uid}/request-payment-order`;
 
     return this.http.post<LegalInstrument>(path, data);
   }
