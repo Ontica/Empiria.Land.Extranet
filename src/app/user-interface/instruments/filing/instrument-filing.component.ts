@@ -9,9 +9,10 @@ import { Component, Input, OnChanges } from '@angular/core';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { LegalInstrument } from '@app/domain/models';
 import { FrontController } from '@app/core/presentation';
 import { InstrumentCommandType } from '@app/core/presentation/commands';
+
+import { LegalInstrument, RequestPaymentOrderData } from '@app/domain/models';
 
 
 @Component({
@@ -35,8 +36,8 @@ export class InstrumentFilingComponent implements OnChanges {
   }
 
 
-  onRequestRecording() {
-    this.requestRecording();
+  onFileToRegistryAuthority() {
+    this.fileToRegistryAuthority();
   }
 
 
@@ -51,7 +52,7 @@ export class InstrumentFilingComponent implements OnChanges {
   private getFormData() {
     const formModel = this.form.value;
 
-    const data = {
+    const data: RequestPaymentOrderData = {
       rfc: (formModel.rfc as string).toUpperCase(),
       sendTo: (formModel.sendTo as string).toLowerCase()
     };
@@ -70,12 +71,12 @@ export class InstrumentFilingComponent implements OnChanges {
   }
 
 
-  private requestRecording() {
+  private fileToRegistryAuthority() {
     const payload = {
       instrument: this.instrument
     };
 
-    this.frontController.dispatch(InstrumentCommandType.FILE_TO_RECORDING_AUTHORITY, payload);
+    this.frontController.dispatch(InstrumentCommandType.FILE_TO_REGISTRY_AUTHORITY, payload);
   }
 
 

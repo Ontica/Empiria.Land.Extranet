@@ -206,56 +206,101 @@ export class DateStringLibrary {
 
 
   private static tryParse(value: string): Date {
-    if (!value) {
-      return null;
-    }
+    const dateParts: string[] = this.tryToConvertToDatePartsArray(value);
 
-    const dateParts = value.replace(new RegExp('-', 'g'), '/').split('/');
-
-    if (dateParts.length !== 3) {
+    if (!dateParts) {
       return null;
     }
 
     let monthIndex = dateParts.findIndex(x => LocalizationLibrary.findMonth(x) !== -1);
     if (monthIndex !== -1) {
       dateParts[monthIndex] = LocalizationLibrary.findMonth(dateParts[monthIndex]).toString();
-    } else if (this.isNumericValue(dateParts[1]) &&
-               (1 <= +dateParts[1] && +dateParts[1] <= 12)) {
-      monthIndex = 1;
-      dateParts[1] = (+dateParts[1] - 1).toString();
-    } else if (this.isNumericValue(dateParts[0]) &&
-               (1 <= +dateParts[0] && +dateParts[0] <= 12)) {
-      monthIndex = 0;
-      dateParts[0] = (+dateParts[0] - 1).toString();
     } else {
-      return null;
+      monthIndex = this.tryToDeterminateMonthIndex(dateParts);
+      if (monthIndex === -1) {
+        return null;
+      }
+      dateParts[monthIndex] = (+dateParts[monthIndex] - 1).toString();
     }
 
-    let yearIndex = dateParts.findIndex(x => this.isNumericValue(x) &&
-                                       (1900 <= +x && +x <= 2078) || x.length === 4);
-    if (yearIndex === -1) {
-      yearIndex = 2;
-    }
+    const yearIndex = this.getArrayIndexWithYear(dateParts);
     dateParts[yearIndex] = this.getYearAsString(+dateParts[yearIndex]);
 
 
     let dayIndex = dateParts.findIndex(x => x.includes('T'));
     if (dayIndex !== -1) {
       dateParts[dayIndex] = dateParts[dayIndex].substr(0, 2);
-    } else if (yearIndex === 2 && monthIndex === 1) {
-      dayIndex = 0;
-    } else if (yearIndex === 2 && monthIndex === 0) {
-      dayIndex = 1;
-    } else if (yearIndex === 0 && monthIndex === 1) {
-      dayIndex = 2;
     } else {
-      return null;
+      dayIndex = this.tryToDeterminateDayIndex(yearIndex, monthIndex);
+      if (dayIndex === -1) {
+        return null;
+      }
     }
 
     if (!this.isValidDate(+dateParts[yearIndex], +dateParts[monthIndex], +dateParts[dayIndex])) {
       return null;
     }
 
+    return this.tryToGetParsedDate(dateParts, yearIndex, monthIndex, dayIndex);
+  }
+
+
+  private static getArrayIndexWithYear(dateParts: string[]): number {
+    let yearIndex = dateParts.findIndex(x => this.isNumericValue(x) &&
+                                       (1900 <= +x && +x <= 2078) || x.length === 4);
+    if (yearIndex === -1) {
+      yearIndex = 2;
+    }
+    return yearIndex;
+  }
+
+
+  private static isNumericMonth(value: string): boolean {
+    return this.isNumericValue(value) && (1 <= +value && +value <= 12);
+  }
+
+
+  private static tryToConvertToDatePartsArray(value: string): string[] {
+    if (!value) {
+      return null;
+    }
+
+    const dateParts = value.replace(new RegExp('-', 'g'), '/').split('/');
+
+    if (dateParts.length === 3) {
+      return dateParts;
+    } else {
+      return null;
+    }
+  }
+
+
+  private static tryToDeterminateDayIndex(yearIndex: number, monthIndex: number): number {
+    if (yearIndex === 2 && monthIndex === 1) {
+      return 0;
+    } else if (yearIndex === 2 && monthIndex === 0) {
+      return 1;
+    } else if (yearIndex === 0 && monthIndex === 1) {
+      return 2;
+    } else {
+      return -1;
+    }
+  }
+
+
+  private static tryToDeterminateMonthIndex(dateParts: string[]): number {
+    if (this.isNumericMonth(dateParts[1])) {
+      return 1;
+    } else if (this.isNumericMonth(dateParts[0])) {
+      return 0;
+    } else {
+      return -1;
+    }
+  }
+
+
+  private static tryToGetParsedDate(dateParts: string[], yearIndex: number,
+                                    monthIndex: number, dayIndex: number): Date {
     const parsedDate = moment(`${+dateParts[yearIndex]}-` +
                               `${this.padZeros(+dateParts[monthIndex] + 1)}-` +
                               `${this.padZeros(+dateParts[dayIndex])}`).toDate();

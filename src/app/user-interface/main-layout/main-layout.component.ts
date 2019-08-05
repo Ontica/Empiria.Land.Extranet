@@ -9,6 +9,7 @@ import { Component } from '@angular/core';
 import { ActivationEnd, Router } from '@angular/router';
 
 import { UserInterfaceStore } from '@app/store/ui.store';
+import { ActionType } from '@app/integration/state.handlers/instruments.state.handler';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class MainLayoutComponent {
   }
 
 
-  onAction(event: any) {
+  onAction(action: ActionType) {
 
   }
 

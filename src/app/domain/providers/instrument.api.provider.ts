@@ -8,7 +8,8 @@
 import { Observable } from 'rxjs';
 
 import { LegalInstrument, LegalInstrumentStatus,
-         PreventiveNote, PreventiveNoteEditionData } from '@app/domain/entities';
+         PreventiveNote, PreventiveNoteEditionData,
+         RequestPaymentOrderData, RequestRecordingData } from '@app/domain/entities';
 
 
 export abstract class InstrumentApiProvider {
@@ -24,10 +25,13 @@ export abstract class InstrumentApiProvider {
   abstract createPreventiveNote(data: PreventiveNoteEditionData): Observable<PreventiveNote>;
 
 
-  abstract requestPaymentOrder(instrument: LegalInstrument, data: any): Observable<LegalInstrument>;
+  abstract fileToRegistryAuthority(instrument: LegalInstrument,
+                                   data: RequestRecordingData): Observable<LegalInstrument>;
 
 
-  abstract requestRecording(instrument: LegalInstrument, data: any);
+  abstract requestPaymentOrder(instrument: LegalInstrument,
+                               data: RequestPaymentOrderData): Observable<LegalInstrument>;
+
 
 
   abstract revokeInstrumentSign(instrument: LegalInstrument,

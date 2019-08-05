@@ -10,7 +10,16 @@ export class Validate {
 
 
   static hasValue(object: any): boolean {
-    if (object === null || object === undefined || object === {} || object === '') {
+    if (object === null) {
+      return false;
+    }
+    if (typeof object === 'undefined') {
+      return false;
+    }
+    if (object === {}) {
+      return false;
+    }
+    if (typeof object === 'string' && object === '') {
       return false;
     }
     return true;
@@ -21,8 +30,7 @@ export class Validate {
     if (!this.hasValue(value)) {
       return false;
     }
-    const emailExp = '^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$';
-    const regularExpresion = new RegExp(emailExp);
+    const regularExpresion = new RegExp(/^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/);
     const test = regularExpresion.test(value);
     return test;
   }
@@ -34,7 +42,7 @@ export class Validate {
 
 
   static notNull(value: any): boolean {
-    if ((value === null) || (value === undefined) || value === {}) {
+    if ((value === null) || (typeof value === 'undefined') || value === {}) {
       return false;
     }
     return true;

@@ -10,18 +10,18 @@ import { View } from './common';
 
 export class MenuItem {
 
-  readonly action: string = '';
+  readonly action: string;
 
-  readonly text: string = '';
+  readonly text: string;
 
-  readonly routerLink: string = '';
+  readonly routerLink: string;
 
   private disabledFlag = false;
 
   private selectedFlag = false;
 
 
-  constructor(text: string, action: string = '', routerLink: string = '', disabled: boolean = false) {
+  constructor(text: string, action = '', routerLink = '', disabled = false) {
     this.text = text;
     this.action = action;
     this.routerLink = routerLink;

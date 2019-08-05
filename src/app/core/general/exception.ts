@@ -12,6 +12,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 export class Exception extends Error {
 
+  readonly code: string;
+  readonly innerError: Error;
+
   constructor(message: string, innerError?: Error) {
     super(Exception.extractErrorMessage(message));
 
@@ -21,9 +24,6 @@ export class Exception extends Error {
     this.innerError = innerError;
     this.code = Exception.extractErrorCode(message);
   }
-
-  readonly code: string;
-  readonly innerError: Error;
 
   static convertTo(sourceErr: any, defaultMessage?: string): Exception {
     if (!sourceErr) {

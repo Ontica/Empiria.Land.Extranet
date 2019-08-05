@@ -18,7 +18,7 @@ export enum CommandType {
   SIGN                        = 'Land.LegalInstrument.Sign',
   REVOKE_SIGN                 = 'Land.LegalInstrument.RevokeSign',
   REQUEST_PAYMENT_ORDER       = 'Land.LegalInstrument.RequestPaymentOrder',
-  FILE_TO_RECORDING_AUTHORITY = 'Land.LegalInstrument.FileToRecordingAuthority'
+  FILE_TO_REGISTRY_AUTHORITY  = 'Land.LegalInstrument.FileToRegistryAuthority'
 }
 
 
@@ -53,8 +53,8 @@ export class InstrumentCommandHandler extends CommandHandler {
         return this.useCases.requestPaymentOrder(command.payload.instrument, command.payload.data)
           .toPromise();
 
-      case CommandType.FILE_TO_RECORDING_AUTHORITY:
-        return this.useCases.requestRecording(command.payload.instrument, {})
+      case CommandType.FILE_TO_REGISTRY_AUTHORITY:
+        return this.useCases.fileToRegistryAuthority(command.payload.instrument, {})
           .toPromise();
 
       default:

@@ -21,9 +21,9 @@ export class SpinnerComponent implements OnDestroy, OnInit {
   @HostBinding('style.display') display = 'block';
   @HostBinding('style.position') position = 'absolute';
 
-  private spinnerStateChanged: Subscription;
-
   visible = false;
+
+  private spinnerStateChanged: Subscription;
 
   constructor(private spinnerService: SpinnerService) {
 

@@ -54,7 +54,7 @@
       <tr *ngIf="instrument.transaction.uid && !instrument.transaction.presentationDate">
         <td></td>
         <td colspan="3">
-          <button type="submit" class="btn-action" (click)="onRequestRecording()">Ingresar el trámite</button>
+          <button type="submit" class="btn-action" (click)="onFileToRegistryAuthority()">Ingresar el trámite</button>
         </td>
       </tr>
       <tr *ngIf="instrument.transaction.uid && instrument.transaction.presentationDate">

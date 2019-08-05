@@ -76,7 +76,9 @@ export class PresentationState {
         return handler;
       }
     }
-    throw Assertion.assertNoReachThisCode(`There is not defined a presentation state handler for action '${actionType}'.`);
+    throw Assertion.assertNoReachThisCode(
+      `There is not defined a presentation state handler for action '${actionType}'.`
+    );
   }
 
 
@@ -86,7 +88,9 @@ export class PresentationState {
         return handler;
       }
     }
-    throw Assertion.assertNoReachThisCode(`There is not defined a presentation state handler for selector '${selector}'.`);
+    throw Assertion.assertNoReachThisCode(
+      `There is not defined a presentation state handler for selector '${selector}'.`
+    );
   }
 
 

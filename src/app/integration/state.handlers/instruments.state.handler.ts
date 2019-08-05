@@ -34,12 +34,12 @@ export enum SelectorType {
 
 
 enum CommandEffectType {
-  CREATE_PREVENTIVE_NOTE      = InstrumentCommandType.CREATE_PREVENTIVE_NOTE,
-  UPDATE_PREVENTIVE_NOTE      = InstrumentCommandType.UPDATE_PREVENTIVE_NOTE,
-  SIGN                        = InstrumentCommandType.SIGN,
-  REVOKE_SIGN                 = InstrumentCommandType.REVOKE_SIGN,
-  REQUEST_PAYMENT_ORDER       = InstrumentCommandType.REQUEST_PAYMENT_ORDER,
-  FILE_TO_RECORDING_AUTHORITY = InstrumentCommandType.FILE_TO_RECORDING_AUTHORITY
+  CREATE_PREVENTIVE_NOTE     = InstrumentCommandType.CREATE_PREVENTIVE_NOTE,
+  UPDATE_PREVENTIVE_NOTE     = InstrumentCommandType.UPDATE_PREVENTIVE_NOTE,
+  SIGN                       = InstrumentCommandType.SIGN,
+  REVOKE_SIGN                = InstrumentCommandType.REVOKE_SIGN,
+  REQUEST_PAYMENT_ORDER      = InstrumentCommandType.REQUEST_PAYMENT_ORDER,
+  FILE_TO_REGISTRY_AUTHORITY = InstrumentCommandType.FILE_TO_REGISTRY_AUTHORITY
 }
 
 
@@ -86,7 +86,7 @@ export class InstrumentsStateHandler extends AbstractStateHandler<InstrumentsSta
       case CommandEffectType.SIGN:
       case CommandEffectType.REVOKE_SIGN:
       case CommandEffectType.REQUEST_PAYMENT_ORDER:
-      case CommandEffectType.FILE_TO_RECORDING_AUTHORITY:
+      case CommandEffectType.FILE_TO_REGISTRY_AUTHORITY:
         this.stateUpdater.replaceEntity(SelectorType.INSTRUMENT_LIST, command.result);
         this.setValue(SelectorType.SELECTED_INSTRUMENT, command.result);
         return;

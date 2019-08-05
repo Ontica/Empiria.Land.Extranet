@@ -38,13 +38,13 @@ export interface StateHandler {
 
 export abstract class AbstractStateHandler<T> implements StateHandler {
 
-  private stateItems = new Map<string, BehaviorSubject<any>>();
-
   readonly selectors: string[] = [];
   readonly actions: string[] = [];
   readonly effects: string[] = [];
 
   protected stateUpdater: UpdateStateUtilities;
+
+  private stateItems = new Map<string, BehaviorSubject<any>>();
 
 
   constructor(initialState: StateValues, selectors: any, actions: any, effects: any) {
@@ -71,8 +71,6 @@ export abstract class AbstractStateHandler<T> implements StateHandler {
 
   abstract dispatch<U>(actionType: StateAction, payload?: any): Promise<U>;
 
-  abstract get state(): T;
-
 
   getValue<U>(selector: StateSelector): U {
     const stateItem = this.getStateMapItem(selector);
@@ -81,17 +79,20 @@ export abstract class AbstractStateHandler<T> implements StateHandler {
   }
 
 
-  protected getSubject<U>(selector: StateSelector): BehaviorSubject<U> {
-    const stateItem = this.getStateMapItem(selector);
-
-    return stateItem as BehaviorSubject<U>;
-  }
-
-
   select<U>(selector: StateSelector): Observable<U> {
     const stateItem = this.getStateMapItem(selector);
 
     return stateItem.asObservable() as Observable<U>;
+  }
+
+
+  abstract get state(): T;
+
+
+  protected getSubject<U>(selector: StateSelector): BehaviorSubject<U> {
+    const stateItem = this.getStateMapItem(selector);
+
+    return stateItem as BehaviorSubject<U>;
   }
 
 
