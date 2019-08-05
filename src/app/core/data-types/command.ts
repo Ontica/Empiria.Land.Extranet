@@ -14,6 +14,12 @@ export interface Command {
 }
 
 
+export interface EventInfo {
+  readonly type: string;
+  readonly payload?: any;
+}
+
+
 export interface CommandResult extends Command {
   readonly result: any;
 }

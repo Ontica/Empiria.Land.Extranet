@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -26,8 +26,6 @@ import { EmptyRealEstate, PreventiveNote, PreventiveNoteEditionData, RealEstate 
 export class PreventiveNoteComponent implements OnInit, OnChanges {
 
   @Input() preventiveNote: PreventiveNote;
-
-  @Output() preventiveNoteChange = new EventEmitter<PreventiveNote>();
 
   realEstate = EmptyRealEstate;
 
@@ -83,7 +81,8 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
       data: this.getFormData()
     };
 
-    this.frontController.dispatch(InstrumentCommandType.CREATE_PREVENTIVE_NOTE, payload);
+    this.frontController.dispatch(InstrumentCommandType.CREATE_PREVENTIVE_NOTE, payload)
+      .then(x => this.preventiveNote = x);
   }
 
 
@@ -141,7 +140,6 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
     this.store.dispatch<RealEstate>(InstrumentsStateAction.GET_REAL_ESTATE, { uid: propertyUID })
       .then(x => this.realEstate = x)
       .catch(err => console.log('Display something with real estate not found error', JSON.stringify(err)));
-
   }
 
 }

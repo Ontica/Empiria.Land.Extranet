@@ -51,7 +51,6 @@ export class PresentationState {
 
   dispatch<T>(actionType: StateAction, payload?: any): Promise<T> {
     Assertion.assertValue(actionType, 'actionType');
-    Assertion.assertValue(payload, 'payload');
 
     const stateHandler = this.getStateHandlerForAction(actionType);
 

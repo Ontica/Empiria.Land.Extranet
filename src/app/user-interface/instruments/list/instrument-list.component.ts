@@ -5,76 +5,55 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
-import { of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 
-import { Assertion } from '@app/core';
+import { EventInfo } from '@app/core';
 
 import { PresentationState } from '@app/core/presentation';
 
-import { LegalInstrument, EmptyLegalInstrument, LegalInstrumentStatus } from '@app/domain/models';
+import { LegalInstrument, EmptyLegalInstrument,
+         LegalInstrumentFilter, EmptyLegalInstrumentFilter } from '@app/domain/models';
 
-import { InstrumentStateSelector, InstrumentsStateAction } from '@app/core/presentation/state.commands';
+import { InstrumentsStateAction } from '@app/core/presentation/state.commands';
 
-import { View } from '@app/user-interface/main-layout';
+
+export enum InstrumentListEventType {
+  SET_FILTER                        = 'InstrumentListComponent.SetFilter',
+  ON_CLICK_CREATE_INSTRUMENT_BUTTON = 'InstrumentListComponent.OnClickCreateInstrumentButton'
+}
 
 
 @Component({
   selector: 'emp-land-instrument-list',
   templateUrl: './instrument-list.component.html'
 })
-export class InstrumentListComponent implements OnInit, OnChanges {
+export class InstrumentListComponent implements OnChanges {
 
-  @Input() view: View;
+  @Input() instrumentList: LegalInstrument[] = [];
 
-  @Output() instrumentSelected = new EventEmitter<LegalInstrument>();
+  @Input() selectedInstrument: LegalInstrument = EmptyLegalInstrument;
 
-  hint = 'Ningún documento encontrado';
+  @Input() filter: LegalInstrumentFilter = EmptyLegalInstrumentFilter;
+
+  @Input() title: 'Documentos';
+
+  @Output() instrumentListEvent = new EventEmitter<EventInfo>();
+
   keywords = '';
-
-  instrumentList = of<LegalInstrument[]>([]);
-  selectedInstrument = EmptyLegalInstrument;
-
-  displayCreateDocumentWizard = false;
 
 
   constructor(private store: PresentationState) { }
 
 
-  ngOnInit() {
-    this.instrumentList = this.store.select<LegalInstrument[]>(InstrumentStateSelector.INSTRUMENT_LIST)
-      .pipe(
-        tap(x => {
-          if (this.selectedInstrument.uid) {
-            const newSelected = x.find(item => item.uid === this.selectedInstrument.uid);
-            if (newSelected) {
-              this.onSelect(newSelected);
-            }
-          }
-          this.hint = `${x.length} documentos encontrados`;
-        })
-      );
-  }
-
-
-  ngOnChanges() {
-    this.setFilter();
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.filter) {
+      this.keywords = this.filter.keywords;
+    }
   }
 
 
   isSelected(instrument: LegalInstrument) {
     return (this.selectedInstrument.uid === instrument.uid);
-  }
-
-
-  openCreateDocumentWizard() {
-    this.displayCreateDocumentWizard = true;
-  }
-
-
-  closeCreateDocumentWizard() {
-    this.displayCreateDocumentWizard = false;
   }
 
 
@@ -84,38 +63,29 @@ export class InstrumentListComponent implements OnInit, OnChanges {
 
 
   onSelect(instrument: LegalInstrument) {
-    this.selectedInstrument = instrument;
+    this.store.dispatch(InstrumentsStateAction.SELECT_INSTRUMENT, { instrument });
+  }
 
-    this.instrumentSelected.emit(this.selectedInstrument);
+
+  onClickCreateInstrumentButton() {
+    const event: EventInfo = {
+      type: InstrumentListEventType.ON_CLICK_CREATE_INSTRUMENT_BUTTON
+    };
+
+    this.instrumentListEvent.emit(event);
   }
 
 
   // private methods
 
 
-  private getInstrumentStatusForSelectedView(): LegalInstrumentStatus {
-    switch (this.view.name) {
-      case 'Instruments.Pending':
-        return 'Pending';
-      case 'Instruments.Signed':
-        return 'Signed';
-      case 'Instruments.Requested':
-        return 'Requested';
-      case 'Instruments.All':
-        return 'All';
-      default:
-        throw Assertion.assertNoReachThisCode(`Unrecognized view with name '${this.view.name}'.`);
-    }
-  }
-
-
   private setFilter() {
-    const filter = {
-      status: this.getInstrumentStatusForSelectedView(),
-      keywords: this.keywords
+    const event: EventInfo = {
+      type: InstrumentListEventType.SET_FILTER,
+      payload: { keywords: this.keywords }
     };
 
-    this.store.dispatch(InstrumentsStateAction.SET_INSTRUMENT_FILTER, { filter });
+    this.instrumentListEvent.emit(event);
   }
 
 }

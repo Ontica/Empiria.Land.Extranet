@@ -2,16 +2,30 @@
 
   <div [fxHide.lt-lg]="displayEditor" class="primary">
     <emp-land-instrument-list
-        [view]="currentView"
-        (instrumentSelected)="onSelectInstrument($event)">
+      [instrumentList]="instrumentList"
+      [selectedInstrument]="selectedInstrument"
+      [filter]="filter"
+      [title]="currentView.title"
+      (instrumentListEvent)="onInstrumentListEvent($event)">
     </emp-land-instrument-list>
   </div>
 
   <div *ngIf="displayEditor" class="secondary">
     <emp-land-create-instrument-wizard
         [instrument]="selectedInstrument"
-        (wizardClose)="onEditorClose()">
+        (wizardClose)="onCloseEditor()">
     </emp-land-create-instrument-wizard>
   </div>
 
 </div>
+
+<emp-ng-modal-window *ngIf="displayCreateInstrumentWizard"
+                     [config]="{width:'840px', height:'900px', disableClose:true}"
+                     (modalWindowClose)="onCloseCreateInstrumentWizard()">
+
+  <emp-land-create-instrument-wizard
+      [showInstrumentTypeSelector]="true"
+      (wizardClose)="onCloseCreateInstrumentWizard()">
+  </emp-land-create-instrument-wizard>
+
+</emp-ng-modal-window>

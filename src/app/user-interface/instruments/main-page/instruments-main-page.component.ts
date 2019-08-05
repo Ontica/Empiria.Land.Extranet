@@ -6,13 +6,21 @@
  */
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { isEmpty, Assertion, EventInfo } from '@app/core';
+
+import { PresentationState } from '@app/core/presentation';
+import { InstrumentStateSelector, InstrumentsStateAction } from '@app/core/presentation/state.commands';
+
+import { LegalInstrument, EmptyLegalInstrument, LegalInstrumentStatus,
+         LegalInstrumentFilter, EmptyLegalInstrumentFilter } from '@app/domain/models';
 
 import { UserInterfaceStore } from '@app/store/ui.store';
-
-import { LegalInstrument, EmptyLegalInstrument } from '@app/domain/models';
-
 import { View } from '@app/user-interface/main-layout';
+
+import { InstrumentListEventType } from '../list/instrument-list.component';
 
 
 @Component({
@@ -22,48 +30,116 @@ import { View } from '@app/user-interface/main-layout';
 export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
 
   displayEditor = false;
-  toggleEditor = false;
   currentView: View;
 
+  instrumentList: LegalInstrument[] = [];
+
   selectedInstrument: LegalInstrument = EmptyLegalInstrument;
+  filter: LegalInstrumentFilter = EmptyLegalInstrumentFilter;
 
-  private subs1: Subscription;
+  displayCreateInstrumentWizard = false;
 
+  private unsubscribe: Subject<void> = new Subject();
 
-  constructor(private uiStore: UserInterfaceStore) { }
+  constructor(private store: PresentationState,
+              private uiStore: UserInterfaceStore) { }
 
 
   ngOnInit() {
-    this.subs1 = this.uiStore.currentView.subscribe(
-      x => this.onChangeView(x)
-    );
+    this.store.select<LegalInstrument[]>(InstrumentStateSelector.INSTRUMENT_LIST)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(x =>
+        this.instrumentList = x
+      );
+
+    this.uiStore.currentView
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(x =>
+        this.onChangeView(x)
+      );
+
+    this.store.select<LegalInstrument>(InstrumentStateSelector.SELECTED_INSTRUMENT)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(x => {
+        this.selectedInstrument = x;
+        this.displayEditor = !isEmpty(this.selectedInstrument);
+      });
+
+    this.store.select<LegalInstrumentFilter>(InstrumentStateSelector.LIST_FILTER)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(x =>
+        this.filter = x
+      );
   }
 
 
   ngOnDestroy() {
-    if (this.subs1) {
-      this.subs1.unsubscribe();
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+  }
+
+
+  onCloseEditor() {
+    this.store.dispatch(InstrumentsStateAction.UNSELECT_INSTRUMENT);
+  }
+
+
+  onInstrumentListEvent(event: EventInfo): void {
+    switch (event.type as InstrumentListEventType) {
+
+      case InstrumentListEventType.SET_FILTER:
+        this.setFilter(event.payload);
+        return;
+
+      case InstrumentListEventType.ON_CLICK_CREATE_INSTRUMENT_BUTTON:
+        this.displayCreateInstrumentWizard = true;
+        return;
+
+      default:
+        console.log(`Unhandled user interface event ${event.type}`);
+        return;
     }
   }
 
 
-  onSelectInstrument(instrument: LegalInstrument) {
-    this.selectedInstrument = instrument;
-    this.displayEditor = true;
+  onCloseCreateInstrumentWizard() {
+    this.displayCreateInstrumentWizard = false;
   }
-
-
-  onEditorClose() {
-    this.selectedInstrument = EmptyLegalInstrument;
-    this.displayEditor = false;
-  }
-
 
   // private methods
 
 
   private onChangeView(newView: View) {
     this.currentView = newView;
+    this.setFilter();
+  }
+
+
+  private getInstrumentStatusForView(view: View): LegalInstrumentStatus {
+    switch (view.name) {
+      case 'Instruments.Pending':
+        return 'Pending';
+      case 'Instruments.Signed':
+        return 'Signed';
+      case 'Instruments.Requested':
+        return 'Requested';
+      case 'Instruments.All':
+        return 'All';
+      default:
+        throw Assertion.assertNoReachThisCode(`Unrecognized view with name '${view.name}'.`);
+    }
+  }
+
+
+  private setFilter(data?: { keywords: string }) {
+    const currentKeywords = this.store.getValue<LegalInstrumentFilter>(InstrumentStateSelector.LIST_FILTER).keywords;
+
+    const filter = {
+      status: this.getInstrumentStatusForView(this.currentView),
+      keywords: data ? data.keywords : currentKeywords
+    };
+
+    this.store.dispatch(InstrumentsStateAction.SET_INSTRUMENT_FILTER, { filter });
   }
 
 }

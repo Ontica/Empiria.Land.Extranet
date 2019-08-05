@@ -23,8 +23,7 @@
       <ng-template matStepLabel>{{instrument.isSigned ? 'Ver' : 'Llenar'}}<br>el formulario</ng-template>
       <ng-container *ngIf="documentType === 'PreventiveNote'">
         <emp-land-preventive-note
-            [preventiveNote]="instrument"
-            (preventiveNoteChange)="onInstrumentChange($event)">
+            [preventiveNote]="instrument">
         </emp-land-preventive-note>
       </ng-container>
       <ng-container *ngIf="documentType === 'DefinitiveNote'">
@@ -55,7 +54,7 @@
       <ng-template matStepLabel>{{instrument.isSigned ? 'Firma electrónica' : 'Firmar el documento'}}</ng-template>
 
       <emp-land-instrument-sign-request
-          [instrument]="instrument" (instrumentChange)="onInstrumentChange($event)">
+          [instrument]="instrument">
       </emp-land-instrument-sign-request>
 
       <div class="right">
@@ -69,7 +68,7 @@
       <ng-template matStepLabel>{{instrument.isRequested ? 'Información del trámite' : 'Solicitar el trámite'}}</ng-template>
 
       <emp-land-instrument-filing
-          [instrument]="instrument" (instrumentChange)="onInstrumentChange($event)">
+          [instrument]="instrument">
       </emp-land-instrument-filing>
 
       <div class="right">

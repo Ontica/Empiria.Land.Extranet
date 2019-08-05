@@ -3,8 +3,8 @@
   <div class="card-header card-header-flat">
 
     <div class="card-title">
-      {{view.title}}
-      <div class="card-hint">{{hint}}</div>
+      {{title}}
+      <div class="card-hint">{{instrumentList.length}} documentos encontrados</div>
     </div>
 
     <div class="card-header-options">
@@ -15,7 +15,7 @@
                (search)="onFilterChange()" [(ngModel)]="keywords">
         &nbsp; &nbsp; &nbsp;
         <button class="btn-action"
-                (click)="openCreateDocumentWizard()" i18n>Nuevo</button>
+                (click)="onClickCreateInstrumentButton()" i18n>Nuevo</button>
 
     </div>
 
@@ -23,7 +23,7 @@
 
   <div class="card-body">
 
-    <div *ngFor="let instrument of instrumentList | async"
+    <div *ngFor="let instrument of instrumentList"
           class="list-item" matRipple [matRippleTrigger]="trigger"
           [class.list-item-selected]="isSelected(instrument)">
 
@@ -43,15 +43,3 @@
   </div> <!--card-body-->
 
 </div>
-
-
-<emp-ng-modal-window *ngIf="displayCreateDocumentWizard"
-                     [config]="{width:'840px', height:'900px', disableClose:true}"
-                     (modalWindowClose)="closeCreateDocumentWizard()">
-
-  <emp-land-create-instrument-wizard
-      [showInstrumentTypeSelector]="true"
-      (wizardClose)="closeCreateDocumentWizard()">
-  </emp-land-create-instrument-wizard>
-
-</emp-ng-modal-window>
