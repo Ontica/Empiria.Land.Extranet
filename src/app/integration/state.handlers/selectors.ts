@@ -5,7 +5,12 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
+import { SelectorType as MainUIStateSelector } from '../state.handlers/main-ui.state.handler';
+export { SelectorType as MainUIStateSelector } from '../state.handlers/main-ui.state.handler';
+
+
 import { SelectorType as InstrumentsStateSelector } from '../state.handlers/instruments.state.handler';
 export { SelectorType as InstrumentStateSelector } from '../state.handlers/instruments.state.handler';
 
-export type StateSelector = InstrumentsStateSelector;
+
+export type StateSelector = MainUIStateSelector | InstrumentsStateSelector;

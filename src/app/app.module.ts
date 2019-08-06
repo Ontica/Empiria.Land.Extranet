@@ -11,7 +11,6 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CoreModule } from './core/core.module';
-import { StoreModule } from './store/store.module';
 
 import { MainLayoutModule } from './user-interface/main-layout/main-layout.module';
 
@@ -40,7 +39,6 @@ const EXCEPTION_HANDLER_PROVIDER = { provide: ErrorHandler, useClass: ExceptionH
     BrowserAnimationsModule,
 
     CoreModule,
-    StoreModule,
     MainLayoutModule,
 
     AppRoutingModule,

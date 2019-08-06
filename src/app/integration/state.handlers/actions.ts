@@ -5,7 +5,12 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
+import { ActionType as MainUIStateAction } from '../state.handlers/main-ui.state.handler';
+export { ActionType as MainUIStateAction } from '../state.handlers/main-ui.state.handler';
+
+
 import { ActionType as InstrumentsStateAction } from '../state.handlers/instruments.state.handler';
 export { ActionType as InstrumentsStateAction } from '../state.handlers/instruments.state.handler';
 
-export type StateAction = InstrumentsStateAction;
+
+export type StateAction = MainUIStateAction | InstrumentsStateAction;

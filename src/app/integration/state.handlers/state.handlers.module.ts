@@ -9,14 +9,18 @@ import { NgModule } from '@angular/core';
 
 import { STATE_HANDLERS } from '@app/core/presentation/presentation.state';
 
+import { MainUserInterfaceStateHandler } from './main-ui.state.handler';
 import { InstrumentsStateHandler } from './instruments.state.handler';
+
 
 
 @NgModule({
 
   providers: [
+    MainUserInterfaceStateHandler,
     InstrumentsStateHandler,
 
+    { provide: STATE_HANDLERS, useExisting: MainUserInterfaceStateHandler, multi: true },
     { provide: STATE_HANDLERS, useExisting: InstrumentsStateHandler, multi: true }
 
   ]

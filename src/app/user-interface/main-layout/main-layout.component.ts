@@ -8,8 +8,8 @@
 import { Component } from '@angular/core';
 import { ActivationEnd, Router } from '@angular/router';
 
-import { UserInterfaceStore } from '@app/store/ui.store';
-import { ActionType } from '@app/integration/state.handlers/instruments.state.handler';
+import { PresentationState } from '@app/core/presentation';
+import { MainUIStateAction, StateAction } from '@app/core/presentation/state.commands';
 
 
 @Component({
@@ -21,19 +21,20 @@ export class MainLayoutComponent {
 
   keywords = '';
 
-  constructor(uiStore: UserInterfaceStore,
-              private router: Router) {
+  constructor(store: PresentationState, private router: Router) {
+
     this.router.events.subscribe(val => {
       if (val instanceof ActivationEnd) {
         const url = this.router.routerState.snapshot.url.split(';')[0];
 
-        uiStore.setCurrentViewFromUrl(url);
+        store.dispatch(MainUIStateAction.SET_CURRENT_VIEW_FROM_URL, { url });
       }
     });
+
   }
 
 
-  onAction(action: ActionType) {
+  onAction(action: StateAction) {
 
   }
 

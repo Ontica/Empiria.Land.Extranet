@@ -6,12 +6,14 @@
  */
 
 import { Component, EventEmitter,
-         Input, Output, OnDestroy, OnInit } from '@angular/core';
+         Output, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { UserInterfaceStore } from '@app/store/ui.store';
+import { PresentationState } from '@app/core/presentation';
 
 import { MenuItem, NavigationHeader } from '@app/user-interface/main-layout';
+import { MainUIStateSelector } from '@app/core/presentation/state.commands';
+
 
 
 @Component({
@@ -27,13 +29,14 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(protected uiStore: UserInterfaceStore) { }
+  constructor(protected state: PresentationState) { }
 
 
   ngOnInit() {
-    this.subscription = this.uiStore.navigationHeader.subscribe (
-      value => this.navigationHeader = value
-    );
+    this.subscription = this.state.select<NavigationHeader>(MainUIStateSelector.NAVIGATION_HEADER)
+      .subscribe (
+        value => this.navigationHeader = value
+      );
   }
 
 

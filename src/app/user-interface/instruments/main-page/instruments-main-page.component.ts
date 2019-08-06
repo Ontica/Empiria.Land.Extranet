@@ -12,12 +12,12 @@ import { takeUntil } from 'rxjs/operators';
 import { isEmpty, Assertion, EventInfo } from '@app/core';
 
 import { PresentationState } from '@app/core/presentation';
-import { InstrumentStateSelector, InstrumentsStateAction } from '@app/core/presentation/state.commands';
+import { InstrumentStateSelector, InstrumentsStateAction,
+         MainUIStateSelector } from '@app/core/presentation/state.commands';
 
 import { LegalInstrument, EmptyLegalInstrument, LegalInstrumentStatus,
          LegalInstrumentFilter, EmptyLegalInstrumentFilter } from '@app/domain/models';
 
-import { UserInterfaceStore } from '@app/store/ui.store';
 import { View } from '@app/user-interface/main-layout';
 
 import { InstrumentListEventType } from '../list/instrument-list.component';
@@ -41,8 +41,7 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
 
   private unsubscribe: Subject<void> = new Subject();
 
-  constructor(private store: PresentationState,
-              private uiStore: UserInterfaceStore) { }
+  constructor(private store: PresentationState) { }
 
 
   ngOnInit() {
@@ -52,7 +51,7 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
         this.instrumentList = x
       );
 
-    this.uiStore.currentView
+    this.store.select<View>(MainUIStateSelector.CURRENT_VIEW)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(x =>
         this.onChangeView(x)
