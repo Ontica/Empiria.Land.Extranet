@@ -1,5 +1,7 @@
 # Empiria Land Extranet Web Site
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5d4a7bd36f5b4001bd0d1af439c08cb0)](https://app.codacy.com/app/Ontica/Empiria.Land.Extranet?utm_source=github.com&utm_medium=referral&utm_content=Ontica/Empiria.Land.Extranet&utm_campaign=Badge_Grade_Dashboard)
+
 ## Overview
 
 Provides Empiria Land services for large users like notaries, judges and other government entities and authorities. Services include deeds recording requests, preventive notes registration, certified copies, real estate certificates emission, and documents and images search services as well.
