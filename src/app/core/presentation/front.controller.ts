@@ -13,6 +13,7 @@ import { Assertion, Command, CommandHandler, CommandResult,
 import { PresentationState } from './presentation.state';
 
 import { CommandType } from './commands';
+import { MainUIStateAction } from '@app/integration/state.handlers/actions';
 
 
 export const COMMAND_HANDLERS =
@@ -99,7 +100,7 @@ export class FrontController {
 
   private endProcessing(): void {
     this.processing = false;
-    document.body.style.cursor = 'default';
+    this.presentation.dispatch(MainUIStateAction.SET_IS_PROCESSING_FLAG, false);
   }
 
 
@@ -115,7 +116,7 @@ export class FrontController {
 
   private startProcessing(): void {
     this.processing = true;
-    document.body.style.cursor = 'wait';
+    this.presentation.dispatch(MainUIStateAction.SET_IS_PROCESSING_FLAG, true);
   }
 
 
