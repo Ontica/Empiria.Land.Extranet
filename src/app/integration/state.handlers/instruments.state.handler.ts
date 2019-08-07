@@ -7,19 +7,18 @@
 
 import { Injectable } from '@angular/core';
 
-import { Assertion, CommandResult, toPromise, resolve } from '@app/core';
+import { Assertion, CommandResult } from '@app/core';
 
 import { AbstractStateHandler, StateValues } from '@app/core/presentation/state-handler';
 
-import { InstrumentUseCases, PropertyUseCases } from '@app/domain/use-cases';
+import { InstrumentUseCases } from '@app/domain/use-cases';
 
 import { LegalInstrument, LegalInstrumentFilter,
-         EmptyLegalInstrumentFilter, EmptyLegalInstrument, RealEstate } from '@app/domain/models';
+         EmptyLegalInstrumentFilter, EmptyLegalInstrument } from '@app/domain/models';
 import { InstrumentCommandType } from '../command.handlers/commands';
 
 
 export enum ActionType {
-  GET_REAL_ESTATE       = 'Land.UI-Action.RealEstate.LoadOrGetCached',
   SET_INSTRUMENT_FILTER = 'Land.UI-Action.LegalInstruments.SetListFilter',
   SELECT_INSTRUMENT     = 'Land.UI-Action.LegalInstruments.SelectInstrument',
   UNSELECT_INSTRUMENT   = 'Land.UI-Action.LegaInstruments.UnselectInstrument'
@@ -59,8 +58,7 @@ const initialState: StateValues = [
 @Injectable()
 export class InstrumentsStateHandler extends AbstractStateHandler<InstrumentsState> {
 
-  constructor(private useCases: InstrumentUseCases,
-              private propertyUseCases: PropertyUseCases) {
+  constructor(private useCases: InstrumentUseCases) {
     super(initialState, SelectorType, ActionType, CommandEffectType);
   }
 
@@ -97,40 +95,27 @@ export class InstrumentsStateHandler extends AbstractStateHandler<InstrumentsSta
   }
 
 
-  dispatch<U>(actionType: ActionType, payload?: any): Promise<U> {
+  dispatch<U>(actionType: ActionType, payload?: any): Promise<U> | void {
     switch (actionType) {
-
-      case ActionType.GET_REAL_ESTATE:
-        Assertion.assertValue(payload.uid, 'options.uid');
-
-        return toPromise<U>(
-          this.propertyUseCases.getRealEstate(payload.uid)
-        );
 
       case ActionType.SET_INSTRUMENT_FILTER:
         Assertion.assertValue(payload.filter, 'payload.filter');
 
         this.setValue(SelectorType.LIST_FILTER, payload.filter);
 
-        this.setValue(SelectorType.INSTRUMENT_LIST,
-                      this.useCases.getInstruments(this.state.listFilter));
-
-        return resolve<U>();
-
+        return this.setValue<U>(SelectorType.INSTRUMENT_LIST,
+                                this.useCases.getInstruments(this.state.listFilter));
 
       case ActionType.SELECT_INSTRUMENT:
         Assertion.assertValue(payload.instrument, 'payload.instrument');
 
         this.setValue(SelectorType.SELECTED_INSTRUMENT, payload.instrument);
-
-        return resolve<U>();
+        return;
 
 
       case ActionType.UNSELECT_INSTRUMENT:
         this.setValue(SelectorType.SELECTED_INSTRUMENT, EmptyLegalInstrument);
-
-        return resolve<U>();
-
+        return;
 
       default:
         throw this.unhandledCommandOrActionType(actionType);

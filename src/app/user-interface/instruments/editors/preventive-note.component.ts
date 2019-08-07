@@ -14,7 +14,7 @@ import { Assertion } from '@app/core';
 import { FrontController, PresentationState } from '@app/core/presentation';
 
 import { InstrumentCommandType } from '@app/core/presentation/commands';
-import { InstrumentsStateAction } from '@app/core/presentation/state.commands';
+import { RepositoryStateAction } from '@app/core/presentation/state.commands';
 
 import { EmptyRealEstate, PreventiveNote, PreventiveNoteEditionData, RealEstate } from '@app/domain/models';
 
@@ -38,8 +38,8 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
   });
 
 
-  constructor(private store: PresentationState,
-              private frontController: FrontController) { }
+  constructor(private frontController: FrontController,
+              private store: PresentationState) { }
 
 
   get isReadyForSave() {
@@ -137,7 +137,7 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
     const propertyUID = this.form.value.propertyUID.toUpperCase();
 
-    this.store.dispatch<RealEstate>(InstrumentsStateAction.GET_REAL_ESTATE, { uid: propertyUID })
+    this.store.dispatch<RealEstate>(RepositoryStateAction.LOAD_REAL_ESTATE, { uid: propertyUID })
       .then(x => this.realEstate = x)
       .catch(err => console.log('Display something with real estate not found error', JSON.stringify(err)));
   }

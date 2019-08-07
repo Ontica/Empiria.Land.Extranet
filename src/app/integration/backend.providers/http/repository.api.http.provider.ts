@@ -10,13 +10,13 @@ import { Observable } from 'rxjs';
 
 import { Assertion, HttpService } from '@app/core';
 
-import { PropertyApiProvider } from '@app/domain/providers';
+import { RepositoryApiProvider } from '@app/domain/providers';
 
 import { RealEstate } from '@app/domain/entities';
 
 
 @Injectable()
-export class PropertyApiHttpProvider extends PropertyApiProvider {
+export class RepositoryApiHttpProvider extends RepositoryApiProvider {
 
   constructor(private http: HttpService) {
     super();

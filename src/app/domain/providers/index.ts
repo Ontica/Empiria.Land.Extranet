@@ -6,5 +6,5 @@
  */
 
 export * from './instrument.api.provider';
-export * from './property.api.provider';
+export * from './repository.api.provider';
 

@@ -13,29 +13,29 @@ import { Assertion } from '@app/core';
 
 import { RealEstate, Property } from '@app/domain/models';
 
-import { PropertyApiProvider } from '../providers';
+import { RepositoryApiProvider } from '../providers';
 
 
 @Injectable()
-export class PropertyUseCases {
+export class RepositoryUseCases {
 
-  private cache = new Map<string, Property>();
-
-
-  constructor(private backend: PropertyApiProvider) { }
+  private realEstateCache = new Map<string, Property>();
 
 
-  getRealEstate(propertyUID: string): Observable<RealEstate> {
-    Assertion.assertValue(propertyUID, 'propertyUID');
+  constructor(private backend: RepositoryApiProvider) { }
 
-    if (this.cache.has(propertyUID)) {
-      return of(this.cache.get(propertyUID) as RealEstate);
+
+  getRealEstate(uid: string): Observable<RealEstate> {
+    Assertion.assertValue(uid, 'uid');
+
+    if (this.realEstateCache.has(uid)) {
+      return of(this.realEstateCache.get(uid) as RealEstate);
     }
 
-    return this.backend.getRealEstate(propertyUID)
+    return this.backend.getRealEstate(uid)
       .pipe(
         tap(x => {
-          this.cache.set(x.uid, x);
+          this.realEstateCache.set(x.uid, x);
         })
       );
   }

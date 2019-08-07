@@ -10,7 +10,7 @@ import { NgModule } from '@angular/core';
 import { BackendProvidersModule } from '@app/integration/backend.providers/backend.providers.module';
 
 import { InstrumentUseCases } from './instrument.use-cases';
-import { PropertyUseCases } from './property.use-cases';
+import { RepositoryUseCases } from './repository.use-cases';
 
 
 @NgModule({
@@ -21,7 +21,7 @@ import { PropertyUseCases } from './property.use-cases';
 
   providers: [
     InstrumentUseCases,
-    PropertyUseCases
+    RepositoryUseCases
   ]
 
 })

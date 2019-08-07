@@ -11,6 +11,7 @@ import { STATE_HANDLERS } from '@app/core/presentation/presentation.state';
 
 import { MainUserInterfaceStateHandler } from './main-ui.state.handler';
 import { InstrumentsStateHandler } from './instruments.state.handler';
+import { RepositoryStateHandler } from './repository.state.handler';
 
 
 
@@ -19,9 +20,11 @@ import { InstrumentsStateHandler } from './instruments.state.handler';
   providers: [
     MainUserInterfaceStateHandler,
     InstrumentsStateHandler,
+    RepositoryStateHandler,
 
     { provide: STATE_HANDLERS, useExisting: MainUserInterfaceStateHandler, multi: true },
-    { provide: STATE_HANDLERS, useExisting: InstrumentsStateHandler, multi: true }
+    { provide: STATE_HANDLERS, useExisting: InstrumentsStateHandler, multi: true },
+    { provide: STATE_HANDLERS, useExisting: RepositoryStateHandler, multi: true }
 
   ]
 

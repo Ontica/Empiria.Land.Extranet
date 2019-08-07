@@ -8,17 +8,17 @@
 import { NgModule } from '@angular/core';
 
 import { InstrumentApiProvider } from '@app/domain/providers/instrument.api.provider';
-import { PropertyApiProvider } from '@app/domain/providers/property.api.provider';
+import { RepositoryApiProvider } from '@app/domain/providers/repository.api.provider';
 
 import { InstrumentApiHttpProvider } from './http/instrument.api.http.provider';
-import { PropertyApiHttpProvider } from './http/property.api.http.provider';
+import { RepositoryApiHttpProvider } from './http/repository.api.http.provider';
 
 
 @NgModule({
 
   providers: [
     { provide: InstrumentApiProvider, useClass: InstrumentApiHttpProvider },
-    { provide: PropertyApiProvider, useClass: PropertyApiHttpProvider }
+    { provide: RepositoryApiProvider, useClass: RepositoryApiHttpProvider }
   ]
 
 })

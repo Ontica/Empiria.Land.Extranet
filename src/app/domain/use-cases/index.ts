@@ -7,4 +7,4 @@
 
 
 export * from './instrument.use-cases';
-export * from './property.use-cases';
+export * from './repository.use-cases';
