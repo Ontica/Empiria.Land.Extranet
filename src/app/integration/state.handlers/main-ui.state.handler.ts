@@ -7,7 +7,7 @@
 
 import { Injectable } from '@angular/core';
 
-import { Assertion, CommandResult, Exception } from '@app/core';
+import { Assertion, CommandResult, Exception, resolve } from '@app/core';
 
 import { AbstractStateHandler, StateValues } from '@app/core/presentation/state-handler';
 
@@ -71,7 +71,7 @@ export class MainUserInterfaceStateHandler extends AbstractStateHandler<MainUser
   }
 
 
-  dispatch<U>(actionType: ActionType, payload?: any): Promise<any> {
+  dispatch<U>(actionType: ActionType, payload?: any): Promise<U> {
     switch (actionType) {
 
       case ActionType.SET_CURRENT_VIEW_FROM_URL:
@@ -79,7 +79,7 @@ export class MainUserInterfaceStateHandler extends AbstractStateHandler<MainUser
 
         this.setCurrentViewFromUrl(payload.url);
 
-        return Promise.resolve();
+        return resolve<U>();
 
       default:
         throw this.unhandledCommandOrActionType(actionType);

@@ -43,9 +43,9 @@ export abstract class CommandHandler {
     this.commands = Object.keys(commands).map(k => commands[k as string]);
   }
 
+  abstract execute(command: Command): void;
 
-  abstract execute(command: Command): Promise<any>;
-
+  abstract execute<U>(command: Command): Promise<U>;
 
   protected unhandledCommand(command: Command): never {
     const msg = `${CommandHandler.name} is not able to handle command ${command.type}.`;

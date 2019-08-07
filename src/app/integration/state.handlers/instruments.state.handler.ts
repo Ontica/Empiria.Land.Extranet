@@ -7,14 +7,14 @@
 
 import { Injectable } from '@angular/core';
 
-import { Assertion, CommandResult } from '@app/core';
+import { Assertion, CommandResult, toPromise, resolve } from '@app/core';
 
 import { AbstractStateHandler, StateValues } from '@app/core/presentation/state-handler';
 
 import { InstrumentUseCases, PropertyUseCases } from '@app/domain/use-cases';
 
 import { LegalInstrument, LegalInstrumentFilter,
-         EmptyLegalInstrumentFilter, EmptyLegalInstrument } from '@app/domain/models';
+         EmptyLegalInstrumentFilter, EmptyLegalInstrument, RealEstate } from '@app/domain/models';
 import { InstrumentCommandType } from '../command.handlers/commands';
 
 
@@ -97,15 +97,15 @@ export class InstrumentsStateHandler extends AbstractStateHandler<InstrumentsSta
   }
 
 
-  dispatch<U>(actionType: ActionType, payload?: any): Promise<any> {
+  dispatch<U>(actionType: ActionType, payload?: any): Promise<U> {
     switch (actionType) {
 
       case ActionType.GET_REAL_ESTATE:
         Assertion.assertValue(payload.uid, 'options.uid');
 
-        return this.propertyUseCases.getRealEstate(payload.uid)
-          .toPromise();
-
+        return toPromise<U>(
+          this.propertyUseCases.getRealEstate(payload.uid)
+        );
 
       case ActionType.SET_INSTRUMENT_FILTER:
         Assertion.assertValue(payload.filter, 'payload.filter');
@@ -115,7 +115,7 @@ export class InstrumentsStateHandler extends AbstractStateHandler<InstrumentsSta
         this.setValue(SelectorType.INSTRUMENT_LIST,
                       this.useCases.getInstruments(this.state.listFilter));
 
-        return Promise.resolve();
+        return resolve<U>();
 
 
       case ActionType.SELECT_INSTRUMENT:
@@ -123,13 +123,13 @@ export class InstrumentsStateHandler extends AbstractStateHandler<InstrumentsSta
 
         this.setValue(SelectorType.SELECTED_INSTRUMENT, payload.instrument);
 
-        return Promise.resolve();
+        return resolve<U>();
 
 
       case ActionType.UNSELECT_INSTRUMENT:
         this.setValue(SelectorType.SELECTED_INSTRUMENT, EmptyLegalInstrument);
 
-        return Promise.resolve();
+        return resolve<U>();
 
 
       default:

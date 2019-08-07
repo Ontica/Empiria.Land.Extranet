@@ -28,7 +28,8 @@ export interface StateHandler {
   applyEffects(command: CommandResult): void;
 
   dispatch(actionType: StateAction, payload?: any): void;
-  dispatch<U>(actionType: StateAction, payload?: any): Promise<U>;
+
+  dispatch<U>(actionType: StateAction, payload?: any): U extends void ? void : Promise<U>;
 
   getValue<U>(selector: StateSelector): U;
 

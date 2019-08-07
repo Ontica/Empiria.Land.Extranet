@@ -49,12 +49,16 @@ export class PresentationState {
   }
 
 
-  dispatch<T>(actionType: StateAction, payload?: any): Promise<T> {
+  dispatch(actionType: StateAction, payload?: any): void;
+
+  dispatch<U>(actionType: StateAction, payload?: any): Promise<U>;
+
+  dispatch<U>(actionType: StateAction, payload?: any): U extends void ? void : Promise<U> {
     Assertion.assertValue(actionType, 'actionType');
 
     const stateHandler = this.getStateHandlerForAction(actionType);
 
-    return stateHandler.dispatch<T>(actionType, payload);
+    return stateHandler.dispatch<U>(actionType, payload);
   }
 
 

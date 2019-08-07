@@ -81,7 +81,7 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
       data: this.getFormData()
     };
 
-    this.frontController.dispatch(InstrumentCommandType.CREATE_PREVENTIVE_NOTE, payload)
+    this.frontController.dispatch<PreventiveNote>(InstrumentCommandType.CREATE_PREVENTIVE_NOTE, payload)
       .then(x => this.preventiveNote = x);
   }
 

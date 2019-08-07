@@ -7,7 +7,8 @@
 
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 
-import { Command, Assertion, CommandHandler, createCommand as createCommandAlias, CommandResult } from '@app/core';
+import { Assertion, Command, CommandHandler, CommandResult,
+        createCommand as createCommandAlias } from '@app/core';
 
 import { PresentationState } from './presentation.state';
 
@@ -37,19 +38,23 @@ export class FrontController {
   }
 
 
-  dispatch(command: Command): Promise<any>;
+  dispatch(command: Command): void;
+
+  dispatch<U>(command: Command): Promise<U>;
+
+  dispatch(commandType: CommandType, payload?: any): void;
+
+  dispatch<U>(commandType: CommandType, payload?: any): Promise<U>;
 
 
-  dispatch(commandType: CommandType, payload?: any): Promise<any>;
+  dispatch<U>(commandOrCommandType: Command | CommandType, payload?: any): Promise<U> {
+    Assertion.assertValue(commandOrCommandType, 'commandOrCommandType');
 
-
-  dispatch(command: Command | CommandType, payload?: any): Promise<any> {
-    Assertion.assertValue(command, 'command');
-
-    if (typeof command === 'string') {
-      return this.dispatchImplementation(this.createCommand(command as CommandType, payload));
+    if (typeof commandOrCommandType === 'string') {
+      const command = this.createCommand(commandOrCommandType as CommandType, payload);
+      return this.dispatchImplementation<U>(command);
     } else {
-      return this.dispatchImplementation(command);
+      return this.dispatchImplementation<U>(commandOrCommandType);
     }
   }
 
@@ -65,7 +70,7 @@ export class FrontController {
   }
 
 
-  private dispatchImplementation(command: Command): Promise<any> {
+  private dispatchImplementation<U>(command: Command): Promise<U> {
     if (this.isProcessing) {
       throw new Error('FrontController is processing a previous command. Please try again later.');
     }
@@ -75,15 +80,15 @@ export class FrontController {
 
       const commandHandler: CommandHandler = this.selectCommandHandler(command);
 
-      return commandHandler.execute(command)
+      return commandHandler.execute<U>(command)
         .then(x => {
           this.afterCommandExecution(command, x);
           return x;
 
-        }).catch(e =>
-          this.whenCommandExecutionFails(command, e)
-
-        );
+        }).catch(e => {
+          this.whenCommandExecutionFails(command, e);
+          throw e;
+        });
 
     } catch (e) {
       this.endProcessing();
@@ -118,8 +123,6 @@ export class FrontController {
     this.endProcessing();
 
     console.log(`There was a problem executing command ${command.type} in FrontController.`, error);
-
-    throw error;
   }
 
 }
