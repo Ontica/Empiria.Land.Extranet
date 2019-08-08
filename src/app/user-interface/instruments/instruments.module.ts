@@ -14,6 +14,7 @@ import { AngularFlexLayoutModule } from '@app/shared/angular-flex-layout.module'
 
 import { SharedContainersModule } from '@app/shared/containers/shared-containers.module';
 import { SharedFormControlsModule } from '@app/shared/form-controls/shared-form-controls.module';
+import { SharedIndicatorsModule } from '@app/shared/indicators/shared-indicators.module';
 
 import { CreateInstrumentWizardComponent } from './create-wizard/create-instrument-wizard.component';
 import { DeedComponent } from './editors/deed.component';
@@ -40,6 +41,7 @@ import { InstrumentsRoutingModule } from './instruments-routing.module';
 
     SharedContainersModule,
     SharedFormControlsModule,
+    SharedIndicatorsModule,
 
     InstrumentsRoutingModule
   ],

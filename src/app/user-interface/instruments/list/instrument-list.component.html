@@ -4,7 +4,11 @@
 
     <div class="card-title">
       {{title}}
-      <div class="card-hint">{{instrumentList.length}} documentos encontrados</div>
+      <div class="card-hint" empNgProgressText
+           loadingText="Cargando documentos"
+           [finalText]="instrumentList.length + ' documentos encontrados'"
+           [isLoading]="isLoading"></div>
+
     </div>
 
     <div class="card-header-options">

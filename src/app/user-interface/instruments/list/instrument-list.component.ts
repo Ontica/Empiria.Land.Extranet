@@ -37,6 +37,8 @@ export class InstrumentListComponent implements OnChanges {
 
   @Input() title: 'Documentos';
 
+  @Input() isLoading = false;
+
   @Output() instrumentListEvent = new EventEmitter<EventInfo>();
 
   keywords = '';

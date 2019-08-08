@@ -33,11 +33,12 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
   currentView: View;
 
   instrumentList: LegalInstrument[] = [];
-
   selectedInstrument: LegalInstrument = EmptyLegalInstrument;
   filter: LegalInstrumentFilter = EmptyLegalInstrumentFilter;
 
   displayCreateInstrumentWizard = false;
+
+  isLoading = false;
 
   private unsubscribe: Subject<void> = new Subject();
 
@@ -87,7 +88,7 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
     switch (event.type as InstrumentListEventType) {
 
       case InstrumentListEventType.SET_FILTER:
-        this.setFilter(event.payload);
+        this.loadInstruments(event.payload);
         return;
 
       case InstrumentListEventType.ON_CLICK_CREATE_INSTRUMENT_BUTTON:
@@ -105,12 +106,13 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
     this.displayCreateInstrumentWizard = false;
   }
 
+
   // private methods
 
 
   private onChangeView(newView: View) {
     this.currentView = newView;
-    this.setFilter();
+    this.loadInstruments();
   }
 
 
@@ -130,7 +132,7 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
   }
 
 
-  private setFilter(data?: { keywords: string }) {
+  private loadInstruments(data?: { keywords: string }) {
     const currentKeywords = this.store.getValue<LegalInstrumentFilter>(InstrumentStateSelector.LIST_FILTER).keywords;
 
     const filter = {
@@ -138,7 +140,9 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
       keywords: data ? data.keywords : currentKeywords
     };
 
-    this.store.dispatch(InstrumentsStateAction.SET_INSTRUMENT_FILTER, { filter });
+    this.isLoading = true;
+    this.store.dispatch<any>(InstrumentsStateAction.SET_INSTRUMENT_FILTER, { filter })
+      .then(() => this.isLoading = false);
   }
 
 }
