@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Directive, ElementRef, OnChanges, Input } from '@angular/core';
+import { Directive, ElementRef, OnChanges, Input, OnDestroy } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -13,7 +13,7 @@ import { tap } from 'rxjs/operators';
 @Directive({
   selector: '[empNgProgressText]'
 })
-export class ProgressTextDirective implements OnChanges {
+export class ProgressTextDirective implements OnChanges, OnDestroy {
 
   @Input() isLoading: boolean;
 
@@ -33,6 +33,13 @@ export class ProgressTextDirective implements OnChanges {
       this.originalInnerText = this.el.nativeElement.innerText;
     }
     this.showProgressLabel();
+  }
+
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 
