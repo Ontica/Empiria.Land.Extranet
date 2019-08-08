@@ -39,16 +39,6 @@ export class PresentationState {
     }
   }
 
-
-  getValue<T>(selector: StateSelector): T {
-    Assertion.assertValue(selector, 'selector');
-
-    const stateHandler = this.getStateHandlerForSelector(selector);
-
-    return stateHandler.getValue<T>(selector);
-  }
-
-
   dispatch(actionType: StateAction, payload?: any): void;
 
   dispatch<U>(actionType: StateAction, payload?: any): Promise<U>;
@@ -59,6 +49,15 @@ export class PresentationState {
     const stateHandler = this.getStateHandlerForAction(actionType);
 
     return stateHandler.dispatch<U>(actionType, payload);
+  }
+
+
+  getValue<T>(selector: StateSelector): T {
+    Assertion.assertValue(selector, 'selector');
+
+    const stateHandler = this.getStateHandlerForSelector(selector);
+
+    return stateHandler.getValue<T>(selector);
   }
 
 

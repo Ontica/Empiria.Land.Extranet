@@ -9,7 +9,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 
 import { Assertion } from '../general/assertion';
 
-import { CommandResult, KeyValue } from '../data-types';
+import { CommandResult, KeyValue, resolve } from '../data-types';
 
 import { StateAction, StateSelector } from './state.commands';
 import { CommandType } from './commands';
@@ -70,7 +70,7 @@ export abstract class AbstractStateHandler<T> implements StateHandler {
 
   abstract applyEffects(command: CommandResult): void;
 
-  abstract dispatch<U>(actionType: StateAction, payload?: any): Promise<U>;
+  abstract dispatch<U>(actionType: StateAction, payload?: any): Promise<U> | void;
 
 
   getValue<U>(selector: StateSelector): U {
@@ -97,13 +97,22 @@ export abstract class AbstractStateHandler<T> implements StateHandler {
   }
 
 
-  protected setValue(selector: StateSelector, value: any): void {
+  protected setValue(selector: StateSelector, value: any): void;
+
+  protected setValue<U>(selector: StateSelector, value: Observable<any>): Promise<U>;
+
+  protected setValue<U>(selector: StateSelector, value: Observable<any> | any): Promise<U> {
     const stateItem = this.getStateMapItem(selector);
 
     if (value instanceof Observable) {
-      value.toPromise().then(data => stateItem.next(data));
+      return value.toPromise<U>()
+                  .then(x => {
+                    stateItem.next(x);
+                    return x;
+                  });
     } else {
       stateItem.next(value);
+      return resolve<U>(value);
     }
   }
 
