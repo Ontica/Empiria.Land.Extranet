@@ -16,10 +16,11 @@ import { InstrumentUseCases } from '@app/domain/use-cases';
 import { LegalInstrument, LegalInstrumentFilter,
          EmptyLegalInstrumentFilter, EmptyLegalInstrument } from '@app/domain/models';
 import { InstrumentCommandType } from '../command.handlers/commands';
+import { switchMap, take } from 'rxjs/operators';
 
 
 export enum ActionType {
-  SET_INSTRUMENT_FILTER = 'Land.UI-Action.LegalInstruments.SetListFilter',
+  LOAD_INSTRUMENT_LIST = 'Land.UI-Action.LegalInstruments.LoadInstrumentList',
   SELECT_INSTRUMENT     = 'Land.UI-Action.LegalInstruments.SelectInstrument',
   UNSELECT_INSTRUMENT   = 'Land.UI-Action.LegaInstruments.UnselectInstrument'
 }
@@ -98,7 +99,7 @@ export class InstrumentsStateHandler extends AbstractStateHandler<InstrumentsSta
   dispatch<U>(actionType: ActionType, payload?: any): Promise<U> | void {
     switch (actionType) {
 
-      case ActionType.SET_INSTRUMENT_FILTER:
+      case ActionType.LOAD_INSTRUMENT_LIST:
         Assertion.assertValue(payload.filter, 'payload.filter');
 
         this.setValue(SelectorType.LIST_FILTER, payload.filter);

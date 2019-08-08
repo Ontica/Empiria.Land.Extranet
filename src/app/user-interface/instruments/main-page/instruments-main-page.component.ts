@@ -9,7 +9,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { isEmpty, Assertion, EventInfo } from '@app/core';
+import { Assertion, EventInfo, isEmpty } from '@app/core';
 
 import { PresentationState } from '@app/core/presentation';
 import { InstrumentStateSelector, InstrumentsStateAction,
@@ -48,9 +48,10 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.store.select<LegalInstrument[]>(InstrumentStateSelector.INSTRUMENT_LIST)
       .pipe(takeUntil(this.unsubscribe))
-      .subscribe(x =>
-        this.instrumentList = x
-      );
+      .subscribe(x => {
+        this.instrumentList = x;
+        this.isLoading = false;
+      });
 
     this.store.select<View>(MainUIStateSelector.CURRENT_VIEW)
       .pipe(takeUntil(this.unsubscribe))
@@ -141,8 +142,7 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
     };
 
     this.isLoading = true;
-    this.store.dispatch<any>(InstrumentsStateAction.SET_INSTRUMENT_FILTER, { filter })
-      .then(() => this.isLoading = false);
+    this.store.dispatch(InstrumentsStateAction.LOAD_INSTRUMENT_LIST, { filter });
   }
 
 }
