@@ -6,36 +6,33 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { Displayable } from '../../common-models';
-
-
-export interface SpinnerState {
-  show: boolean;
-}
 
 
 @Injectable()
 export class SpinnerService implements Displayable {
 
-  id = Math.random();
+  private spinnerSubject = new BehaviorSubject<boolean>(false);
 
-  private spinnerSubject = new Subject<SpinnerState>();
-
-
-  get spinnerState(): Observable<SpinnerState> {
+  get state(): Observable<boolean> {
     return this.spinnerSubject.asObservable();
   }
 
 
+  get value(): boolean {
+    return this.spinnerSubject.value;
+  }
+
+
   show() {
-    this.spinnerSubject.next({ show: true });
+    this.spinnerSubject.next(true);
   }
 
 
   hide() {
-    this.spinnerSubject.next({ show: false });
+    this.spinnerSubject.next(false);
   }
 
 }

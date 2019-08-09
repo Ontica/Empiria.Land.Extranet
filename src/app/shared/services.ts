@@ -7,4 +7,4 @@
 
 export { AbstractForm } from './abstract-form';
 
-export { SpinnerService, SpinnerState } from './indicators/spinner/spinner.service';
+export { SpinnerService } from './indicators/spinner/spinner.service';
