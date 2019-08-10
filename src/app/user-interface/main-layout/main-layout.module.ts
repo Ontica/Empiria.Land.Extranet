@@ -14,12 +14,14 @@ import { AngularFlexLayoutModule } from '@app/shared/angular-flex-layout.module'
 
 
 import { SharedFormControlsModule } from '@app/shared/form-controls/shared-form-controls.module';
+import { SharedIndicatorsModule } from '@app/shared/indicators/shared-indicators.module';
 
 import { MainLayoutComponent } from './main-layout.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { NavigationHeaderComponent } from './nav-header/nav-header.component';
 import { NavigationMenuComponent } from './nav-menu/nav-menu.component';
 import { NoContentComponent } from './no-content.component';
+
 
 
 
@@ -32,6 +34,7 @@ import { NoContentComponent } from './no-content.component';
     AngularMaterialModule,
     AngularFlexLayoutModule,
 
+    SharedIndicatorsModule,
     SharedFormControlsModule
   ],
 
