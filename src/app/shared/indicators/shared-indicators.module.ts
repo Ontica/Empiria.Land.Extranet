@@ -11,8 +11,11 @@ import { CommonModule } from '@angular/common';
 import { AngularMaterialModule } from '../angular-material.module';
 
 import { ProgressTextDirective } from './progress-text/progress-text.directive';
+
 import { RagStatusComponent } from './rag-status/rag-status.component';
+
 import { SpinnerComponent } from './spinner/spinner.component';
+import { SpinnerHostDirective } from './spinner/spinner-host.directive';
 import { SpinnerService } from './spinner/spinner.service';
 
 
@@ -27,13 +30,15 @@ import { SpinnerService } from './spinner/spinner.service';
   declarations: [
     ProgressTextDirective,
     RagStatusComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    SpinnerHostDirective,
   ],
 
   exports: [
     ProgressTextDirective,
     RagStatusComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    SpinnerHostDirective
   ],
 
   providers: [
