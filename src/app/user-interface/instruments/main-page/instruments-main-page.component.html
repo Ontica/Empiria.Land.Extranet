@@ -1,14 +1,18 @@
 <div class="explorer" fxLayoutGap="32px">
 
-  <div [fxHide.lt-lg]="displayEditor" class="primary">
+  <div [fxHide.lt-lg]="displayEditor" class="primary" empNgSpinnerHost>
+
+    <emp-ng-spinner [visible]="isLoading"></emp-ng-spinner>
+
     <emp-land-instrument-list
-      [instrumentList]="instrumentList"
-      [selectedInstrument]="selectedInstrument"
-      [filter]="filter"
-      [title]="currentView.title"
-      [isLoading]="isLoading"
-      (instrumentListEvent)="onInstrumentListEvent($event)">
+        [instrumentList]="instrumentList"
+        [selectedInstrument]="selectedInstrument"
+        [filter]="filter"
+        [title]="currentView.title"
+        [isLoading]="isLoading"
+        (instrumentListEvent)="onInstrumentListEvent($event)">
     </emp-land-instrument-list>
+
   </div>
 
   <div *ngIf="displayEditor" class="secondary">

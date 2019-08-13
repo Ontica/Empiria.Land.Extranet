@@ -29,6 +29,8 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
   realEstate = EmptyRealEstate;
 
+  showSpinner = false;
+
   readonly = false;
 
   form = new FormGroup({
@@ -137,8 +139,12 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
     const propertyUID = this.form.value.propertyUID.toUpperCase();
 
+    this.showSpinner = true;
     this.store.dispatch<RealEstate>(RepositoryStateAction.LOAD_REAL_ESTATE, { uid: propertyUID })
-      .then(x => this.realEstate = x)
+        .then(x => {
+          this.realEstate = x;
+          this.showSpinner = false;
+       })
       .catch(err => console.log('Display something with real estate not found error', JSON.stringify(err)));
   }
 
