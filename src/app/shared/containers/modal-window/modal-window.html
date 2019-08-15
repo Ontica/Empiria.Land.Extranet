@@ -1,11 +1,16 @@
-<div class="overlay" (click)="onClickOverlay()">
+<div class="backdrop" [class.transparent]="modalConfig.backdropClick" (click)="onBackdropClick()">
 
-</div>
-<div class="modal-container"
-      [style.width]="config.width || 'auto'"
-      [style.height]="config.height || 'auto'"
-      [style.max-width]="config.maxWidth || '90%'"
-      [style.max-height]="config.maxHeight || '90%'">
-  <ng-content>
-  </ng-content>
+  <div class="modal-container"
+       [style.width]="modalConfig.width"
+       [style.height]="modalConfig.height"
+       [style.max-width]="modalConfig.maxWidth"
+       [style.max-height]="modalConfig.maxHeight"
+       [style.min-width]="modalConfig.minWidth"
+       [style.min-height]="modalConfig.minHeight"
+       (click)="stopPropagation($event)">
+
+    <ng-content></ng-content>
+
+  </div>
+
 </div>

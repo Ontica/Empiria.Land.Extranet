@@ -9,6 +9,28 @@ import { Component, EventEmitter,
          Input, Output } from '@angular/core';
 
 
+export interface ModalDialogConfig {
+  height?: string;
+  width?: string;
+  maxWidth?: string;
+  maxHeight?: string;
+  minWidth?: string;
+  minHeight?: string;
+  backdropClick?: boolean;
+}
+
+
+const DefaultModalDialogConfig: ModalDialogConfig = {
+  height: 'auto',
+  width: 'auto',
+  maxWidth: '100%',
+  maxHeight: '100%',
+  minWidth: '440px',
+  minHeight: '640px',
+  backdropClick: false,
+};
+
+
 @Component({
   selector: 'emp-ng-modal-window',
   templateUrl: './modal-window.html',
@@ -18,27 +40,28 @@ export class ModalWindowComponent {
 
   @Input() title = '';
 
-  @Input() config = {
-    height: 'auto',
-    width: 'auto',
-    maxWidth: '90%',
-    maxHeight: '90%',
-    disableClose: false
-  };
-
-
-  @Output() modalWindowClose = new EventEmitter();
-
-  onClose() {
-    this.modalWindowClose.emit();
+  @Input()
+  get config() {
+    return this.modalConfig;
+  }
+  set config(value: ModalDialogConfig) {
+    this.modalConfig = Object.assign({}, DefaultModalDialogConfig, value);
   }
 
+  @Output() backdropClick = new EventEmitter();
 
-  onClickOverlay() {
-    if (!this.config.disableClose) {
-      this.modalWindowClose.emit();
+  modalConfig = DefaultModalDialogConfig;
+
+
+  onBackdropClick() {
+    if (this.config.backdropClick) {
+      this.backdropClick.emit();
     }
   }
 
-}
 
+  stopPropagation(event: Event)  {
+    event.stopPropagation();
+  }
+
+}
