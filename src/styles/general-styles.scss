@@ -384,3 +384,17 @@ i.disabled {
   margin-top: -4px;
   margin-left: -6px;
 }
+
+
+// skeleton
+
+@keyframes skeleton-opacity {
+  0% { opacity: 0.80 }
+  100% { opacity: 0.10 }
+}
+
+.skeleton {
+  opacity: 0.80;
+
+  animation: skeleton-opacity 1s infinite linear;
+}
