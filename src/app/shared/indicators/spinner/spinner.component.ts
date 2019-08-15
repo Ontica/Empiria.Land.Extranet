@@ -13,6 +13,7 @@ import { Assertion } from '@app/core';
 
 export type OverlayType = 'None' | 'Container' | 'FullScreen';
 
+
 @Component({
   selector: 'emp-ng-spinner',
   templateUrl: './spinner.component.html',
@@ -38,7 +39,7 @@ export class SpinnerComponent implements OnDestroy {
 
   @Input() visible = false;
 
-  overlayClass = SpinnerComponent.getContainerClass('None');
+  overlayClass = SpinnerComponent.getContainerClass('Container');
 
   private subscription: Subscription;
 

@@ -1,9 +1,6 @@
 <div class="explorer" fxLayoutGap="32px">
 
-  <div [fxHide.lt-lg]="displayEditor" class="primary" empNgSpinnerHost>
-
-    <emp-ng-spinner [visible]="isLoading"></emp-ng-spinner>
-
+  <div [fxHide.lt-lg]="displayEditor" class="primary">
     <emp-land-instrument-list
         [instrumentList]="instrumentList"
         [selectedInstrument]="selectedInstrument"

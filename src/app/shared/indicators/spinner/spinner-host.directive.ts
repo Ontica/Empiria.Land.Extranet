@@ -5,7 +5,9 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Directive, ElementRef } from '@angular/core';
+import { Directive, ElementRef, Input } from '@angular/core';
+
+import { SpinnerComponent } from './spinner.component';
 
 
 @Directive({
@@ -13,8 +15,10 @@ import { Directive, ElementRef } from '@angular/core';
 })
 export class SpinnerHostDirective {
 
-  constructor(el: ElementRef) {
-    el.nativeElement.style.position = 'relative';
+  @Input('empNgSpinnerHost') spinner: SpinnerComponent;
+
+  constructor(private el: ElementRef) {
+    this.el.nativeElement.style.position = 'relative';
   }
 
 }

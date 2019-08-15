@@ -29,7 +29,7 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
   realEstate = EmptyRealEstate;
 
-  showSpinner = false;
+  isLoading = false;
 
   readonly = false;
 
@@ -139,11 +139,11 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
     const propertyUID = this.form.value.propertyUID.toUpperCase();
 
-    this.showSpinner = true;
+    this.isLoading = true;
     this.store.dispatch<RealEstate>(RepositoryStateAction.LOAD_REAL_ESTATE, { uid: propertyUID })
         .then(x => {
           this.realEstate = x;
-          this.showSpinner = false;
+          this.isLoading = false;
        })
       .catch(err => console.log('Display something with real estate not found error', JSON.stringify(err)));
   }
