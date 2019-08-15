@@ -16,7 +16,7 @@
 .card {
   @include column;
 
-  height: calc(100vh - 196px + 68px);
+  height: 100%;
   width: auto;
   max-height: 100%;
   max-width: 100%;

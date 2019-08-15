@@ -25,11 +25,10 @@ const DefaultModalDialogConfig: ModalDialogConfig = {
   width: 'auto',
   maxWidth: '100%',
   maxHeight: '100%',
-  minWidth: '440px',
-  minHeight: '640px',
+  minWidth: '',
+  minHeight: '',
   backdropClick: false,
 };
-
 
 @Component({
   selector: 'emp-ng-modal-window',
