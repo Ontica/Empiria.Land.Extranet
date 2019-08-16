@@ -20,6 +20,8 @@ import { CreateInstrumentWizardComponent } from './create-wizard/create-instrume
 import { DeedComponent } from './editors/deed.component';
 import { DefinitiveNoteComponent } from './editors/definitive-note.component';
 import { FolioRealRequestComponent } from './editors/folio-real-request.component';
+
+import { InstrumentCreatorComponent } from './instrument-creator/instrument-creator.component';
 import { InstrumentFilingComponent } from './filing/instrument-filing.component';
 import { InstrumentListComponent } from './list/instrument-list.component';
 import { InstrumentListItemComponent } from './list/instrument-list-item.component';
@@ -51,6 +53,7 @@ import { InstrumentsRoutingModule } from './instruments-routing.module';
     DeedComponent,
     DefinitiveNoteComponent,
     FolioRealRequestComponent,
+    InstrumentCreatorComponent,
     InstrumentFilingComponent,
     InstrumentListComponent,
     InstrumentListItemComponent,

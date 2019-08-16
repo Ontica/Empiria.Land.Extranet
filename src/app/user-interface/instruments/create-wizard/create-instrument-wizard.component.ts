@@ -5,7 +5,10 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+
+import { EventInfo } from '@app/core';
+import { FrontController } from '@app/core/presentation';
 
 import { LegalInstrument, EmptyLegalInstrument } from '@app/domain/models';
 
@@ -15,24 +18,24 @@ import { LegalInstrument, EmptyLegalInstrument } from '@app/domain/models';
   templateUrl: './create-instrument-wizard.component.html',
   styleUrls: ['./create-instrument-wizard.component.scss']
 })
-export class CreateInstrumentWizardComponent implements OnChanges {
+export class CreateInstrumentWizardComponent {
 
   @Input() instrument: LegalInstrument = EmptyLegalInstrument;
-  @Input() showInstrumentTypeSelector = false;
 
-  @Output() wizardClose = new EventEmitter<void>();
+  @Output() closeEvent = new EventEmitter<void>();
 
-  documentType = '';
+  documentType = 'PreventiveNote';
 
-  ngOnChanges() {
-    if (!this.showInstrumentTypeSelector) {
-      this.documentType = 'PreventiveNote';
-    }
-  }
+  constructor(private frontController: FrontController) { }
 
 
   onClose() {
-    this.wizardClose.emit();
+    this.closeEvent.emit();
+  }
+
+
+  processEvent(event: EventInfo) {
+    this.frontController.dispatch<void>(event);
   }
 
 }

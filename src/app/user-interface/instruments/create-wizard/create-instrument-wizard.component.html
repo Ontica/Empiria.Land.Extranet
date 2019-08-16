@@ -4,26 +4,13 @@
 
   <mat-horizontal-stepper linear #stepper labelPosition="bottom" color="accent">
 
-    <mat-step *ngIf="showInstrumentTypeSelector" [completed]="documentType !== ''">
-      <ng-template matStepLabel>Seleccionar<br>el tipo de<br> documento</ng-template>
-
-      <label>¿Qúe tipo de documento se desea registrar?</label>
-      <mat-radio-group class="radio-group" [(ngModel)]="documentType">
-        <mat-radio-button class="radio-button" value="PreventiveNote">Aviso preventivo</mat-radio-button>
-        <mat-radio-button class="radio-button" value="DefinitiveNote">Segundo aviso definitivo</mat-radio-button>
-        <mat-radio-button class="radio-button" value="NotaryDeed">Escritura pública</mat-radio-button>
-        <mat-radio-button class="radio-button" value="FolioRealRequest">Solicitar expedición de folio real</mat-radio-button>
-      </mat-radio-group>
-      <div class="right">
-          <button [class.btn]="!documentType" [class.btn-action]="documentType" [disabled]="!documentType" matStepperNext>Siguiente</button>
-      </div>
-    </mat-step>
-
-    <mat-step [completed]="instrument.uid">
+    <mat-step>
       <ng-template matStepLabel>{{instrument.isSigned ? 'Ver' : 'Llenar'}}<br>el formulario</ng-template>
       <ng-container *ngIf="documentType === 'PreventiveNote'">
         <emp-land-preventive-note
-            [preventiveNote]="instrument">
+            [preventiveNote]="instrument"
+            [readonly] = "instrument.isSigned"
+            (editionEvent)="processEvent($event)">
         </emp-land-preventive-note>
       </ng-container>
       <ng-container *ngIf="documentType === 'DefinitiveNote'">
@@ -36,7 +23,7 @@
         <emp-land-folio-real-request></emp-land-folio-real-request>
       </ng-container>
       <div class="right">
-        <button [class.btn]="!instrument.uid" [class.btn-action]="instrument.uid" [disabled]="!instrument.uid" matStepperNext>Siguiente</button>
+        <button class="btn-action" matStepperNext>Siguiente</button>
       </div>
     </mat-step>
 
@@ -54,7 +41,9 @@
       <ng-template matStepLabel>{{instrument.isSigned ? 'Firma electrónica' : 'Firmar el documento'}}</ng-template>
 
       <emp-land-instrument-sign-request
-          [instrument]="instrument">
+          [instrument]="instrument"
+          [readonly] = "instrument.isRequested"
+          (editionEvent)="processEvent($event)">
       </emp-land-instrument-sign-request>
 
       <div class="right">
@@ -68,7 +57,8 @@
       <ng-template matStepLabel>{{instrument.isRequested ? 'Información del trámite' : 'Solicitar el trámite'}}</ng-template>
 
       <emp-land-instrument-filing
-          [instrument]="instrument">
+          [instrument]="instrument"
+          (editionEvent)="processEvent($event)">
       </emp-land-instrument-filing>
 
       <div class="right">

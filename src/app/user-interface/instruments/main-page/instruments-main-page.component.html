@@ -15,18 +15,17 @@
   <div *ngIf="displayEditor" class="secondary">
     <emp-land-create-instrument-wizard
         [instrument]="selectedInstrument"
-        (wizardClose)="onCloseEditor()">
+        (closeEvent)="onCloseEditor()">
     </emp-land-create-instrument-wizard>
   </div>
 
 </div>
 
-<emp-ng-modal-window *ngIf="displayCreateInstrumentWizard"
+<emp-ng-modal-window *ngIf="displayInstrumentCreator"
                      [config]="{width:'820px', height:'840px'}">
 
-  <emp-land-create-instrument-wizard
-      [showInstrumentTypeSelector]="true"
-      (wizardClose)="onCloseCreateInstrumentWizard()">
-  </emp-land-create-instrument-wizard>
+  <emp-land-instrument-creator
+      (closeEvent)="onInstrumentCreatorClosed()">
+  </emp-land-instrument-creator>
 
 </emp-ng-modal-window>

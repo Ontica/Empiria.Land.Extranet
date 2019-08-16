@@ -36,7 +36,7 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
   selectedInstrument: LegalInstrument = EmptyLegalInstrument;
   filter: LegalInstrumentFilter = EmptyLegalInstrumentFilter;
 
-  displayCreateInstrumentWizard = false;
+  displayInstrumentCreator = false;
 
   isLoading = false;
 
@@ -85,6 +85,11 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
   }
 
 
+  onInstrumentCreatorClosed() {
+    this.displayInstrumentCreator = false;
+  }
+
+
   onInstrumentListEvent(event: EventInfo): void {
     switch (event.type as InstrumentListEventType) {
 
@@ -93,18 +98,13 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
         return;
 
       case InstrumentListEventType.ON_CLICK_CREATE_INSTRUMENT_BUTTON:
-        this.displayCreateInstrumentWizard = true;
+        this.displayInstrumentCreator = true;
         return;
 
       default:
         console.log(`Unhandled user interface event ${event.type}`);
         return;
     }
-  }
-
-
-  onCloseCreateInstrumentWizard() {
-    this.displayCreateInstrumentWizard = false;
   }
 
 

@@ -1,0 +1,48 @@
+<emp-ng-card title='Nuevo documento'
+             hint='Crear un nuevo instrumento legal u oficio'
+             (cardClose)="onClose()">
+
+  <mat-horizontal-stepper linear #stepper labelPosition="bottom" color="accent">
+
+      <mat-step [completed]="instrumentType !== ''">
+        <ng-template matStepLabel>Seleccionar el tipo de documento</ng-template>
+
+        <label>¿Qúe tipo de documento se desea registrar?</label>
+        <mat-radio-group class="radio-group" [(ngModel)]="instrumentType">
+          <mat-radio-button class="radio-button" value="PreventiveNote">Aviso preventivo</mat-radio-button>
+          <mat-radio-button class="radio-button" value="DefinitiveNote">Segundo aviso definitivo</mat-radio-button>
+          <mat-radio-button class="radio-button" value="NotaryDeed">Escritura pública</mat-radio-button>
+          <mat-radio-button class="radio-button" value="FolioRealRequest">Solicitar expedición de folio real</mat-radio-button>
+        </mat-radio-group>
+        <div class="right">
+          <button [class.btn]="!instrumentType" [class.btn-action]="instrumentType" [disabled]="!instrumentType" matStepperNext>Siguiente</button>
+        </div>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Llenar el formulario</ng-template>
+        <ng-container *ngIf="instrumentType === 'PreventiveNote'">
+          <emp-land-preventive-note
+            (editionEvent)="processEvent($event)">
+          </emp-land-preventive-note>
+        </ng-container>
+        <ng-container *ngIf="instrumentType === 'DefinitiveNote'">
+          <emp-land-definitive-note
+            (editionEvent)="processEvent($event)">
+          </emp-land-definitive-note>
+        </ng-container>
+        <ng-container *ngIf="instrumentType === 'NotaryDeed'">
+          <emp-land-deed
+            (editionEvent)="processEvent($event)">
+          </emp-land-deed>
+        </ng-container>
+        <ng-container *ngIf="instrumentType === 'FolioRealRequest'">
+          <emp-land-folio-real-request
+            (editionEvent)="processEvent($event)">
+          </emp-land-folio-real-request>
+        </ng-container>
+      </mat-step>
+
+  </mat-horizontal-stepper>
+
+</emp-ng-card>
