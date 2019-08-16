@@ -9,12 +9,7 @@
       <tr>
         <td>Solicitante:</td>
         <td colspan="3" style="width:100%">
-          <input type="text" class="text-box uppercase" style="width:calc(100% - 120px)"
-                formControlName="requestedBy">
-          &nbsp; &nbsp; &nbsp;
-          <button *ngIf="!readonly" type="button" class="right"
-                  [disabled]="!isReadyForSave" [class.btn]="!isReadyForSave" [class.btn-action]="isReadyForSave"
-                  (click)="onSave()">Guardar</button>
+          <input type="text" class="text-box uppercase" formControlName="requestedBy">
         </td>
       </tr>
       <tr>
@@ -73,8 +68,16 @@
         <td colspan="4">
           <textarea class="text-area uppercase" rows="10"
                     formControlName="projectedOperation"></textarea>
+          <br><br>
         </td>
       </tr>
+      <tr *ngIf="!readonly">
+          <td colspan="4" class="text-align-right" style='background-color:white;border-top: 2px solid #afafaf'>
+            <button type="button" class="right"
+                    [disabled]="!isReadyForSave" [class.btn]="!isReadyForSave" [class.btn-action]="isReadyForSave"
+                    (click)="onSave()">{{preventiveNote && preventiveNote.uid ? 'Guardar cambios':  'Crear el aviso preventivo'}}</button>
+          </td>
+        </tr>
     </table>
 
   </fieldset>

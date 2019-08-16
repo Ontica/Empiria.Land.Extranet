@@ -5,11 +5,11 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Component, Input, OnChanges } from '@angular/core';
-
+import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { FrontController } from '@app/core/presentation';
+import { EventInfo } from '@app/core';
+
 import { InstrumentCommandType } from '@app/core/presentation/commands';
 
 import { LegalInstrument, RequestPaymentOrderData } from '@app/domain/models';
@@ -23,12 +23,18 @@ export class InstrumentFilingComponent implements OnChanges {
 
   @Input() instrument: LegalInstrument;
 
+  @Output() editionEvent = new EventEmitter<EventInfo>();
+
+
   form = new FormGroup({
     sendTo: new FormControl('', Validators.email),
     rfc: new FormControl(''),
   });
 
-  constructor(private frontController: FrontController) { }
+
+  ngOnChanges() {
+    this.resetForm();
+  }
 
 
   onRequestPaymentOrder() {
@@ -41,12 +47,19 @@ export class InstrumentFilingComponent implements OnChanges {
   }
 
 
-  ngOnChanges() {
-    this.resetForm();
-  }
-
-
   // private members
+
+
+  private fileToRegistryAuthority() {
+    const event: EventInfo = {
+      type: InstrumentCommandType.FILE_TO_REGISTRY_AUTHORITY,
+      payload: {
+        instrument: this.instrument
+      }
+    };
+
+    this.editionEvent.emit(event);
+  }
 
 
   private getFormData() {
@@ -62,21 +75,15 @@ export class InstrumentFilingComponent implements OnChanges {
 
 
   private requestPaymentOrder() {
-    const payload = {
-      instrument: this.instrument,
-      data: this.getFormData()
+    const event: EventInfo = {
+      type: InstrumentCommandType.REQUEST_PAYMENT_ORDER,
+      payload: {
+        instrument: this.instrument,
+        data: this.getFormData()
+      }
     };
 
-    this.frontController.dispatch(InstrumentCommandType.REQUEST_PAYMENT_ORDER, payload);
-  }
-
-
-  private fileToRegistryAuthority() {
-    const payload = {
-      instrument: this.instrument
-    };
-
-    this.frontController.dispatch(InstrumentCommandType.FILE_TO_REGISTRY_AUTHORITY, payload);
+    this.editionEvent.emit(event);
   }
 
 

@@ -32,7 +32,7 @@
             <input type="text" class="text-box" disabled readonly="readonly" [value]="instrument.esign?.hash" style="max-width: 120px;">
           </td>
         </tr>
-        <tr>
+        <tr *ngIf="!readonly">
           <td></td>
           <td>
             <input type="checkbox" [checked]="revokeMode" (change)="toggleRevokeMode()">Deseo revocar la firma del documento
@@ -45,6 +45,6 @@
   </form>
 </ng-container>
 
-<ng-container *ngIf="!instrument.isSigned || revokeMode">
+<ng-container *ngIf="(!instrument.isSigned || revokeMode) && !readonly">
     <emp-ng-esign-input [revokeMode]="revokeMode" (signTokenReceived)="onSignTokenReceived($event)"></emp-ng-esign-input>
 </ng-container>

@@ -5,15 +5,15 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Assertion } from '@app/core';
+import { Assertion, EventInfo } from '@app/core';
 
-import { FrontController, PresentationState } from '@app/core/presentation';
-
+import { PresentationState } from '@app/core/presentation';
 import { InstrumentCommandType } from '@app/core/presentation/commands';
+
 import { RepositoryStateAction } from '@app/core/presentation/state.commands';
 
 import { EmptyRealEstate, PreventiveNote, PreventiveNoteEditionData, RealEstate } from '@app/domain/models';
@@ -27,11 +27,13 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
   @Input() preventiveNote: PreventiveNote;
 
+  @Input() readonly = false;
+
+  @Output() editionEvent = new EventEmitter<EventInfo>();
+
   realEstate = EmptyRealEstate;
 
   isLoading = false;
-
-  readonly = false;
 
   form = new FormGroup({
     requestedBy: new FormControl('', Validators.required),
@@ -40,8 +42,7 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
   });
 
 
-  constructor(private frontController: FrontController,
-              private store: PresentationState) { }
+  constructor(private store: PresentationState) { }
 
 
   get isReadyForSave() {
@@ -51,12 +52,10 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.realEstate = EmptyRealEstate;
-    this.readonly = false;
   }
 
 
   ngOnChanges() {
-    this.readonly = this.preventiveNote.isSigned;
     this.resetForm();
   }
 
@@ -67,10 +66,10 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
 
   onSave() {
-    if (!this.preventiveNote.uid) {
-      this.createPreventiveNote();
-    } else {
+    if (this.preventiveNote && this.preventiveNote.uid) {
       this.updatePreventiveNote();
+    } else {
+      this.createPreventiveNote();
     }
   }
 
@@ -79,12 +78,14 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
 
   private createPreventiveNote() {
-    const payload = {
-      data: this.getFormData()
+    const event: EventInfo = {
+      type: InstrumentCommandType.CREATE_PREVENTIVE_NOTE,
+      payload: {
+        data: this.getFormData()
+      }
     };
 
-    this.frontController.dispatch<PreventiveNote>(InstrumentCommandType.CREATE_PREVENTIVE_NOTE, payload)
-      .then(x => this.preventiveNote = x);
+    this.editionEvent.emit(event);
   }
 
 
@@ -122,12 +123,15 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
 
   private updatePreventiveNote() {
-    const payload = {
-      instrument: this.preventiveNote,
-      data: this.getFormData()
+    const event: EventInfo = {
+      type: InstrumentCommandType.UPDATE_PREVENTIVE_NOTE,
+      payload: {
+        instrument: this.preventiveNote,
+        data: this.getFormData()
+      }
     };
 
-    this.frontController.dispatch(InstrumentCommandType.UPDATE_PREVENTIVE_NOTE, payload);
+    this.editionEvent.emit(event);
   }
 
 

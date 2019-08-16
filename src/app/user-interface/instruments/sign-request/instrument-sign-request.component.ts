@@ -5,9 +5,9 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 
-import { FrontController } from '@app/core/presentation';
+import { EventInfo } from '@app/core';
 import { InstrumentCommandType } from '@app/core/presentation/commands';
 
 import { LegalInstrument } from '@app/domain/models';
@@ -21,9 +21,12 @@ export class InstrumentSignRequestComponent implements OnChanges {
 
   @Input() instrument: LegalInstrument;
 
+  @Input() readonly = false;
+
+  @Output() editionEvent = new EventEmitter<EventInfo>();
+
   revokeMode = false;
 
-  constructor(private frontController: FrontController) { }
 
   ngOnChanges() {
     this.revokeMode = false;
@@ -49,22 +52,28 @@ export class InstrumentSignRequestComponent implements OnChanges {
 
 
   private revokeSign(revocationToken: string) {
-    const payload = {
-      instrument: this.instrument,
-      token: revocationToken
+    const event: EventInfo = {
+      type: InstrumentCommandType.REVOKE_SIGN,
+      payload: {
+        instrument: this.instrument,
+        token: revocationToken
+      }
     };
 
-    this.frontController.dispatch(InstrumentCommandType.REVOKE_SIGN, payload);
+    this.editionEvent.emit(event);
   }
 
 
   private sign(signToken: string) {
-    const payload = {
-      instrument: this.instrument,
-      token: signToken
+    const event: EventInfo = {
+      type: InstrumentCommandType.SIGN,
+      payload: {
+        instrument: this.instrument,
+        token: signToken
+      }
     };
 
-    this.frontController.dispatch(InstrumentCommandType.SIGN, payload);
+    this.editionEvent.emit(event);
   }
 
 }
