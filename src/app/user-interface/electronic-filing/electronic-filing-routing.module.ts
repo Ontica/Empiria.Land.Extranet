@@ -8,7 +8,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ElectronicFilingMainPageComponent } from './main-page/instruments-main-page.component';
+import { ElectronicFilingMainPageComponent } from './main-page/electronic-filing-main-page.component';
 
 
 const routes: Routes = [

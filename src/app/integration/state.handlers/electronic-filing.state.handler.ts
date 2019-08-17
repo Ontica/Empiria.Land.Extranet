@@ -15,7 +15,7 @@ import { ElectronicFilingUseCases } from '@app/domain/use-cases';
 
 import { Request, RequestFilter,
          EmptyRequestFilter, EmptyRequest } from '@app/domain/models';
-import { RequestCommandType } from '../command.handlers/commands';
+import { ElectronicFilingCommandType } from '../command.handlers/commands';
 
 
 export enum ActionType {
@@ -33,16 +33,16 @@ export enum SelectorType {
 
 
 enum CommandEffectType {
-  CREATE_PREVENTIVE_NOTE = RequestCommandType.CREATE_PREVENTIVE_NOTE,
-  UPDATE_PREVENTIVE_NOTE = RequestCommandType.UPDATE_PREVENTIVE_NOTE,
-  SIGN                   = RequestCommandType.SIGN,
-  REVOKE_SIGN            = RequestCommandType.REVOKE_SIGN,
-  GENERATE_PAYMENT_ORDER = RequestCommandType.GENERATE_PAYMENT_ORDER,
-  REQUEST_SUBMISSION     = RequestCommandType.REQUEST_SUBMISSION
+  CREATE_PREVENTIVE_NOTE = ElectronicFilingCommandType.CREATE_PREVENTIVE_NOTE,
+  UPDATE_PREVENTIVE_NOTE = ElectronicFilingCommandType.UPDATE_PREVENTIVE_NOTE,
+  SIGN                   = ElectronicFilingCommandType.SIGN,
+  REVOKE_SIGN            = ElectronicFilingCommandType.REVOKE_SIGN,
+  GENERATE_PAYMENT_ORDER = ElectronicFilingCommandType.GENERATE_PAYMENT_ORDER,
+  REQUEST_SUBMISSION     = ElectronicFilingCommandType.REQUEST_SUBMISSION
 }
 
 
-export interface RequestsState {
+export interface ElectronicFilingState {
   readonly requestsList: Request[];
   readonly listFilter: RequestFilter;
   readonly selectedRequest: Request;
@@ -57,14 +57,14 @@ const initialState: StateValues = [
 
 
 @Injectable()
-export class RequestsStateHandler extends AbstractStateHandler<RequestsState> {
+export class ElectronicFilingStateHandler extends AbstractStateHandler<ElectronicFilingState> {
 
   constructor(private useCases: ElectronicFilingUseCases) {
     super(initialState, SelectorType, ActionType, CommandEffectType);
   }
 
 
-  get state(): RequestsState {
+  get state(): ElectronicFilingState {
     return {
       requestsList: this.getValue(SelectorType.REQUESTS_LIST),
       listFilter: this.getValue(SelectorType.LIST_FILTER),

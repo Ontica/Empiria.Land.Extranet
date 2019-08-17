@@ -7,22 +7,22 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ElectronicFilingMainPageComponent } from './instruments-main-page.component';
+import { RequestCreatorComponent } from './request-creator.component';
 
 
-describe('ElectronicFilingMainPageComponent', () => {
-  let component: ElectronicFilingMainPageComponent;
-  let fixture: ComponentFixture<ElectronicFilingMainPageComponent>;
+describe('RequestCreatorComponent', () => {
+  let component: RequestCreatorComponent;
+  let fixture: ComponentFixture<RequestCreatorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ElectronicFilingMainPageComponent ]
+      declarations: [ RequestCreatorComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ElectronicFilingMainPageComponent);
+    fixture = TestBed.createComponent(RequestCreatorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

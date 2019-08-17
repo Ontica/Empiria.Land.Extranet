@@ -13,8 +13,8 @@ import { FrontController } from '@app/core/presentation';
 
 @Component({
   selector: 'emp-one-request-creator',
-  templateUrl: './instrument-creator.component.html',
-  styleUrls: ['./instrument-creator.component.scss']
+  templateUrl: './request-creator.component.html',
+  styleUrls: ['./request-creator.component.scss']
 })
 export class RequestCreatorComponent {
 

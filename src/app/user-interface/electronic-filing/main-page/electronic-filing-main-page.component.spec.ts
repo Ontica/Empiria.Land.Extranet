@@ -7,22 +7,22 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RequestTabViewComponent } from './create-instrument-wizard.component';
+import { ElectronicFilingMainPageComponent } from './electronic-filing-main-page.component';
 
 
-describe('RequestTabViewComponent', () => {
-  let component: RequestTabViewComponent;
-  let fixture: ComponentFixture<RequestTabViewComponent>;
+describe('ElectronicFilingMainPageComponent', () => {
+  let component: ElectronicFilingMainPageComponent;
+  let fixture: ComponentFixture<ElectronicFilingMainPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RequestTabViewComponent ]
+      declarations: [ ElectronicFilingMainPageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RequestTabViewComponent);
+    fixture = TestBed.createComponent(ElectronicFilingMainPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

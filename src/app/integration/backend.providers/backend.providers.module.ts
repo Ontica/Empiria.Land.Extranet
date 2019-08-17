@@ -7,10 +7,10 @@
 
 import { NgModule } from '@angular/core';
 
-import { ElectronicFilingApiProvider } from '@app/domain/providers/instrument.api.provider';
+import { ElectronicFilingApiProvider } from '@app/domain/providers/electronic-filing.api.provider';
 import { RepositoryApiProvider } from '@app/domain/providers/repository.api.provider';
 
-import { ElectronicFilingApiHttpProvider } from './http/instrument.api.http.provider';
+import { ElectronicFilingApiHttpProvider } from './http/electronic-filing.api.http.provider';
 import { RepositoryApiHttpProvider } from './http/repository.api.http.provider';
 
 

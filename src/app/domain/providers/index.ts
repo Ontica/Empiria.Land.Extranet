@@ -5,6 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-export * from './instrument.api.provider';
+export * from './electronic-filing.api.provider';
+
 export * from './repository.api.provider';
 

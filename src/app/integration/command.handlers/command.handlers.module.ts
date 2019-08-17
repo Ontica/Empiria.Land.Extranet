@@ -9,15 +9,15 @@ import { NgModule } from '@angular/core';
 
 import { COMMAND_HANDLERS } from '@app/core/presentation/front.controller';
 
-import { RequestCommandHandler } from './instrument.command.handler';
+import { ElectronicFilingCommandHandler } from './electronic-filing.command.handler';
 
 
 @NgModule({
 
   providers: [
-    RequestCommandHandler,
+    ElectronicFilingCommandHandler,
 
-    { provide: COMMAND_HANDLERS, useExisting: RequestCommandHandler, multi: true }
+    { provide: COMMAND_HANDLERS, useExisting: ElectronicFilingCommandHandler, multi: true }
   ]
 
 })

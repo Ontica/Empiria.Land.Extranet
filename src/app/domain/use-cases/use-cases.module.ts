@@ -9,7 +9,7 @@ import { NgModule } from '@angular/core';
 
 import { BackendProvidersModule } from '@app/integration/backend.providers/backend.providers.module';
 
-import { ElectronicFilingUseCases } from './instrument.use-cases';
+import { ElectronicFilingUseCases } from './electronic-filing.use-cases';
 import { RepositoryUseCases } from './repository.use-cases';
 
 

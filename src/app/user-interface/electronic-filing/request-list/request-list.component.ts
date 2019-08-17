@@ -14,7 +14,7 @@ import { PresentationState } from '@app/core/presentation';
 import { Request, EmptyRequest,
          RequestFilter, EmptyRequestFilter } from '@app/domain/models';
 
-import { RequestsStateAction } from '@app/core/presentation/state.commands';
+import { ElectronicFilingAction } from '@app/core/presentation/state.commands';
 
 
 export enum RequestListEventType {
@@ -25,7 +25,7 @@ export enum RequestListEventType {
 
 @Component({
   selector: 'emp-one-request-list',
-  templateUrl: './instrument-list.component.html'
+  templateUrl: './request-list.component.html'
 })
 export class RequestListComponent implements OnChanges {
 
@@ -65,7 +65,7 @@ export class RequestListComponent implements OnChanges {
 
 
   onSelect(request: Request) {
-    this.store.dispatch(RequestsStateAction.SELECT_REQUEST, { request });
+    this.store.dispatch(ElectronicFilingAction.SELECT_REQUEST, { request });
   }
 
 

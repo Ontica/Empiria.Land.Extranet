@@ -12,7 +12,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Assertion, EventInfo, isEmpty } from '@app/core';
 
 import { PresentationState } from '@app/core/presentation';
-import { RequestsStateSelector, RequestsStateAction,
+import { ElectronicFilingStateSelector, ElectronicFilingAction,
          MainUIStateSelector } from '@app/core/presentation/state.commands';
 
 import { Request, EmptyRequest, RequestStatus,
@@ -20,12 +20,12 @@ import { Request, EmptyRequest, RequestStatus,
 
 import { View } from '@app/user-interface/main-layout';
 
-import { RequestListEventType } from '../list/instrument-list.component';
+import { RequestListEventType } from '../request-list/request-list.component';
 
 
 @Component({
   selector: 'emp-one-electronic-filing-main-page',
-  templateUrl: './instruments-main-page.component.html'
+  templateUrl: './electronic-filing-main-page.component.html'
 })
 export class ElectronicFilingMainPageComponent implements OnInit, OnDestroy {
 
@@ -46,7 +46,7 @@ export class ElectronicFilingMainPageComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.store.select<Request[]>(RequestsStateSelector.REQUESTS_LIST)
+    this.store.select<Request[]>(ElectronicFilingStateSelector.REQUESTS_LIST)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(x => {
         this.requestList = x;
@@ -59,14 +59,14 @@ export class ElectronicFilingMainPageComponent implements OnInit, OnDestroy {
         this.onChangeView(x)
       );
 
-    this.store.select<Request>(RequestsStateSelector.SELECTED_REQUEST)
+    this.store.select<Request>(ElectronicFilingStateSelector.SELECTED_REQUEST)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(x => {
         this.selectedRequest = x;
         this.displayEditor = !isEmpty(this.selectedRequest);
       });
 
-    this.store.select<RequestFilter>(RequestsStateSelector.LIST_FILTER)
+    this.store.select<RequestFilter>(ElectronicFilingStateSelector.LIST_FILTER)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(x =>
         this.filter = x
@@ -81,7 +81,7 @@ export class ElectronicFilingMainPageComponent implements OnInit, OnDestroy {
 
 
   onCloseEditor() {
-    this.store.dispatch(RequestsStateAction.UNSELECT_REQUEST);
+    this.store.dispatch(ElectronicFilingAction.UNSELECT_REQUEST);
   }
 
 
@@ -142,7 +142,7 @@ export class ElectronicFilingMainPageComponent implements OnInit, OnDestroy {
 
 
   private loadRequests(data?: { keywords: string }) {
-    const currentKeywords = this.store.getValue<RequestFilter>(RequestsStateSelector.LIST_FILTER).keywords;
+    const currentKeywords = this.store.getValue<RequestFilter>(ElectronicFilingStateSelector.LIST_FILTER).keywords;
 
     const filter = {
       status: this.getRequestStatusForView(this.currentView),
@@ -150,7 +150,7 @@ export class ElectronicFilingMainPageComponent implements OnInit, OnDestroy {
     };
 
     this.isLoading = true;
-    this.store.dispatch(RequestsStateAction.LOAD_REQUESTS_LIST, { filter });
+    this.store.dispatch(ElectronicFilingAction.LOAD_REQUESTS_LIST, { filter });
   }
 
 }

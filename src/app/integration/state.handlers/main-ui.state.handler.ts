@@ -50,6 +50,7 @@ const initialState: StateValues = [
   { key: SelectorType.IS_PROCESSING, value: false }
 ];
 
+
 @Injectable()
 export class MainUserInterfaceStateHandler extends AbstractStateHandler<MainUserInterfaceState> {
 

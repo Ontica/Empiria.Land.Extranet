@@ -16,20 +16,17 @@ import { SharedContainersModule } from '@app/shared/containers/shared-containers
 import { SharedFormControlsModule } from '@app/shared/form-controls/shared-form-controls.module';
 import { SharedIndicatorsModule } from '@app/shared/indicators/shared-indicators.module';
 
-import { DeedComponent } from './editors/deed.component';
-import { DefinitiveNoteComponent } from './editors/definitive-note.component';
-import { FolioRealRequestComponent } from './editors/folio-real-request.component';
-import { PreventiveNoteComponent } from './editors/preventive-note.component';
+import { ElectronicFilingMainPageComponent } from './main-page/electronic-filing-main-page.component';
+import { RequestCreatorComponent } from './request-creator/request-creator.component';
+import { RequestListComponent } from './request-list/request-list.component';
+import { RequestListItemComponent } from './request-list/request-list-item.component';
+import { RequestSignerComponent } from './request-signer/request-signer.component';
+import { RequestSubmitterComponent } from './request-submitter/request-submitter.component';
+import { RequestTabbedViewComponent } from './request-tabbed-view/request-tabbed-view.component';
 
-import { ElectronicFilingMainPageComponent } from './main-page/instruments-main-page.component';
-import { RequestCreatorComponent } from './instrument-creator/instrument-creator.component';
-import { RequestListComponent } from './list/instrument-list.component';
-import { RequestListItemComponent } from './list/instrument-list-item.component';
-import { RequestSignerComponent } from './sign-request/instrument-sign-request.component';
-import { RequestSubmitterComponent } from './filing/instrument-filing.component';
-import { RequestTabViewComponent } from './create-wizard/create-instrument-wizard.component';
+import { ApplicationFormsModule } from '../application-forms/application-forms.module';
 
-import { ElectronicFilingRoutingModule } from './instruments-routing.module';
+import { ElectronicFilingRoutingModule } from './electronic-filing-routing.module';
 
 
 @NgModule({
@@ -45,21 +42,19 @@ import { ElectronicFilingRoutingModule } from './instruments-routing.module';
     SharedFormControlsModule,
     SharedIndicatorsModule,
 
+    ApplicationFormsModule,
+
     ElectronicFilingRoutingModule
   ],
 
   declarations: [
-    DeedComponent,
-    DefinitiveNoteComponent,
     ElectronicFilingMainPageComponent,
-    FolioRealRequestComponent,
-    PreventiveNoteComponent,
     RequestCreatorComponent,
     RequestListComponent,
     RequestListItemComponent,
     RequestSignerComponent,
     RequestSubmitterComponent,
-    RequestTabViewComponent
+    RequestTabbedViewComponent
   ],
 
   exports: []

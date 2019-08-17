@@ -8,14 +8,14 @@
 import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 
 import { EventInfo } from '@app/core';
-import { RequestCommandType } from '@app/core/presentation/commands';
+import { ElectronicFilingCommandType } from '@app/core/presentation/commands';
 
 import { Request } from '@app/domain/models';
 
 
 @Component({
   selector: 'emp-one-request-signer',
-  templateUrl: './instrument-sign-request.component.html'
+  templateUrl: './request-signer.component.html'
 })
 export class RequestSignerComponent implements OnChanges {
 
@@ -53,7 +53,7 @@ export class RequestSignerComponent implements OnChanges {
 
   private revokeSign(revocationToken: string) {
     const event: EventInfo = {
-      type: RequestCommandType.REVOKE_SIGN,
+      type: ElectronicFilingCommandType.REVOKE_SIGN,
       payload: {
         request: this.request,
         token: revocationToken
@@ -66,7 +66,7 @@ export class RequestSignerComponent implements OnChanges {
 
   private sign(signToken: string) {
     const event: EventInfo = {
-      type: RequestCommandType.SIGN,
+      type: ElectronicFilingCommandType.SIGN,
       payload: {
         request: this.request,
         token: signToken

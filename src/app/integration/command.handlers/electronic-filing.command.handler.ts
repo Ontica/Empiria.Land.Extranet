@@ -23,7 +23,7 @@ export enum CommandType {
 
 
 @Injectable()
-export class RequestCommandHandler extends CommandHandler {
+export class ElectronicFilingCommandHandler extends CommandHandler {
 
   constructor(private useCases: ElectronicFilingUseCases) {
     super(CommandType);

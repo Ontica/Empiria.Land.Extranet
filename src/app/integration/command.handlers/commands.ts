@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { CommandType as RequestCommandType } from './instrument.command.handler';
-export { CommandType as RequestCommandType } from './instrument.command.handler';
+import { CommandType as ElectronicFilingCommandType } from './electronic-filing.command.handler';
+export { CommandType as ElectronicFilingCommandType } from './electronic-filing.command.handler';
 
-export type CommandType = RequestCommandType;
+export type CommandType = ElectronicFilingCommandType;

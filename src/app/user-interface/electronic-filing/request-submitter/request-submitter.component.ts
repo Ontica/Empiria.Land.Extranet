@@ -10,14 +10,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { EventInfo } from '@app/core';
 
-import { RequestCommandType } from '@app/core/presentation/commands';
+import { ElectronicFilingCommandType } from '@app/core/presentation/commands';
 
 import { Request, RequestPaymentOrderData } from '@app/domain/models';
 
 
 @Component({
   selector: 'emp-one-request-submitter',
-  templateUrl: './instrument-filing.component.html'
+  templateUrl: './request-submitter.component.html'
 })
 export class RequestSubmitterComponent implements OnChanges {
 
@@ -64,7 +64,7 @@ export class RequestSubmitterComponent implements OnChanges {
 
   private generatePaymentOrder() {
     const event: EventInfo = {
-      type: RequestCommandType.GENERATE_PAYMENT_ORDER,
+      type: ElectronicFilingCommandType.GENERATE_PAYMENT_ORDER,
       payload: {
         request: this.request,
         data: this.getFormData()
@@ -85,7 +85,7 @@ export class RequestSubmitterComponent implements OnChanges {
 
   private submitRequest() {
     const event: EventInfo = {
-      type: RequestCommandType.REQUEST_SUBMISSION,
+      type: ElectronicFilingCommandType.REQUEST_SUBMISSION,
       payload: {
         request: this.request
       }

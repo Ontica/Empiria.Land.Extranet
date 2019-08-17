@@ -11,6 +11,6 @@
 
  export * from './recording-act';
 
- export * from './instruments';
+ export * from './electronic-filing';
 
  export * from './transaction';

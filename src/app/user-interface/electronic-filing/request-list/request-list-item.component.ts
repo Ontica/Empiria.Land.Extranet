@@ -12,7 +12,7 @@ import { Request, PreventiveNote } from '@app/domain/models';
 
 @Component({
   selector: 'emp-one-request-list-item',
-  templateUrl: './instrument-list-item.component.html',
+  templateUrl: './request-list-item.component.html',
 })
 export class RequestListItemComponent {
 

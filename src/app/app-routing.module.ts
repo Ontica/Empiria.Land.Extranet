@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'electronic-filing/requests',
     component: MainLayoutComponent,
     canActivate: [SecurityGuardService],
-    loadChildren: './user-interface/instruments/instruments.module#ElectronicFilingModule'
+    loadChildren: './user-interface/electronic-filing/electronic-filing.module#ElectronicFilingModule'
   },
   { path: 'transactions',
     component: MainLayoutComponent,

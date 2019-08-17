@@ -14,11 +14,11 @@ import { Request, EmptyRequest } from '@app/domain/models';
 
 
 @Component({
-  selector: 'emp-one-request-tab-view',
-  templateUrl: './create-instrument-wizard.component.html',
-  styleUrls: ['./create-instrument-wizard.component.scss']
+  selector: 'emp-one-request-tabbed-view',
+  templateUrl: './request-tabbed-view.component.html',
+  styleUrls: ['./request-tabbed-view.component.scss']
 })
-export class RequestTabViewComponent {
+export class RequestTabbedViewComponent {
 
   @Input() request: Request = EmptyRequest;
 
