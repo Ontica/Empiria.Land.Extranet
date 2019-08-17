@@ -10,25 +10,25 @@ import { Observable } from 'rxjs';
 
 import { Assertion } from '@app/core';
 
-import { InstrumentApiProvider } from '../providers';
+import { ElectronicFilingApiProvider } from '../providers';
 
 import {
-  LegalInstrument, LegalInstrumentFilter,
+  Request, RequestFilter,
   PreventiveNote, PreventiveNoteEditionData,
   RequestPaymentOrderData, RequestRecordingData
 } from '@app/domain/models';
 
 
 @Injectable()
-export class InstrumentUseCases {
+export class ElectronicFilingUseCases {
 
-  constructor(private backend: InstrumentApiProvider) { }
+  constructor(private backend: ElectronicFilingApiProvider) { }
 
 
-  getInstruments(filter: LegalInstrumentFilter): Observable<LegalInstrument[]> {
+  getRequests(filter: RequestFilter): Observable<Request[]> {
     Assertion.assertValue(filter, 'filter');
 
-    return this.backend.getInstruments(filter.status, filter.keywords);
+    return this.backend.getRequests(filter.status, filter.keywords);
   }
 
 
@@ -42,38 +42,38 @@ export class InstrumentUseCases {
   }
 
 
-  fileToRegistryAuthority(instrument: LegalInstrument,
-                          data: RequestRecordingData): Observable<LegalInstrument> {
-    Assertion.assertValue(instrument, 'instrument');
+  generatePaymentOrder(request: Request,
+                       data: RequestPaymentOrderData): Observable<Request> {
+    Assertion.assertValue(request, 'request');
 
-    return this.backend.fileToRegistryAuthority(instrument, data);
-  }
-
-
-  requestPaymentOrder(instrument: LegalInstrument,
-                      data: RequestPaymentOrderData): Observable<LegalInstrument> {
-    Assertion.assertValue(instrument, 'instrument');
-
-    return this.backend.requestPaymentOrder(instrument, data);
+    return this.backend.generatePaymentOrder(request, data);
 
   }
 
 
-  revokeInstrumentSign(instrument: LegalInstrument,
-                       revocationToken: string): Observable<LegalInstrument> {
-    Assertion.assertValue(instrument, 'instrument');
+  revokeRequestSign(request: Request,
+                    revocationToken: string): Observable<Request> {
+    Assertion.assertValue(request, 'request');
     Assertion.assertValue(revocationToken, 'revocationToken');
 
-    return this.backend.revokeInstrumentSign(instrument, revocationToken);
+    return this.backend.revokeRequestSign(request, revocationToken);
   }
 
 
-  signInstrument(instrument: LegalInstrument,
-                 signToken: string): Observable<LegalInstrument> {
-    Assertion.assertValue(instrument, 'instrument');
+  signRequest(request: Request,
+              signToken: string): Observable<Request> {
+    Assertion.assertValue(request, 'request');
     Assertion.assertValue(signToken, 'signToken');
 
-    return this.backend.signInstrument(instrument, signToken);
+    return this.backend.signRequest(request, signToken);
+  }
+
+
+  submitRequest(request: Request,
+                data: RequestRecordingData): Observable<Request> {
+    Assertion.assertValue(request, 'request');
+
+    return this.backend.submitRequest(request, data);
   }
 
 

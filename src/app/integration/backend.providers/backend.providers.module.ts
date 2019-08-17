@@ -7,17 +7,17 @@
 
 import { NgModule } from '@angular/core';
 
-import { InstrumentApiProvider } from '@app/domain/providers/instrument.api.provider';
+import { ElectronicFilingApiProvider } from '@app/domain/providers/instrument.api.provider';
 import { RepositoryApiProvider } from '@app/domain/providers/repository.api.provider';
 
-import { InstrumentApiHttpProvider } from './http/instrument.api.http.provider';
+import { ElectronicFilingApiHttpProvider } from './http/instrument.api.http.provider';
 import { RepositoryApiHttpProvider } from './http/repository.api.http.provider';
 
 
 @NgModule({
 
   providers: [
-    { provide: InstrumentApiProvider, useClass: InstrumentApiHttpProvider },
+    { provide: ElectronicFilingApiProvider, useClass: ElectronicFilingApiHttpProvider },
     { provide: RepositoryApiProvider, useClass: RepositoryApiHttpProvider }
   ]
 

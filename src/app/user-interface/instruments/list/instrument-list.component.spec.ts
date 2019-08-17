@@ -7,22 +7,22 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InstrumentListComponent } from './instrument-list.component';
+import { RequestListComponent } from './instrument-list.component';
 
 
-describe('InstrumentListComponent', () => {
-  let component: InstrumentListComponent;
-  let fixture: ComponentFixture<InstrumentListComponent>;
+describe('RequestListComponent', () => {
+  let component: RequestListComponent;
+  let fixture: ComponentFixture<RequestListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InstrumentListComponent ]
+      declarations: [ RequestListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InstrumentListComponent);
+    fixture = TestBed.createComponent(RequestListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

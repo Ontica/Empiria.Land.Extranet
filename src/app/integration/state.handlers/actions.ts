@@ -9,8 +9,9 @@ import { ActionType as MainUIStateAction } from '../state.handlers/main-ui.state
 export { ActionType as MainUIStateAction } from '../state.handlers/main-ui.state.handler';
 
 
-import { ActionType as InstrumentsStateAction } from '../state.handlers/instruments.state.handler';
-export { ActionType as InstrumentsStateAction } from '../state.handlers/instruments.state.handler';
+import { ActionType as RequestsStateAction } from '../state.handlers/instruments.state.handler';
+export { ActionType as RequestsStateAction } from '../state.handlers/instruments.state.handler';
+
 
 import { ActionType as RepositoryStateAction } from './repository.state.handler';
 export { ActionType as RepositoryStateAction } from './repository.state.handler';
@@ -18,6 +19,6 @@ export { ActionType as RepositoryStateAction } from './repository.state.handler'
 
 export type StateAction
   =  MainUIStateAction
-  | InstrumentsStateAction
+  | RequestsStateAction
   | RepositoryStateAction
 ;

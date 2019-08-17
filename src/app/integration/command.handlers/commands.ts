@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { CommandType as InstrumentCommandType } from './instrument.command.handler';
-export { CommandType as InstrumentCommandType } from './instrument.command.handler';
+import { CommandType as RequestCommandType } from './instrument.command.handler';
+export { CommandType as RequestCommandType } from './instrument.command.handler';
 
-export type CommandType = InstrumentCommandType;
+export type CommandType = RequestCommandType;

@@ -7,22 +7,22 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateInstrumentWizardComponent } from './create-instrument-wizard.component';
+import { RequestTabViewComponent } from './create-instrument-wizard.component';
 
 
-describe('CreateInstrumentWizardComponent', () => {
-  let component: CreateInstrumentWizardComponent;
-  let fixture: ComponentFixture<CreateInstrumentWizardComponent>;
+describe('RequestTabViewComponent', () => {
+  let component: RequestTabViewComponent;
+  let fixture: ComponentFixture<RequestTabViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateInstrumentWizardComponent ]
+      declarations: [ RequestTabViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CreateInstrumentWizardComponent);
+    fixture = TestBed.createComponent(RequestTabViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

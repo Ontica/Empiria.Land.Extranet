@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InstrumentFilingComponent } from './instrument-filing.component';
+import { RequestSubmitterComponent } from './instrument-filing.component';
 
-describe('InstrumentFilingComponent', () => {
-  let component: InstrumentFilingComponent;
-  let fixture: ComponentFixture<InstrumentFilingComponent>;
+describe('RequestSubmitterComponent', () => {
+  let component: RequestSubmitterComponent;
+  let fixture: ComponentFixture<RequestSubmitterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InstrumentFilingComponent ]
+      declarations: [ RequestSubmitterComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InstrumentFilingComponent);
+    fixture = TestBed.createComponent(RequestSubmitterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

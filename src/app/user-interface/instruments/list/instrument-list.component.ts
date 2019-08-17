@@ -11,35 +11,35 @@ import { EventInfo } from '@app/core';
 
 import { PresentationState } from '@app/core/presentation';
 
-import { LegalInstrument, EmptyLegalInstrument,
-         LegalInstrumentFilter, EmptyLegalInstrumentFilter } from '@app/domain/models';
+import { Request, EmptyRequest,
+         RequestFilter, EmptyRequestFilter } from '@app/domain/models';
 
-import { InstrumentsStateAction } from '@app/core/presentation/state.commands';
+import { RequestsStateAction } from '@app/core/presentation/state.commands';
 
 
-export enum InstrumentListEventType {
-  SET_FILTER                        = 'InstrumentListComponent.SetFilter',
-  ON_CLICK_CREATE_INSTRUMENT_BUTTON = 'InstrumentListComponent.OnClickCreateInstrumentButton'
+export enum RequestListEventType {
+  SET_FILTER                     = 'RequestListComponent.SetFilter',
+  ON_CLICK_CREATE_REQUEST_BUTTON = 'RequestListComponent.OnClickCreateRequestButton'
 }
 
 
 @Component({
-  selector: 'emp-land-instrument-list',
+  selector: 'emp-one-request-list',
   templateUrl: './instrument-list.component.html'
 })
-export class InstrumentListComponent implements OnChanges {
+export class RequestListComponent implements OnChanges {
 
-  @Input() instrumentList: LegalInstrument[] = [];
+  @Input() requestList: Request[] = [];
 
-  @Input() selectedInstrument: LegalInstrument = EmptyLegalInstrument;
+  @Input() selectedRequest: Request = EmptyRequest;
 
-  @Input() filter: LegalInstrumentFilter = EmptyLegalInstrumentFilter;
+  @Input() filter: RequestFilter = EmptyRequestFilter;
 
-  @Input() title: 'Documentos';
+  @Input() title: 'Solicitudes';
 
   @Input() isLoading = false;
 
-  @Output() instrumentListEvent = new EventEmitter<EventInfo>();
+  @Output() requestListEvent = new EventEmitter<EventInfo>();
 
   keywords = '';
 
@@ -54,8 +54,8 @@ export class InstrumentListComponent implements OnChanges {
   }
 
 
-  isSelected(instrument: LegalInstrument) {
-    return (this.selectedInstrument.uid === instrument.uid);
+  isSelected(request: Request) {
+    return (this.selectedRequest.uid === request.uid);
   }
 
 
@@ -64,17 +64,17 @@ export class InstrumentListComponent implements OnChanges {
   }
 
 
-  onSelect(instrument: LegalInstrument) {
-    this.store.dispatch(InstrumentsStateAction.SELECT_INSTRUMENT, { instrument });
+  onSelect(request: Request) {
+    this.store.dispatch(RequestsStateAction.SELECT_REQUEST, { request });
   }
 
 
-  onClickCreateInstrumentButton() {
+  onClickCreateRequestButton() {
     const event: EventInfo = {
-      type: InstrumentListEventType.ON_CLICK_CREATE_INSTRUMENT_BUTTON
+      type: RequestListEventType.ON_CLICK_CREATE_REQUEST_BUTTON
     };
 
-    this.instrumentListEvent.emit(event);
+    this.requestListEvent.emit(event);
   }
 
 
@@ -83,11 +83,11 @@ export class InstrumentListComponent implements OnChanges {
 
   private setFilter() {
     const event: EventInfo = {
-      type: InstrumentListEventType.SET_FILTER,
+      type: RequestListEventType.SET_FILTER,
       payload: { keywords: this.keywords }
     };
 
-    this.instrumentListEvent.emit(event);
+    this.requestListEvent.emit(event);
   }
 
 }

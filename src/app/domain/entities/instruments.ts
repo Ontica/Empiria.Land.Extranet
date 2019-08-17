@@ -30,10 +30,10 @@ export interface Transaction {
 }
 
 
-export type LegalInstrumentStatus = 'Pending' | 'Signed' | 'Requested' | 'Returned' | 'Finished' | 'All';
+export type RequestStatus = 'Pending' | 'Signed' | 'OnPayment' | 'Submitted' | 'Finished' | 'Rejected' | 'All';
 
 
-export interface LegalInstrument extends Identifiable, PartitionedType {
+export interface Request extends Identifiable, PartitionedType {
   typeName: string;
   number: string;
   requestedBy: string;
@@ -41,18 +41,18 @@ export interface LegalInstrument extends Identifiable, PartitionedType {
   issuedBy: Contact;
   issueDate: DateString;
   summary: string;
-  status: LegalInstrumentStatus;
+  status: RequestStatus;
   statusName: string;
   postingTime: DateString;
   postedBy: Contact;
-  isSigned: boolean;
-  isRequested: boolean;
+  signed: boolean;
+  submitted: boolean;
   esign?: ESignData;
   transaction: Transaction;
 }
 
 
-export interface PreventiveNote extends LegalInstrument {
+export interface PreventiveNote extends Request {
   property: RealEstate;
   projectedOperation: string;
 }
@@ -65,7 +65,7 @@ export interface PreventiveNoteEditionData {
 }
 
 
-export interface Deed extends LegalInstrument {
+export interface Deed extends Request {
   recordingActs: RecordingAct[];
 }
 
@@ -82,7 +82,7 @@ export const EmptyTransaction: Transaction = {
 };
 
 
-export const EmptyLegalInstrument: LegalInstrument = {
+export const EmptyRequest: Request = {
   uid: '',
   name: '',
   type: '',
@@ -97,19 +97,19 @@ export const EmptyLegalInstrument: LegalInstrument = {
   statusName: '',
   postingTime: '',
   postedBy: Empty,
-  isSigned: false,
-  isRequested: false,
+  signed: false,
+  submitted: false,
   transaction: EmptyTransaction
 };
 
 
-export interface LegalInstrumentFilter {
-  status: LegalInstrumentStatus;
+export interface RequestFilter {
+  status: RequestStatus;
   keywords: string;
 }
 
 
-export const EmptyLegalInstrumentFilter: LegalInstrumentFilter = {
+export const EmptyRequestFilter: RequestFilter = {
   status: 'All',
   keywords: '',
 };

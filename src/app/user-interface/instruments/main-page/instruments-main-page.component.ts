@@ -12,31 +12,31 @@ import { takeUntil } from 'rxjs/operators';
 import { Assertion, EventInfo, isEmpty } from '@app/core';
 
 import { PresentationState } from '@app/core/presentation';
-import { InstrumentStateSelector, InstrumentsStateAction,
+import { RequestsStateSelector, RequestsStateAction,
          MainUIStateSelector } from '@app/core/presentation/state.commands';
 
-import { LegalInstrument, EmptyLegalInstrument, LegalInstrumentStatus,
-         LegalInstrumentFilter, EmptyLegalInstrumentFilter } from '@app/domain/models';
+import { Request, EmptyRequest, RequestStatus,
+         RequestFilter, EmptyRequestFilter } from '@app/domain/models';
 
 import { View } from '@app/user-interface/main-layout';
 
-import { InstrumentListEventType } from '../list/instrument-list.component';
+import { RequestListEventType } from '../list/instrument-list.component';
 
 
 @Component({
-  selector: 'emp-land-instruments-main-page',
+  selector: 'emp-one-electronic-filing-main-page',
   templateUrl: './instruments-main-page.component.html'
 })
-export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
+export class ElectronicFilingMainPageComponent implements OnInit, OnDestroy {
 
   displayEditor = false;
   currentView: View;
 
-  instrumentList: LegalInstrument[] = [];
-  selectedInstrument: LegalInstrument = EmptyLegalInstrument;
-  filter: LegalInstrumentFilter = EmptyLegalInstrumentFilter;
+  requestList: Request[] = [];
+  selectedRequest: Request = EmptyRequest;
+  filter: RequestFilter = EmptyRequestFilter;
 
-  displayInstrumentCreator = false;
+  displayRequestCreator = false;
 
   isLoading = false;
 
@@ -46,10 +46,10 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.store.select<LegalInstrument[]>(InstrumentStateSelector.INSTRUMENT_LIST)
+    this.store.select<Request[]>(RequestsStateSelector.REQUESTS_LIST)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(x => {
-        this.instrumentList = x;
+        this.requestList = x;
         this.isLoading = false;
       });
 
@@ -59,14 +59,14 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
         this.onChangeView(x)
       );
 
-    this.store.select<LegalInstrument>(InstrumentStateSelector.SELECTED_INSTRUMENT)
+    this.store.select<Request>(RequestsStateSelector.SELECTED_REQUEST)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(x => {
-        this.selectedInstrument = x;
-        this.displayEditor = !isEmpty(this.selectedInstrument);
+        this.selectedRequest = x;
+        this.displayEditor = !isEmpty(this.selectedRequest);
       });
 
-    this.store.select<LegalInstrumentFilter>(InstrumentStateSelector.LIST_FILTER)
+    this.store.select<RequestFilter>(RequestsStateSelector.LIST_FILTER)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(x =>
         this.filter = x
@@ -81,24 +81,24 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
 
 
   onCloseEditor() {
-    this.store.dispatch(InstrumentsStateAction.UNSELECT_INSTRUMENT);
+    this.store.dispatch(RequestsStateAction.UNSELECT_REQUEST);
   }
 
 
-  onInstrumentCreatorClosed() {
-    this.displayInstrumentCreator = false;
+  onRequestCreatorClosed() {
+    this.displayRequestCreator = false;
   }
 
 
-  onInstrumentListEvent(event: EventInfo): void {
-    switch (event.type as InstrumentListEventType) {
+  onRequestListEvent(event: EventInfo): void {
+    switch (event.type as RequestListEventType) {
 
-      case InstrumentListEventType.SET_FILTER:
-        this.loadInstruments(event.payload);
+      case RequestListEventType.SET_FILTER:
+        this.loadRequests(event.payload);
         return;
 
-      case InstrumentListEventType.ON_CLICK_CREATE_INSTRUMENT_BUTTON:
-        this.displayInstrumentCreator = true;
+      case RequestListEventType.ON_CLICK_CREATE_REQUEST_BUTTON:
+        this.displayRequestCreator = true;
         return;
 
       default:
@@ -113,19 +113,27 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
 
   private onChangeView(newView: View) {
     this.currentView = newView;
-    this.loadInstruments();
+    this.loadRequests();
   }
 
 
-  private getInstrumentStatusForView(view: View): LegalInstrumentStatus {
+  private getRequestStatusForView(view: View): RequestStatus {
     switch (view.name) {
-      case 'Instruments.Pending':
+      case 'Requests.Pending':
         return 'Pending';
-      case 'Instruments.Signed':
+      case 'Requests.Signed':
         return 'Signed';
-      case 'Instruments.Requested':
-        return 'Requested';
-      case 'Instruments.All':
+      case 'Requests.OnPayment':
+        return 'OnPayment';
+      case 'Requests.Signed':
+        return 'Signed';
+      case 'Requests.Submitted':
+        return 'Submitted';
+      case 'Requests.Finished':
+        return 'Finished';
+      case 'Requests.Rejected':
+        return 'Rejected';
+      case 'Requests.All':
         return 'All';
       default:
         throw Assertion.assertNoReachThisCode(`Unrecognized view with name '${view.name}'.`);
@@ -133,16 +141,16 @@ export class InstrumentsMainPageComponent implements OnInit, OnDestroy {
   }
 
 
-  private loadInstruments(data?: { keywords: string }) {
-    const currentKeywords = this.store.getValue<LegalInstrumentFilter>(InstrumentStateSelector.LIST_FILTER).keywords;
+  private loadRequests(data?: { keywords: string }) {
+    const currentKeywords = this.store.getValue<RequestFilter>(RequestsStateSelector.LIST_FILTER).keywords;
 
     const filter = {
-      status: this.getInstrumentStatusForView(this.currentView),
+      status: this.getRequestStatusForView(this.currentView),
       keywords: data ? data.keywords : currentKeywords
     };
 
     this.isLoading = true;
-    this.store.dispatch(InstrumentsStateAction.LOAD_INSTRUMENT_LIST, { filter });
+    this.store.dispatch(RequestsStateAction.LOAD_REQUESTS_LIST, { filter });
   }
 
 }

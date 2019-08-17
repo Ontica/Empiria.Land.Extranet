@@ -10,33 +10,33 @@ import { Observable } from 'rxjs';
 
 import { Assertion, HttpService } from '@app/core';
 
-import { InstrumentApiProvider } from '@app/domain/providers';
+import { ElectronicFilingApiProvider } from '@app/domain/providers';
 
-import { LegalInstrument, LegalInstrumentStatus,
+import { Request, RequestStatus,
          PreventiveNote, PreventiveNoteEditionData,
          RequestPaymentOrderData, RequestRecordingData} from '@app/domain/entities';
 
 
 @Injectable()
-export class InstrumentApiHttpProvider extends InstrumentApiProvider {
+export class ElectronicFilingApiHttpProvider extends ElectronicFilingApiProvider {
 
   constructor(private http: HttpService) {
     super();
   }
 
 
-  getInstrument(uid: string): Observable<LegalInstrument> {
+  getRequest(uid: string): Observable<Request> {
     Assertion.assertValue(uid, 'uid');
 
-    const path = `v2/extranet/instruments/${uid}`;
+    const path = `v2/electronic-filing/requests/${uid}`;
 
-    return this.http.get<LegalInstrument>(path);
+    return this.http.get<Request>(path);
   }
 
 
-  getInstruments(status?: LegalInstrumentStatus,
-                 keywords?: string): Observable<LegalInstrument[]> {
-    let path = `v2/extranet/instruments`;
+  getRequests(status?: RequestStatus,
+              keywords?: string): Observable<Request[]> {
+    let path = `v2/electronic-filing/requests`;
 
     if (status && keywords) {
       path += `/?status=${status}&keywords=${keywords}`;
@@ -48,58 +48,61 @@ export class InstrumentApiHttpProvider extends InstrumentApiProvider {
       // no-op
     }
 
-    return this.http.get<LegalInstrument[]>(path);
+    return this.http.get<Request[]>(path);
   }
+
+
+  // command methods
 
 
   createPreventiveNote(data: PreventiveNoteEditionData): Observable<PreventiveNote> {
     Assertion.assertValue(data, 'data');
 
-    const path = `v2/extranet/instruments/create-preventive-note`;
+    const path = `v2/electronic-filing/requests/create-preventive-note`;
 
     return this.http.post<PreventiveNote>(path, data);
   }
 
 
-  fileToRegistryAuthority(instrument: LegalInstrument,
-                          data: RequestRecordingData) {
-    Assertion.assertValue(instrument, 'instrument');
+  generatePaymentOrder(request: Request,
+                       data: RequestPaymentOrderData): Observable<Request> {
+    Assertion.assertValue(request, 'request');
 
-    const path = `v2/extranet/instruments/${instrument.uid}/request-recording`;
+    const path = `v2/electronic-filing/requests/${request.uid}/generate-payment-order`;
 
-    return this.http.post<LegalInstrument>(path, data);
+    return this.http.post<Request>(path, data);
   }
 
 
-  requestPaymentOrder(instrument: LegalInstrument,
-                      data: RequestPaymentOrderData): Observable<LegalInstrument> {
-    Assertion.assertValue(instrument, 'instrument');
-
-    const path = `v2/extranet/instruments/${instrument.uid}/request-payment-order`;
-
-    return this.http.post<LegalInstrument>(path, data);
-  }
-
-
-  revokeInstrumentSign(instrument: LegalInstrument,
-                       revokeSignToken: string) {
-    Assertion.assertValue(instrument, 'instrument');
+  revokeRequestSign(request: Request,
+                    revokeSignToken: string) {
+    Assertion.assertValue(request, 'request');
     Assertion.assertValue(revokeSignToken, 'revokeSignToken');
 
-    const path = `v2/extranet/instruments/${instrument.uid}/revoke-sign`;
+    const path = `v2/electronic-filing/requests/${request.uid}/revoke-sign`;
 
-    return this.http.post<LegalInstrument>(path, { revokeSignToken });
+    return this.http.post<Request>(path, { revokeSignToken });
   }
 
 
-  signInstrument(instrument: LegalInstrument,
-                 signToken: string): Observable<LegalInstrument> {
-    Assertion.assertValue(instrument, 'instrument');
+  signRequest(request: Request,
+              signToken: string): Observable<Request> {
+    Assertion.assertValue(request, 'request');
     Assertion.assertValue(signToken, 'signToken');
 
-    const path = `v2/extranet/instruments/${instrument.uid}/sign`;
+    const path = `v2/electronic-filing/requests/${request.uid}/sign`;
 
-    return this.http.post<LegalInstrument>(path, { signToken });
+    return this.http.post<Request>(path, { signToken });
+  }
+
+
+  submitRequest(request: Request,
+                data: RequestRecordingData) {
+    Assertion.assertValue(request, 'request');
+
+    const path = `v2/electronic-filing/requests/${request.uid}/submit`;
+
+    return this.http.post<Request>(path, data);
   }
 
 
@@ -108,7 +111,7 @@ export class InstrumentApiHttpProvider extends InstrumentApiProvider {
     Assertion.assertValue(preventiveNote, 'preventiveNote');
     Assertion.assertValue(data, 'data');
 
-    const path = `v2/extranet/instruments/${preventiveNote.uid}`;
+    const path = `v2/electronic-filing/requests/${preventiveNote.uid}`;
 
     return this.http.put<PreventiveNote>(path, data);
   }

@@ -12,15 +12,15 @@ import { FrontController } from '@app/core/presentation';
 
 
 @Component({
-  selector: 'emp-land-instrument-creator',
+  selector: 'emp-one-request-creator',
   templateUrl: './instrument-creator.component.html',
   styleUrls: ['./instrument-creator.component.scss']
 })
-export class InstrumentCreatorComponent {
+export class RequestCreatorComponent {
 
   @Output() closeEvent = new EventEmitter<void>();
 
-  instrumentType = '';
+  requestType = '';
 
   constructor(private frontController: FrontController) { }
 

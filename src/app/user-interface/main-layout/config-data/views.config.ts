@@ -8,30 +8,48 @@
 import { View } from '../common-models/common';
 
 
-export const InstrumentsViews: View[] = [
+export const RequestsViews: View[] = [
   {
-    name: 'Instruments.Pending',
-    title: 'Documentos en elaboración',
+    name: 'Requests.Pending',
+    title: 'Solicitudes en elaboración',
     menuTitle: 'En elaboración',
-    url: '/documents/pending'
+    url: '/electronic-filing/requests/pending'
   },
   {
-    name: 'Instruments.Signed',
-    title: 'Documentos firmados',
-    menuTitle: 'Firmados',
-    url: '/documents/signed'
+    name: 'Requests.Signed',
+    title: 'Solicitudes firmadas',
+    menuTitle: 'Firmadas',
+    url: '/electronic-filing/requests/signed'
   },
   {
-    name: 'Instruments.Requested',
-    title: 'Documentos tramitados',
-    menuTitle: 'Tramitados',
-    url: '/documents/requested'
+    name: 'Requests.OnPayment',
+    title: 'Solicitudes con pago pendiente',
+    menuTitle: 'Por pagar',
+    url: '/electronic-filing/requests/on-payment'
   },
   {
-    name: 'Instruments.All',
-    title: 'Todos los documentos',
-    menuTitle: 'Todos',
-    url: '/documents/all'
+    name: 'Requests.Submitted',
+    title: 'Solicitudes ingresadas',
+    menuTitle: 'Ingresadas',
+    url: '/electronic-filing/requests/submitted'
+  },
+  {
+    name: 'Requests.Finished',
+    title: 'Solicitudes finalizadas',
+    menuTitle: 'Finalizadas',
+    url: '/electronic-filing/requests/finished'
+  },
+  {
+    name: 'Requests.Rejected',
+    title: 'Solicitudes devueltas',
+    menuTitle: 'Devueltas',
+    url: '/electronic-filing/requests/rejected'
+  },
+  {
+    name: 'Requests.All',
+    title: 'Todas las solicitudes',
+    menuTitle: 'Todas',
+    url: '/electronic-filing/requests/all'
   }
 ];
 

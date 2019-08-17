@@ -12,10 +12,10 @@ import { SecurityGuardService } from './core';
 import { MainLayoutComponent, NoContentComponent } from './user-interface/main-layout';
 
 const routes: Routes = [
-  { path: 'documents',
+  { path: 'electronic-filing/requests',
     component: MainLayoutComponent,
     canActivate: [SecurityGuardService],
-    loadChildren: './user-interface/instruments/instruments.module#InstrumentsModule'
+    loadChildren: './user-interface/instruments/instruments.module#ElectronicFilingModule'
   },
   { path: 'transactions',
     component: MainLayoutComponent,
@@ -30,7 +30,7 @@ const routes: Routes = [
   { path: 'security',
     loadChildren: './user-interface/security/security-ui.module#SecurityUIModule'
   },
-  { path: '', redirectTo: 'documents', pathMatch: 'full' },
+  { path: '', redirectTo: 'electronic-filing/requests', pathMatch: 'full' },
   { path: '**', component: NoContentComponent }
 ];
 

@@ -1,4 +1,4 @@
-<ng-container *ngIf="instrument.isSigned">
+<ng-container *ngIf="request.signed">
 
   <form class="form-container">
 
@@ -6,14 +6,14 @@
 
       <table class="form-section">
         <tr>
-          <td class="form-section-title" colspan="2" i18n>Este documento está firmado electrónicamente</td>
+          <td class="form-section-title" colspan="2" i18n>Esta solicitud está firmada electrónicamente</td>
         </tr>
         <tr>
           <td>
             <label i18n>Firma electrónica:</label>
           </td>
           <td>
-            <textarea class="text-area" rows="4" disabled readonly="readonly" [value]="instrument.esign?.sign"></textarea>
+            <textarea class="text-area" rows="4" disabled readonly="readonly" [value]="request.esign?.sign"></textarea>
           </td>
         </tr>
         <tr>
@@ -21,7 +21,7 @@
             <label i18n>Sello digital:</label>
           </td>
           <td>
-            <textarea class="text-area" rows="4" disabled readonly="readonly" [value]="instrument.esign?.seal"></textarea>
+            <textarea class="text-area" rows="4" disabled readonly="readonly" [value]="request.esign?.seal"></textarea>
           </td>
         </tr>
         <tr>
@@ -29,13 +29,13 @@
             <label i18n>Código de seguridad:</label>
           </td>
           <td>
-            <input type="text" class="text-box" disabled readonly="readonly" [value]="instrument.esign?.hash" style="max-width: 120px;">
+            <input type="text" class="text-box" disabled readonly="readonly" [value]="request.esign?.hash" style="max-width: 120px;">
           </td>
         </tr>
         <tr *ngIf="!readonly">
           <td></td>
           <td>
-            <input type="checkbox" [checked]="revokeMode" (change)="toggleRevokeMode()">Deseo revocar la firma del documento
+            <input type="checkbox" [checked]="revokeMode" (change)="toggleRevokeMode()">Deseo revocar la firma de esta solicitud
           </td>
         </tr>
       </table>
@@ -45,6 +45,6 @@
   </form>
 </ng-container>
 
-<ng-container *ngIf="(!instrument.isSigned || revokeMode) && !readonly">
+<ng-container *ngIf="(!request.signed || revokeMode) && !readonly">
     <emp-ng-esign-input [revokeMode]="revokeMode" (signTokenReceived)="onSignTokenReceived($event)"></emp-ng-esign-input>
 </ng-container>

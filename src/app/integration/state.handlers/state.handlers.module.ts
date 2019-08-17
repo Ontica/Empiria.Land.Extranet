@@ -10,7 +10,7 @@ import { NgModule } from '@angular/core';
 import { STATE_HANDLERS } from '@app/core/presentation/presentation.state';
 
 import { MainUserInterfaceStateHandler } from './main-ui.state.handler';
-import { InstrumentsStateHandler } from './instruments.state.handler';
+import { RequestsStateHandler } from './instruments.state.handler';
 import { RepositoryStateHandler } from './repository.state.handler';
 
 
@@ -19,11 +19,11 @@ import { RepositoryStateHandler } from './repository.state.handler';
 
   providers: [
     MainUserInterfaceStateHandler,
-    InstrumentsStateHandler,
+    RequestsStateHandler,
     RepositoryStateHandler,
 
     { provide: STATE_HANDLERS, useExisting: MainUserInterfaceStateHandler, multi: true },
-    { provide: STATE_HANDLERS, useExisting: InstrumentsStateHandler, multi: true },
+    { provide: STATE_HANDLERS, useExisting: RequestsStateHandler, multi: true },
     { provide: STATE_HANDLERS, useExisting: RepositoryStateHandler, multi: true }
 
   ]

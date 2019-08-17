@@ -9,15 +9,15 @@ import { NgModule } from '@angular/core';
 
 import { COMMAND_HANDLERS } from '@app/core/presentation/front.controller';
 
-import { InstrumentCommandHandler } from './instrument.command.handler';
+import { RequestCommandHandler } from './instrument.command.handler';
 
 
 @NgModule({
 
   providers: [
-    InstrumentCommandHandler,
+    RequestCommandHandler,
 
-    { provide: COMMAND_HANDLERS, useExisting: InstrumentCommandHandler, multi: true }
+    { provide: COMMAND_HANDLERS, useExisting: RequestCommandHandler, multi: true }
   ]
 
 })

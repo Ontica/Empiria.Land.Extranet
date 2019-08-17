@@ -10,21 +10,21 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { EventInfo } from '@app/core';
 import { FrontController } from '@app/core/presentation';
 
-import { LegalInstrument, EmptyLegalInstrument } from '@app/domain/models';
+import { Request, EmptyRequest } from '@app/domain/models';
 
 
 @Component({
-  selector: 'emp-land-create-instrument-wizard',
+  selector: 'emp-one-request-tab-view',
   templateUrl: './create-instrument-wizard.component.html',
   styleUrls: ['./create-instrument-wizard.component.scss']
 })
-export class CreateInstrumentWizardComponent {
+export class RequestTabViewComponent {
 
-  @Input() instrument: LegalInstrument = EmptyLegalInstrument;
+  @Input() request: Request = EmptyRequest;
 
   @Output() closeEvent = new EventEmitter<void>();
 
-  documentType = 'PreventiveNote';
+  requestType = 'PreventiveNote';
 
   constructor(private frontController: FrontController) { }
 

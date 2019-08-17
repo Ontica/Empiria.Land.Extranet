@@ -6,7 +6,7 @@
  */
 
 
-export interface ISelectable {
+export interface Selectable {
   selected: boolean;
 }
 
@@ -28,7 +28,7 @@ export class CardSettings {
 
 // colored tag
 
-export interface ColoredTag extends ISelectable {
+export interface ColoredTag extends Selectable {
   name: string;
   color: string;
 }

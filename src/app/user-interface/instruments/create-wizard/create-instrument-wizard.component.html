@@ -1,25 +1,25 @@
-<emp-ng-card [title]='instrument.name || "Nuevo documento"'
-             [hint]='instrument.requestedBy || "Crear un nuevo instrumento legal u oficio"'
+<emp-ng-card [title]="request.name"
+             [hint]="request.requestedBy"
              (cardClose)="onClose()">
 
   <mat-horizontal-stepper linear #stepper labelPosition="bottom" color="accent">
 
     <mat-step>
-      <ng-template matStepLabel>{{instrument.isSigned ? 'Ver' : 'Llenar'}}<br>el formulario</ng-template>
-      <ng-container *ngIf="documentType === 'PreventiveNote'">
+      <ng-template matStepLabel>{{request.signed ? 'Ver' : 'Llenar'}}<br>el formulario</ng-template>
+      <ng-container *ngIf="requestType === 'PreventiveNote'">
         <emp-land-preventive-note
-            [preventiveNote]="instrument"
-            [readonly] = "instrument.isSigned"
+            [preventiveNote]="request"
+            [readonly] = "request.signed"
             (editionEvent)="processEvent($event)">
         </emp-land-preventive-note>
       </ng-container>
-      <ng-container *ngIf="documentType === 'DefinitiveNote'">
+      <ng-container *ngIf="requestType === 'DefinitiveNote'">
         <emp-land-definitive-note></emp-land-definitive-note>
       </ng-container>
-      <ng-container *ngIf="documentType === 'NotaryDeed'">
+      <ng-container *ngIf="requestType === 'NotaryDeed'">
         <emp-land-deed></emp-land-deed>
       </ng-container>
-      <ng-container *ngIf="documentType === 'FolioRealRequest'">
+      <ng-container *ngIf="requestType === 'FolioRealRequest'">
         <emp-land-folio-real-request></emp-land-folio-real-request>
       </ng-container>
       <div class="right">
@@ -27,7 +27,7 @@
       </div>
     </mat-step>
 
-    <mat-step [completed]="false" *ngIf="documentType === 'NotaryDeed'">
+    <mat-step [completed]="false" *ngIf="requestType === 'NotaryDeed'">
       <ng-template matStepLabel>Adjuntar<br>archivos</ng-template>
       <emp-ng-file-control></emp-ng-file-control>
 
@@ -37,29 +37,29 @@
       </div>
     </mat-step>
 
-    <mat-step [completed]="instrument.isSigned">
-      <ng-template matStepLabel>{{instrument.isSigned ? 'Firma electrónica' : 'Firmar el documento'}}</ng-template>
+    <mat-step [completed]="request.signed">
+      <ng-template matStepLabel>{{request.signed ? 'Firma electrónica' : 'Firmar la solicitud'}}</ng-template>
 
-      <emp-land-instrument-sign-request
-          [instrument]="instrument"
-          [readonly] = "instrument.isRequested"
+      <emp-one-request-signer
+          [request]="request"
+          [readonly] = "request.submitted"
           (editionEvent)="processEvent($event)">
-      </emp-land-instrument-sign-request>
+      </emp-one-request-signer>
 
       <div class="right">
         <button mat-button matStepperPrevious>Anterior</button>
-        <button [class.btn]="!instrument.isSigned" [class.btn-action]="instrument.isSigned"
-                [disabled]="!instrument.isSigned" matStepperNext>Siguiente</button>
+        <button [class.btn]="!request.signed" [class.btn-action]="request.signed"
+                [disabled]="!request.signed" matStepperNext>Siguiente</button>
       </div>
     </mat-step>
 
-    <mat-step [completed]="instrument.isRequested">
-      <ng-template matStepLabel>{{instrument.isRequested ? 'Información del trámite' : 'Solicitar el trámite'}}</ng-template>
+    <mat-step [completed]="request.submitted">
+      <ng-template matStepLabel>{{request.submitted ? 'Información del trámite' : 'Solicitar el trámite'}}</ng-template>
 
-      <emp-land-instrument-filing
-          [instrument]="instrument"
+      <emp-one-request-submitter
+          [request]="request"
           (editionEvent)="processEvent($event)">
-      </emp-land-instrument-filing>
+      </emp-one-request-submitter>
 
       <div class="right">
         <button mat-button matStepperPrevious>Anterior</button>

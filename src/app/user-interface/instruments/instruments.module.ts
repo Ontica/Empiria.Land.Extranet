@@ -16,20 +16,20 @@ import { SharedContainersModule } from '@app/shared/containers/shared-containers
 import { SharedFormControlsModule } from '@app/shared/form-controls/shared-form-controls.module';
 import { SharedIndicatorsModule } from '@app/shared/indicators/shared-indicators.module';
 
-import { CreateInstrumentWizardComponent } from './create-wizard/create-instrument-wizard.component';
 import { DeedComponent } from './editors/deed.component';
 import { DefinitiveNoteComponent } from './editors/definitive-note.component';
 import { FolioRealRequestComponent } from './editors/folio-real-request.component';
-
-import { InstrumentCreatorComponent } from './instrument-creator/instrument-creator.component';
-import { InstrumentFilingComponent } from './filing/instrument-filing.component';
-import { InstrumentListComponent } from './list/instrument-list.component';
-import { InstrumentListItemComponent } from './list/instrument-list-item.component';
-import { InstrumentsMainPageComponent } from './main-page/instruments-main-page.component';
-import { InstrumentSignRequestComponent } from './sign-request/instrument-sign-request.component';
 import { PreventiveNoteComponent } from './editors/preventive-note.component';
 
-import { InstrumentsRoutingModule } from './instruments-routing.module';
+import { ElectronicFilingMainPageComponent } from './main-page/instruments-main-page.component';
+import { RequestCreatorComponent } from './instrument-creator/instrument-creator.component';
+import { RequestListComponent } from './list/instrument-list.component';
+import { RequestListItemComponent } from './list/instrument-list-item.component';
+import { RequestSignerComponent } from './sign-request/instrument-sign-request.component';
+import { RequestSubmitterComponent } from './filing/instrument-filing.component';
+import { RequestTabViewComponent } from './create-wizard/create-instrument-wizard.component';
+
+import { ElectronicFilingRoutingModule } from './instruments-routing.module';
 
 
 @NgModule({
@@ -45,24 +45,24 @@ import { InstrumentsRoutingModule } from './instruments-routing.module';
     SharedFormControlsModule,
     SharedIndicatorsModule,
 
-    InstrumentsRoutingModule
+    ElectronicFilingRoutingModule
   ],
 
   declarations: [
-    CreateInstrumentWizardComponent,
     DeedComponent,
     DefinitiveNoteComponent,
+    ElectronicFilingMainPageComponent,
     FolioRealRequestComponent,
-    InstrumentCreatorComponent,
-    InstrumentFilingComponent,
-    InstrumentListComponent,
-    InstrumentListItemComponent,
-    InstrumentsMainPageComponent,
-    InstrumentSignRequestComponent,
-    PreventiveNoteComponent
+    PreventiveNoteComponent,
+    RequestCreatorComponent,
+    RequestListComponent,
+    RequestListItemComponent,
+    RequestSignerComponent,
+    RequestSubmitterComponent,
+    RequestTabViewComponent
   ],
 
   exports: []
 
 })
-export class InstrumentsModule { }
+export class ElectronicFilingModule { }

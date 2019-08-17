@@ -11,7 +11,7 @@
           <label>Solicitante:</label>
         </td>
         <td colspan="3">
-          <input type="text" class="text-box" disabled [value]="instrument.requestedBy">
+          <input type="text" class="text-box" disabled [value]="request.requestedBy">
         </td>
       </tr>
       <tr>
@@ -30,39 +30,39 @@
                  maxlength="15" formControlName="rfc">
         </td>
       </tr>
-      <tr *ngIf="!instrument.transaction.uid">
+      <tr *ngIf="!request.transaction.uid">
         <td></td>
         <td colspan="3">
-          <button type="submit" class="btn-action" (click)="onRequestPaymentOrder()">Solicitar el trámite</button>
+          <button type="submit" class="btn-action" (click)="onGeneratePaymentOrder()">Solicitar el trámite</button>
         </td>
       </tr>
-      <tr *ngIf="instrument.transaction.uid">
+      <tr *ngIf="request.transaction.uid">
         <td>
           <label>Número de trámite:</label>
         </td>
         <td>
-          <input type="text" class="text-box" [value]="instrument.transaction.uid" disabled style="width: 200px">
+          <input type="text" class="text-box" [value]="request.transaction.uid" disabled style="width: 200px">
         </td>
         <td>
           <label>Documentos:</label>
         </td>
         <td>
           <a target="_blank"
-             href="http://empiria.land/intranet/land.registration.system.transactions/bank.payment.order.aspx?id={{instrument.transaction.id}}">Boleta de pago</a>
+             href="http://empiria.land/intranet/land.registration.system.transactions/bank.payment.order.aspx?id={{request.transaction.id}}">Boleta de pago</a>
         </td>
       </tr>
-      <tr *ngIf="instrument.transaction.uid && !instrument.transaction.presentationDate">
+      <tr *ngIf="request.transaction.uid && !request.transaction.presentationDate">
         <td></td>
         <td colspan="3">
-          <button type="submit" class="btn-action" (click)="onFileToRegistryAuthority()">Ingresar el trámite</button>
+          <button type="submit" class="btn-action" (click)="onSubmitRequest()">Ingresar el trámite</button>
         </td>
       </tr>
-      <tr *ngIf="instrument.transaction.uid && instrument.transaction.presentationDate">
+      <tr *ngIf="request.transaction.uid && request.transaction.presentationDate">
         <td>
           <label>Estado del trámite:</label>
         </td>
         <td colspan="3">
-          <input type="text" class="text-box" style="width: 200px" disabled [value]="instrument.transaction.status">
+          <input type="text" class="text-box" style="width: 200px" disabled [value]="request.transaction.status">
         </td>
       </tr>
     </table>

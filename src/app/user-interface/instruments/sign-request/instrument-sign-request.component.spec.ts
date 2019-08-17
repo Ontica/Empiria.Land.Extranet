@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InstrumentSignRequestComponent } from './instrument-sign-request.component';
+import { RequestSignerComponent } from './instrument-sign-request.component';
 
-describe('InstrumentSignRequestComponent', () => {
-  let component: InstrumentSignRequestComponent;
-  let fixture: ComponentFixture<InstrumentSignRequestComponent>;
+describe('RequestSignerComponent', () => {
+  let component: RequestSignerComponent;
+  let fixture: ComponentFixture<RequestSignerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InstrumentSignRequestComponent ]
+      declarations: [ RequestSignerComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InstrumentSignRequestComponent);
+    fixture = TestBed.createComponent(RequestSignerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -7,20 +7,20 @@
 
 import { Component, Input } from '@angular/core';
 
-import { LegalInstrument, PreventiveNote } from '@app/domain/models';
+import { Request, PreventiveNote } from '@app/domain/models';
 
 
 @Component({
-  selector: 'emp-land-instrument-list-item',
+  selector: 'emp-one-request-list-item',
   templateUrl: './instrument-list-item.component.html',
 })
-export class InstrumentListItemComponent {
+export class RequestListItemComponent {
 
-  @Input() instrument: LegalInstrument;
+  @Input() request: Request;
 
 
   get preventiveNote() {
-    return (this.instrument as PreventiveNote);
+    return (this.request as PreventiveNote);
   }
 
 }

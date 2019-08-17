@@ -7,39 +7,40 @@
 
 import { Observable } from 'rxjs';
 
-import { LegalInstrument, LegalInstrumentStatus,
+import { Request, RequestStatus,
          PreventiveNote, PreventiveNoteEditionData,
          RequestPaymentOrderData, RequestRecordingData } from '@app/domain/entities';
 
 
-export abstract class InstrumentApiProvider {
+export abstract class ElectronicFilingApiProvider {
 
 
-  abstract getInstrument(uid: string): Observable<LegalInstrument>;
+  abstract getRequest(uid: string): Observable<Request>;
 
 
-  abstract getInstruments(status?: LegalInstrumentStatus,
-                          keywords?: string): Observable<LegalInstrument[]>;
+  abstract getRequests(status?: RequestStatus,
+                       keywords?: string): Observable<Request[]>;
 
+  // command methods
 
   abstract createPreventiveNote(data: PreventiveNoteEditionData): Observable<PreventiveNote>;
 
 
-  abstract fileToRegistryAuthority(instrument: LegalInstrument,
-                                   data: RequestRecordingData): Observable<LegalInstrument>;
-
-
-  abstract requestPaymentOrder(instrument: LegalInstrument,
-                               data: RequestPaymentOrderData): Observable<LegalInstrument>;
+  abstract generatePaymentOrder(request: Request,
+                                data: RequestPaymentOrderData): Observable<Request>;
 
 
 
-  abstract revokeInstrumentSign(instrument: LegalInstrument,
-                                revokeSignToken: string);
+  abstract revokeRequestSign(request: Request,
+                             revokeSignToken: string);
 
 
-  abstract signInstrument(instrument: LegalInstrument,
-                          signToken: string): Observable<LegalInstrument>;
+  abstract signRequest(request: Request,
+                       signToken: string): Observable<Request>;
+
+
+  abstract submitRequest(request: Request,
+                         data: RequestRecordingData): Observable<Request>;
 
 
   abstract updatePreventiveNote(preventiveNote: PreventiveNote,

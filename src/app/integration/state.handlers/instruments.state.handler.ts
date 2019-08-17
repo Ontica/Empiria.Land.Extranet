@@ -11,64 +11,64 @@ import { Assertion, CommandResult } from '@app/core';
 
 import { AbstractStateHandler, StateValues } from '@app/core/presentation/state-handler';
 
-import { InstrumentUseCases } from '@app/domain/use-cases';
+import { ElectronicFilingUseCases } from '@app/domain/use-cases';
 
-import { LegalInstrument, LegalInstrumentFilter,
-         EmptyLegalInstrumentFilter, EmptyLegalInstrument } from '@app/domain/models';
-import { InstrumentCommandType } from '../command.handlers/commands';
-import { switchMap, take } from 'rxjs/operators';
+import { Request, RequestFilter,
+         EmptyRequestFilter, EmptyRequest } from '@app/domain/models';
+import { RequestCommandType } from '../command.handlers/commands';
 
 
 export enum ActionType {
-  LOAD_INSTRUMENT_LIST = 'Land.UI-Action.LegalInstruments.LoadInstrumentList',
-  SELECT_INSTRUMENT     = 'Land.UI-Action.LegalInstruments.SelectInstrument',
-  UNSELECT_INSTRUMENT   = 'Land.UI-Action.LegaInstruments.UnselectInstrument'
+  LOAD_REQUESTS_LIST = 'OnePoint.UI-Action.ElectronicFiling.LoadRequestList',
+  SELECT_REQUEST     = 'OnePoint.UI-Action.ElectronicFiling.SelectRequest',
+  UNSELECT_REQUEST   = 'OnePoint.UI-Action.ElectronicFiling.UnselectRequest'
 }
 
 
 export enum SelectorType {
-  INSTRUMENT_LIST     = 'Land.UI-Item.LegalInstruments.List',
-  LIST_FILTER         = 'Land.UI-Item.LegalInstruments.Filter',
-  SELECTED_INSTRUMENT = 'Land.UI-Item.LegalInstruments.SelectedInstrument'
+  REQUESTS_LIST    = 'OnePoint.UI-Item.ElectronicFiling.List',
+  LIST_FILTER      = 'OnePoint.UI-Item.ElectronicFiling.Filter',
+  SELECTED_REQUEST = 'OnePoint.UI-Item.ElectronicFiling.SelectedRequest'
 }
 
 
 enum CommandEffectType {
-  CREATE_PREVENTIVE_NOTE     = InstrumentCommandType.CREATE_PREVENTIVE_NOTE,
-  UPDATE_PREVENTIVE_NOTE     = InstrumentCommandType.UPDATE_PREVENTIVE_NOTE,
-  SIGN                       = InstrumentCommandType.SIGN,
-  REVOKE_SIGN                = InstrumentCommandType.REVOKE_SIGN,
-  REQUEST_PAYMENT_ORDER      = InstrumentCommandType.REQUEST_PAYMENT_ORDER,
-  FILE_TO_REGISTRY_AUTHORITY = InstrumentCommandType.FILE_TO_REGISTRY_AUTHORITY
+  CREATE_PREVENTIVE_NOTE = RequestCommandType.CREATE_PREVENTIVE_NOTE,
+  UPDATE_PREVENTIVE_NOTE = RequestCommandType.UPDATE_PREVENTIVE_NOTE,
+  SIGN                   = RequestCommandType.SIGN,
+  REVOKE_SIGN            = RequestCommandType.REVOKE_SIGN,
+  GENERATE_PAYMENT_ORDER = RequestCommandType.GENERATE_PAYMENT_ORDER,
+  REQUEST_SUBMISSION     = RequestCommandType.REQUEST_SUBMISSION
 }
 
 
-export interface InstrumentsState {
-  readonly instrumentsList: LegalInstrument[];
-  readonly listFilter: LegalInstrumentFilter;
-  readonly selectedInstrument: LegalInstrument;
+export interface RequestsState {
+  readonly requestsList: Request[];
+  readonly listFilter: RequestFilter;
+  readonly selectedRequest: Request;
 }
 
 
 const initialState: StateValues = [
-  { key: SelectorType.INSTRUMENT_LIST, value: [] },
-  { key: SelectorType.LIST_FILTER, value: EmptyLegalInstrumentFilter },
-  { key: SelectorType.SELECTED_INSTRUMENT, value: EmptyLegalInstrument }
+  { key: SelectorType.REQUESTS_LIST, value: [] },
+  { key: SelectorType.LIST_FILTER, value: EmptyRequestFilter },
+  { key: SelectorType.SELECTED_REQUEST, value: EmptyRequest }
 ];
 
-@Injectable()
-export class InstrumentsStateHandler extends AbstractStateHandler<InstrumentsState> {
 
-  constructor(private useCases: InstrumentUseCases) {
+@Injectable()
+export class RequestsStateHandler extends AbstractStateHandler<RequestsState> {
+
+  constructor(private useCases: ElectronicFilingUseCases) {
     super(initialState, SelectorType, ActionType, CommandEffectType);
   }
 
 
-  get state(): InstrumentsState {
+  get state(): RequestsState {
     return {
-      instrumentsList: this.getValue(SelectorType.INSTRUMENT_LIST),
+      requestsList: this.getValue(SelectorType.REQUESTS_LIST),
       listFilter: this.getValue(SelectorType.LIST_FILTER),
-      selectedInstrument: this.getValue(SelectorType.SELECTED_INSTRUMENT)
+      selectedRequest: this.getValue(SelectorType.SELECTED_REQUEST)
     };
   }
 
@@ -77,17 +77,17 @@ export class InstrumentsStateHandler extends AbstractStateHandler<InstrumentsSta
     switch ((command.type as any) as CommandEffectType) {
 
       case CommandEffectType.CREATE_PREVENTIVE_NOTE:
-        this.stateUpdater.appendToStart(SelectorType.INSTRUMENT_LIST, command.result);
-        this.setValue(SelectorType.SELECTED_INSTRUMENT, command.result);
+        this.stateUpdater.appendToStart(SelectorType.REQUESTS_LIST, command.result);
+        this.setValue(SelectorType.SELECTED_REQUEST, command.result);
         return;
 
       case CommandEffectType.UPDATE_PREVENTIVE_NOTE:
       case CommandEffectType.SIGN:
       case CommandEffectType.REVOKE_SIGN:
-      case CommandEffectType.REQUEST_PAYMENT_ORDER:
-      case CommandEffectType.FILE_TO_REGISTRY_AUTHORITY:
-        this.stateUpdater.replaceEntity(SelectorType.INSTRUMENT_LIST, command.result);
-        this.setValue(SelectorType.SELECTED_INSTRUMENT, command.result);
+      case CommandEffectType.GENERATE_PAYMENT_ORDER:
+      case CommandEffectType.REQUEST_SUBMISSION:
+        this.stateUpdater.replaceEntity(SelectorType.REQUESTS_LIST, command.result);
+        this.setValue(SelectorType.SELECTED_REQUEST, command.result);
         return;
 
       default:
@@ -99,23 +99,23 @@ export class InstrumentsStateHandler extends AbstractStateHandler<InstrumentsSta
   dispatch<U>(actionType: ActionType, payload?: any): Promise<U> | void {
     switch (actionType) {
 
-      case ActionType.LOAD_INSTRUMENT_LIST:
+      case ActionType.LOAD_REQUESTS_LIST:
         Assertion.assertValue(payload.filter, 'payload.filter');
 
         this.setValue(SelectorType.LIST_FILTER, payload.filter);
 
-        return this.setValue<U>(SelectorType.INSTRUMENT_LIST,
-                                this.useCases.getInstruments(this.state.listFilter));
+        return this.setValue<U>(SelectorType.REQUESTS_LIST,
+                                this.useCases.getRequests(this.state.listFilter));
 
-      case ActionType.SELECT_INSTRUMENT:
-        Assertion.assertValue(payload.instrument, 'payload.instrument');
+      case ActionType.SELECT_REQUEST:
+        Assertion.assertValue(payload.request, 'payload.request');
 
-        this.setValue(SelectorType.SELECTED_INSTRUMENT, payload.instrument);
+        this.setValue(SelectorType.SELECTED_REQUEST, payload.request);
         return;
 
 
-      case ActionType.UNSELECT_INSTRUMENT:
-        this.setValue(SelectorType.SELECTED_INSTRUMENT, EmptyLegalInstrument);
+      case ActionType.UNSELECT_REQUEST:
+        this.setValue(SelectorType.SELECTED_REQUEST, EmptyRequest);
         return;
 
       default:

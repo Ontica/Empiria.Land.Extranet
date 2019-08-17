@@ -8,14 +8,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { InstrumentsMainPageComponent } from './main-page/instruments-main-page.component';
+import { ElectronicFilingMainPageComponent } from './main-page/instruments-main-page.component';
 
 
 const routes: Routes = [
-  { path: 'pending', component: InstrumentsMainPageComponent },
-  { path: 'signed', component: InstrumentsMainPageComponent },
-  { path: 'requested', component: InstrumentsMainPageComponent },
-  { path: 'all', component: InstrumentsMainPageComponent },
+  { path: 'pending', component: ElectronicFilingMainPageComponent },
+  { path: 'signed', component: ElectronicFilingMainPageComponent },
+  { path: 'on-payment', component: ElectronicFilingMainPageComponent },
+  { path: 'submitted', component: ElectronicFilingMainPageComponent },
+  { path: 'finished', component: ElectronicFilingMainPageComponent },
+  { path: 'rejected', component: ElectronicFilingMainPageComponent },
+  { path: 'all', component: ElectronicFilingMainPageComponent },
   { path: '', redirectTo: 'pending', pathMatch: 'full' }
 ];
 
@@ -24,4 +27,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class InstrumentsRoutingModule { }
+export class ElectronicFilingRoutingModule { }

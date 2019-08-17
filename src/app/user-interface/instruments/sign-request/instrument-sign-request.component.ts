@@ -8,18 +8,18 @@
 import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 
 import { EventInfo } from '@app/core';
-import { InstrumentCommandType } from '@app/core/presentation/commands';
+import { RequestCommandType } from '@app/core/presentation/commands';
 
-import { LegalInstrument } from '@app/domain/models';
+import { Request } from '@app/domain/models';
 
 
 @Component({
-  selector: 'emp-land-instrument-sign-request',
+  selector: 'emp-one-request-signer',
   templateUrl: './instrument-sign-request.component.html'
 })
-export class InstrumentSignRequestComponent implements OnChanges {
+export class RequestSignerComponent implements OnChanges {
 
-  @Input() instrument: LegalInstrument;
+  @Input() request: Request;
 
   @Input() readonly = false;
 
@@ -53,9 +53,9 @@ export class InstrumentSignRequestComponent implements OnChanges {
 
   private revokeSign(revocationToken: string) {
     const event: EventInfo = {
-      type: InstrumentCommandType.REVOKE_SIGN,
+      type: RequestCommandType.REVOKE_SIGN,
       payload: {
-        instrument: this.instrument,
+        request: this.request,
         token: revocationToken
       }
     };
@@ -66,9 +66,9 @@ export class InstrumentSignRequestComponent implements OnChanges {
 
   private sign(signToken: string) {
     const event: EventInfo = {
-      type: InstrumentCommandType.SIGN,
+      type: RequestCommandType.SIGN,
       payload: {
-        instrument: this.instrument,
+        request: this.request,
         token: signToken
       }
     };

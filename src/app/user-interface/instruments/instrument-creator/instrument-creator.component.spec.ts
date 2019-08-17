@@ -7,22 +7,22 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InstrumentCreatorComponent } from './instrument-creator.component';
+import { RequestCreatorComponent } from './instrument-creator.component';
 
 
-describe('InstrumentCreatorComponent', () => {
-  let component: InstrumentCreatorComponent;
-  let fixture: ComponentFixture<InstrumentCreatorComponent>;
+describe('RequestCreatorComponent', () => {
+  let component: RequestCreatorComponent;
+  let fixture: ComponentFixture<RequestCreatorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InstrumentCreatorComponent ]
+      declarations: [ RequestCreatorComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InstrumentCreatorComponent);
+    fixture = TestBed.createComponent(RequestCreatorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

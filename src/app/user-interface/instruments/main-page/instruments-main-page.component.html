@@ -1,31 +1,31 @@
 <div class="explorer" fxLayoutGap="32px">
 
   <div [fxHide.lt-lg]="displayEditor" class="primary">
-    <emp-land-instrument-list
-        [instrumentList]="instrumentList"
-        [selectedInstrument]="selectedInstrument"
+    <emp-one-request-list
+        [requestList]="requestList"
+        [selectedRequest]="selectedRequest"
         [filter]="filter"
         [title]="currentView.title"
         [isLoading]="isLoading"
-        (instrumentListEvent)="onInstrumentListEvent($event)">
-    </emp-land-instrument-list>
+        (requestListEvent)="onRequestListEvent($event)">
+    </emp-one-request-list>
 
   </div>
 
   <div *ngIf="displayEditor" class="secondary">
-    <emp-land-create-instrument-wizard
-        [instrument]="selectedInstrument"
+    <emp-one-request-tab-view
+        [request]="selectedRequest"
         (closeEvent)="onCloseEditor()">
-    </emp-land-create-instrument-wizard>
+    </emp-one-request-tab-view>
   </div>
 
 </div>
 
-<emp-ng-modal-window *ngIf="displayInstrumentCreator"
+<emp-ng-modal-window *ngIf="displayRequestCreator"
                      [config]="{width:'820px', height:'840px'}">
 
-  <emp-land-instrument-creator
-      (closeEvent)="onInstrumentCreatorClosed()">
-  </emp-land-instrument-creator>
+  <emp-one-request-creator
+      (closeEvent)="onRequestCreatorClosed()">
+  </emp-one-request-creator>
 
 </emp-ng-modal-window>

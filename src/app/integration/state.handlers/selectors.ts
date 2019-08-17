@@ -9,8 +9,8 @@ import { SelectorType as MainUIStateSelector } from '../state.handlers/main-ui.s
 export { SelectorType as MainUIStateSelector } from '../state.handlers/main-ui.state.handler';
 
 
-import { SelectorType as InstrumentsStateSelector } from '../state.handlers/instruments.state.handler';
-export { SelectorType as InstrumentStateSelector } from '../state.handlers/instruments.state.handler';
+import { SelectorType as RequestsStateSelector } from '../state.handlers/instruments.state.handler';
+export { SelectorType as RequestsStateSelector } from '../state.handlers/instruments.state.handler';
 
 
-export type StateSelector = MainUIStateSelector | InstrumentsStateSelector;
+export type StateSelector = MainUIStateSelector | RequestsStateSelector;

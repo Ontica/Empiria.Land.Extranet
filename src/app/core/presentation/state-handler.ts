@@ -106,10 +106,10 @@ export abstract class AbstractStateHandler<T> implements StateHandler {
 
     if (value instanceof Observable) {
       return value.toPromise<U>()
-                  .then(x => {
-                    stateItem.next(x);
-                    return x;
-                  });
+        .then(x => {
+          stateItem.next(x);
+          return x;
+        });
     } else {
       stateItem.next(value);
       return resolve<U>(value);

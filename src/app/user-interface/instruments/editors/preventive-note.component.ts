@@ -12,8 +12,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Assertion, EventInfo } from '@app/core';
 
 import { PresentationState } from '@app/core/presentation';
-import { InstrumentCommandType } from '@app/core/presentation/commands';
-
+import { RequestCommandType } from '@app/core/presentation/commands';
 import { RepositoryStateAction } from '@app/core/presentation/state.commands';
 
 import { EmptyRealEstate, PreventiveNote, PreventiveNoteEditionData, RealEstate } from '@app/domain/models';
@@ -41,13 +40,7 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
     projectedOperation: new FormControl('', Validators.required),
   });
 
-
   constructor(private store: PresentationState) { }
-
-
-  get isReadyForSave() {
-    return this.form.valid && !this.form.pristine && !this.readonly;
-  }
 
 
   ngOnInit() {
@@ -57,6 +50,11 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.resetForm();
+  }
+
+
+  get isReadyForSave() {
+    return this.form.valid && !this.form.pristine && !this.readonly;
   }
 
 
@@ -79,7 +77,7 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
   private createPreventiveNote() {
     const event: EventInfo = {
-      type: InstrumentCommandType.CREATE_PREVENTIVE_NOTE,
+      type: RequestCommandType.CREATE_PREVENTIVE_NOTE,
       payload: {
         data: this.getFormData()
       }
@@ -124,9 +122,9 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
   private updatePreventiveNote() {
     const event: EventInfo = {
-      type: InstrumentCommandType.UPDATE_PREVENTIVE_NOTE,
+      type: RequestCommandType.UPDATE_PREVENTIVE_NOTE,
       payload: {
-        instrument: this.preventiveNote,
+        request: this.preventiveNote,
         data: this.getFormData()
       }
     };

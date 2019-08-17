@@ -7,22 +7,22 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InstrumentsMainPageComponent } from './instruments-main-page.component';
+import { ElectronicFilingMainPageComponent } from './instruments-main-page.component';
 
 
-describe('MainPageComponent', () => {
-  let component: InstrumentsMainPageComponent;
-  let fixture: ComponentFixture<InstrumentsMainPageComponent>;
+describe('ElectronicFilingMainPageComponent', () => {
+  let component: ElectronicFilingMainPageComponent;
+  let fixture: ComponentFixture<ElectronicFilingMainPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InstrumentsMainPageComponent ]
+      declarations: [ ElectronicFilingMainPageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InstrumentsMainPageComponent);
+    fixture = TestBed.createComponent(ElectronicFilingMainPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

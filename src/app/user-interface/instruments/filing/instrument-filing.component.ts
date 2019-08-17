@@ -10,18 +10,18 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { EventInfo } from '@app/core';
 
-import { InstrumentCommandType } from '@app/core/presentation/commands';
+import { RequestCommandType } from '@app/core/presentation/commands';
 
-import { LegalInstrument, RequestPaymentOrderData } from '@app/domain/models';
+import { Request, RequestPaymentOrderData } from '@app/domain/models';
 
 
 @Component({
-  selector: 'emp-land-instrument-filing',
+  selector: 'emp-one-request-submitter',
   templateUrl: './instrument-filing.component.html'
 })
-export class InstrumentFilingComponent implements OnChanges {
+export class RequestSubmitterComponent implements OnChanges {
 
-  @Input() instrument: LegalInstrument;
+  @Input() request: Request;
 
   @Output() editionEvent = new EventEmitter<EventInfo>();
 
@@ -37,29 +37,17 @@ export class InstrumentFilingComponent implements OnChanges {
   }
 
 
-  onRequestPaymentOrder() {
-    this.requestPaymentOrder();
+  onGeneratePaymentOrder() {
+    this.generatePaymentOrder();
   }
 
 
-  onFileToRegistryAuthority() {
-    this.fileToRegistryAuthority();
+  onSubmitRequest() {
+    this.submitRequest();
   }
 
 
   // private members
-
-
-  private fileToRegistryAuthority() {
-    const event: EventInfo = {
-      type: InstrumentCommandType.FILE_TO_REGISTRY_AUTHORITY,
-      payload: {
-        instrument: this.instrument
-      }
-    };
-
-    this.editionEvent.emit(event);
-  }
 
 
   private getFormData() {
@@ -74,11 +62,11 @@ export class InstrumentFilingComponent implements OnChanges {
   }
 
 
-  private requestPaymentOrder() {
+  private generatePaymentOrder() {
     const event: EventInfo = {
-      type: InstrumentCommandType.REQUEST_PAYMENT_ORDER,
+      type: RequestCommandType.GENERATE_PAYMENT_ORDER,
       payload: {
-        instrument: this.instrument,
+        request: this.request,
         data: this.getFormData()
       }
     };
@@ -89,9 +77,21 @@ export class InstrumentFilingComponent implements OnChanges {
 
   private resetForm() {
     this.form.reset({
-      sendTo: this.instrument.transaction.sendTo || '',
-      rfc: this.instrument.transaction.rfc || ''
+      sendTo: this.request.transaction.sendTo || '',
+      rfc: this.request.transaction.rfc || ''
     });
+  }
+
+
+  private submitRequest() {
+    const event: EventInfo = {
+      type: RequestCommandType.REQUEST_SUBMISSION,
+      payload: {
+        request: this.request
+      }
+    };
+
+    this.editionEvent.emit(event);
   }
 
 }

@@ -9,7 +9,7 @@ import { NgModule } from '@angular/core';
 
 import { BackendProvidersModule } from '@app/integration/backend.providers/backend.providers.module';
 
-import { InstrumentUseCases } from './instrument.use-cases';
+import { ElectronicFilingUseCases } from './instrument.use-cases';
 import { RepositoryUseCases } from './repository.use-cases';
 
 
@@ -20,7 +20,7 @@ import { RepositoryUseCases } from './repository.use-cases';
   ],
 
   providers: [
-    InstrumentUseCases,
+    ElectronicFilingUseCases,
     RepositoryUseCases
   ]
 

@@ -1,7 +1,7 @@
 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="8px" fxLayoutGap.gt-xs="32px">
 
   <div fxFlex="10%">
-    <div class="label">Documento</div>
+    <div class="label">Tipo de solicitud</div>
     <div class="primary-text nowrap"><b>{{preventiveNote.typeName}}</b></div>
     {{(preventiveNote.issueDate || preventiveNote.postingTime) | date:'dd/LLL/yyyy'}}
   </div>
@@ -13,7 +13,7 @@
   </div>
 
   <div fxFlex="15%">
-    <div *ngIf="instrument.transaction.uid">
+    <div *ngIf="request.transaction.uid">
       <div class="label">Trámite RPP</div>
       <div>
         <div class="primary-text nowrap"><b>{{preventiveNote.transaction.uid}}</b></div>
