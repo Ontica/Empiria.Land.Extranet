@@ -12,7 +12,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Assertion, EventInfo } from '@app/core';
 
 import { PresentationState } from '@app/core/presentation';
-import { RequestCommandType } from '@app/core/presentation/commands';
+import { ElectronicFilingCommandType } from '@app/core/presentation/commands';
 import { RepositoryStateAction } from '@app/core/presentation/state.commands';
 
 import { EmptyRealEstate, PreventiveNote, PreventiveNoteEditionData, RealEstate } from '@app/domain/models';
@@ -77,7 +77,7 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
   private createPreventiveNote() {
     const event: EventInfo = {
-      type: RequestCommandType.CREATE_PREVENTIVE_NOTE,
+      type: ElectronicFilingCommandType.CREATE_PREVENTIVE_NOTE,
       payload: {
         data: this.getFormData()
       }
@@ -122,7 +122,7 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
   private updatePreventiveNote() {
     const event: EventInfo = {
-      type: RequestCommandType.UPDATE_PREVENTIVE_NOTE,
+      type: ElectronicFilingCommandType.UPDATE_PREVENTIVE_NOTE,
       payload: {
         request: this.preventiveNote,
         data: this.getFormData()
