@@ -54,46 +54,6 @@ export const RequestsViews: View[] = [
 ];
 
 
-export const TransactionsViews: View[] = [
-  {
-    name: 'Transactions.Pending',
-    title: 'Trámites pendientes',
-    menuTitle: 'Trámites pendientes',
-    url: '/transactions/pending'
-  },
-  {
-    name: 'Transactions.Payment',
-    title: 'Trámites en pago',
-    menuTitle: 'En pago',
-    url: '/transactions/payment'
-  },
-  {
-    name: 'Transactions.Processing',
-    title: 'Trámites ingresados',
-    menuTitle: 'Ingresados',
-    url: '/transactions/process'
-  },
-  {
-    name: 'Transactions.Finished',
-    title: 'Trámites finalizados',
-    menuTitle: 'Finalizados',
-    url: '/transactions/finished'
-  },
-  {
-    name: 'Transactions.Returned',
-    title: 'Trámites devueltos',
-    menuTitle: 'Devueltos',
-    url: '/transactions/returned'
-  },
-  {
-    name: 'Transactions.All',
-    title: 'Todos los trámites',
-    menuTitle: 'Todos',
-    url: '/transactions/all'
-  }
-];
-
-
 export const SearchViews: View[] = [
   {
     name: 'Search.All',
