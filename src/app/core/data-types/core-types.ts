@@ -44,7 +44,7 @@ export interface Money {
 }
 
 
-export function isEmpty(instance: Identifiable): boolean {
+export function isEmpty(instance: Entity): boolean {
   return (!instance || !instance.uid ||
           instance.uid === '' || instance.uid === 'Empty');
 }

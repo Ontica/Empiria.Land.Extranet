@@ -5,10 +5,76 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Contact, DateString, Identifiable, PartitionedType, Empty } from '@app/core';
+import { DateString, Entity } from '@app/core';
 
 import { RealEstate } from './property';
-import { RecordingAct } from './recording-act';
+
+
+export interface Transaction extends Entity {
+  id: number;
+  status: string;
+  presentationDate: DateString;
+}
+
+
+export type FilingRequestStatusType = 'Pending' | 'Signed' | 'OnPayment' | 'Submitted' |
+                                      'Finished' | 'Rejected' | 'All';
+
+
+export interface FilingRequestStatus {
+  type: FilingRequestStatusType;
+  name: string;
+}
+
+
+export interface Requester {
+  name: string;
+  email?: string;
+  phone?: string;
+  rfc?: string;
+}
+
+
+export const EmptyRequester: Requester = {
+  name: '',
+  email: '',
+  phone: '',
+  rfc: ''
+};
+
+
+export interface Preparer {
+  agency: string;
+  agent: string;
+}
+
+
+export interface PaymentOrderData {
+  routeNumber: string;
+  dueDate: DateString;
+  total: number;
+  receiptNo?: string;
+}
+
+export type ProcedureType = 'AvisoPreventivo' | 'SegundoAvisoDefinitivo' | 'InscripcionEscrituraPublica' |
+                            'CertificadoLibertad' | 'CertificadoInscripcion' | 'CertificadoNoInscripcion' |
+                            'CertificadoPropiedad' | 'CopiaCertificada' | 'CancelacionAvisoPreventivo' |
+                            'SolicitudFolioReal' | 'Aclaracion' | 'NoDeterminado';
+
+
+export type ApplicationFormType = ProcedureType;
+
+
+export type ApplicationFormFields = PreventiveNote | Deed;
+
+
+export interface ApplicationForm extends Entity {
+  type: ApplicationFormType;
+  typeName: string;
+  filledOutBy: string;
+  filledOutTime: DateString;
+  fields: ApplicationFormFields;
+}
 
 
 export interface ESignData {
@@ -18,55 +84,28 @@ export interface ESignData {
 }
 
 
-export interface Transaction {
-  id: number;
-  uid: string;
-  status: string;
-  sendTo: string;
-  rfc: string;
-  receiptNo: string;
-  total: number;
-  presentationDate: DateString;
-}
-
-
-export type RequestStatus = 'Pending' | 'Signed' | 'OnPayment' | 'Submitted' | 'Finished' | 'Rejected' | 'All';
-
-
-export interface Request extends Identifiable, PartitionedType {
-  typeName: string;
-  number: string;
-  requestedBy: string;
-  issueOffice: Contact;
-  issuedBy: Contact;
-  issueDate: DateString;
+export interface EFilingRequest extends Entity {
+  procedureType: ProcedureType;
+  requestedBy: Requester;
+  preparer: Preparer;
   summary: string;
-  status: RequestStatus;
-  statusName: string;
-  postingTime: DateString;
-  postedBy: Contact;
-  signed: boolean;
-  submitted: boolean;
+  lastUpdateTime: DateString;
+  status: FilingRequestStatus;
+  form?: ApplicationForm;
+  paymentOrder?: PaymentOrderData;
   esign?: ESignData;
-  transaction: Transaction;
+  transaction?: Transaction;
 }
 
 
-export interface PreventiveNote extends Request {
-  property: RealEstate;
-  projectedOperation: string;
-}
-
-
-export interface PreventiveNoteEditionData {
-  requestedBy: string;
+export interface PreventiveNote {
   propertyUID: string;
   projectedOperation: string;
 }
 
 
-export interface Deed extends Request {
-  recordingActs: RecordingAct[];
+export interface Deed {
+  property: RealEstate;
 }
 
 
@@ -74,42 +113,42 @@ export const EmptyTransaction: Transaction = {
   id: 0,
   uid: '',
   status: '',
-  sendTo: '',
-  rfc: '',
-  receiptNo: '',
-  total: 0,
   presentationDate: ''
 };
 
 
-export const EmptyRequest: Request = {
+export const EmptyEFilingRequest: EFilingRequest = {
   uid: '',
-  name: '',
-  type: '',
-  typeName: '',
-  number: '',
-  requestedBy: '',
-  issueOffice: Empty,
-  issuedBy: Empty,
-  issueDate: '',
+  procedureType: 'NoDeterminado',
+  requestedBy: {
+    name: '',
+    email: '',
+    phone: '',
+    rfc: ''
+  },
+  preparer: {
+    agency: '',
+    agent: '',
+  },
   summary: '',
-  status: 'Pending',
-  statusName: '',
-  postingTime: '',
-  postedBy: Empty,
-  signed: false,
-  submitted: false,
+  form: null,
+  lastUpdateTime: '',
+  status: {
+    type: 'Pending',
+    name: 'Pendiente'
+  },
+  esign: null,
   transaction: EmptyTransaction
 };
 
 
-export interface RequestFilter {
-  status: RequestStatus;
+export interface EFilingRequestFilter {
+  status: FilingRequestStatusType;
   keywords: string;
 }
 
 
-export const EmptyRequestFilter: RequestFilter = {
+export const EmptyEFilingRequestFilter: EFilingRequestFilter = {
   status: 'All',
   keywords: '',
 };

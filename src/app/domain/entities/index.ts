@@ -12,5 +12,3 @@
  export * from './recording-act';
 
  export * from './electronic-filing';
-
- export * from './transaction';
