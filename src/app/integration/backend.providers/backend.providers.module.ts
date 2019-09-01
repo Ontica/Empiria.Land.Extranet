@@ -7,7 +7,7 @@
 
 import { NgModule } from '@angular/core';
 
-import { ElectronicFilingApiProvider } from '@app/domain/providers/electronic-filing.api.provider';
+import { EFilingRequestApiProvider } from '@app/domain/providers/electronic-filing.api.provider';
 import { RepositoryApiProvider } from '@app/domain/providers/repository.api.provider';
 
 import { ElectronicFilingApiHttpProvider } from './http/electronic-filing.api.http.provider';
@@ -17,7 +17,7 @@ import { RepositoryApiHttpProvider } from './http/repository.api.http.provider';
 @NgModule({
 
   providers: [
-    { provide: ElectronicFilingApiProvider, useClass: ElectronicFilingApiHttpProvider },
+    { provide: EFilingRequestApiProvider, useClass: ElectronicFilingApiHttpProvider },
     { provide: RepositoryApiProvider, useClass: RepositoryApiHttpProvider }
   ]
 

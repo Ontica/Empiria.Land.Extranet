@@ -7,43 +7,48 @@
 
 import { Observable } from 'rxjs';
 
-import { Request, RequestStatus,
-         PreventiveNote, PreventiveNoteEditionData,
-         RequestPaymentOrderData, RequestRecordingData } from '@app/domain/entities';
+import { EFilingRequest, FilingRequestStatusType,
+         ProcedureType, Requester } from '@app/domain/entities';
 
 
-export abstract class ElectronicFilingApiProvider {
+export abstract class EFilingRequestApiProvider {
+
+  abstract getEFilingRequest(uid: string): Observable<EFilingRequest>;
 
 
-  abstract getRequest(uid: string): Observable<Request>;
-
-
-  abstract getRequests(status?: RequestStatus,
-                       keywords?: string): Observable<Request[]>;
+  abstract getEFilingRequestList(status?: FilingRequestStatusType,
+                                 keywords?: string): Observable<EFilingRequest[]>;
 
   // command methods
 
-  abstract createPreventiveNote(data: PreventiveNoteEditionData): Observable<PreventiveNote>;
+
+  abstract createEFilingRequest(procedureType: ProcedureType,
+                                requestedBy: Requester): Observable<EFilingRequest>;
 
 
-  abstract generatePaymentOrder(request: Request,
-                                data: RequestPaymentOrderData): Observable<Request>;
+  abstract generatePaymentOrder(request: EFilingRequest): Observable<EFilingRequest>;
 
 
 
-  abstract revokeRequestSign(request: Request,
-                             revokeSignToken: string);
+  abstract revokeEFilingRequestSign(request: EFilingRequest,
+                                    revokeSignToken: string);
 
 
-  abstract signRequest(request: Request,
-                       signToken: string): Observable<Request>;
+  abstract setPaymentReceipt(request: EFilingRequest,
+                             receiptNo: string): Observable<EFilingRequest>;
 
 
-  abstract submitRequest(request: Request,
-                         data: RequestRecordingData): Observable<Request>;
+  abstract signEFilingRequest(request: EFilingRequest,
+                              signToken: string): Observable<EFilingRequest>;
 
 
-  abstract updatePreventiveNote(preventiveNote: PreventiveNote,
-                                data: PreventiveNoteEditionData);
+  abstract submitEFilingRequest(request: EFilingRequest): Observable<EFilingRequest>;
+
+
+  abstract updateApplicationForm(request: EFilingRequest, form: any): Observable<EFilingRequest>;
+
+
+  abstract updateEFilingRequest(request: EFilingRequest,
+                                requestedBy: Requester): Observable<EFilingRequest>;
 
 }

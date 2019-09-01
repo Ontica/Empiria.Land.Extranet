@@ -13,8 +13,8 @@ import { AbstractStateHandler, StateValues } from '@app/core/presentation/state-
 
 import { ElectronicFilingUseCases } from '@app/domain/use-cases';
 
-import { Request, RequestFilter,
-         EmptyRequestFilter, EmptyRequest } from '@app/domain/models';
+import { EFilingRequest, EFilingRequestFilter,
+         EmptyEFilingRequestFilter, EmptyEFilingRequest } from '@app/domain/models';
 import { ElectronicFilingCommandType } from '../command.handlers/commands';
 
 
@@ -33,26 +33,27 @@ export enum SelectorType {
 
 
 enum CommandEffectType {
-  CREATE_PREVENTIVE_NOTE = ElectronicFilingCommandType.CREATE_PREVENTIVE_NOTE,
-  UPDATE_PREVENTIVE_NOTE = ElectronicFilingCommandType.UPDATE_PREVENTIVE_NOTE,
-  SIGN                   = ElectronicFilingCommandType.SIGN,
-  REVOKE_SIGN            = ElectronicFilingCommandType.REVOKE_SIGN,
-  GENERATE_PAYMENT_ORDER = ElectronicFilingCommandType.GENERATE_PAYMENT_ORDER,
-  REQUEST_SUBMISSION     = ElectronicFilingCommandType.REQUEST_SUBMISSION
+  CREATE_EFILING_REQUEST  = ElectronicFilingCommandType.CREATE_EFILING_REQUEST,
+  UPDATE_EFILING_REQUEST  = ElectronicFilingCommandType.UPDATE_EFILING_REQUEST,
+  UPDATE_APPLICATION_FORM = ElectronicFilingCommandType.UPDATE_APPLICATION_FORM,
+  SIGN                    = ElectronicFilingCommandType.SIGN,
+  REVOKE_SIGN             = ElectronicFilingCommandType.REVOKE_SIGN,
+  GENERATE_PAYMENT_ORDER  = ElectronicFilingCommandType.GENERATE_PAYMENT_ORDER,
+  REQUEST_SUBMISSION      = ElectronicFilingCommandType.REQUEST_SUBMISSION
 }
 
 
 export interface ElectronicFilingState {
-  readonly requestsList: Request[];
-  readonly listFilter: RequestFilter;
-  readonly selectedRequest: Request;
+  readonly requestsList: EFilingRequest[];
+  readonly listFilter: EFilingRequestFilter;
+  readonly selectedRequest: EFilingRequest;
 }
 
 
 const initialState: StateValues = [
   { key: SelectorType.REQUESTS_LIST, value: [] },
-  { key: SelectorType.LIST_FILTER, value: EmptyRequestFilter },
-  { key: SelectorType.SELECTED_REQUEST, value: EmptyRequest }
+  { key: SelectorType.LIST_FILTER, value: EmptyEFilingRequestFilter },
+  { key: SelectorType.SELECTED_REQUEST, value: EmptyEFilingRequest }
 ];
 
 
@@ -76,12 +77,13 @@ export class ElectronicFilingStateHandler extends AbstractStateHandler<Electroni
   applyEffects(command: CommandResult): void {
     switch ((command.type as any) as CommandEffectType) {
 
-      case CommandEffectType.CREATE_PREVENTIVE_NOTE:
+      case CommandEffectType.CREATE_EFILING_REQUEST:
         this.stateUpdater.appendToStart(SelectorType.REQUESTS_LIST, command.result);
         this.setValue(SelectorType.SELECTED_REQUEST, command.result);
         return;
 
-      case CommandEffectType.UPDATE_PREVENTIVE_NOTE:
+      case CommandEffectType.UPDATE_APPLICATION_FORM:
+      case CommandEffectType.UPDATE_EFILING_REQUEST:
       case CommandEffectType.SIGN:
       case CommandEffectType.REVOKE_SIGN:
       case CommandEffectType.GENERATE_PAYMENT_ORDER:
@@ -115,7 +117,7 @@ export class ElectronicFilingStateHandler extends AbstractStateHandler<Electroni
 
 
       case ActionType.UNSELECT_REQUEST:
-        this.setValue(SelectorType.SELECTED_REQUEST, EmptyRequest);
+        this.setValue(SelectorType.SELECTED_REQUEST, EmptyEFilingRequest);
         return;
 
       default:

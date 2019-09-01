@@ -10,33 +10,32 @@ import { Observable } from 'rxjs';
 
 import { Assertion, HttpService } from '@app/core';
 
-import { ElectronicFilingApiProvider } from '@app/domain/providers';
+import { EFilingRequestApiProvider } from '@app/domain/providers';
 
-import { Request, RequestStatus,
-         PreventiveNote, PreventiveNoteEditionData,
-         RequestPaymentOrderData, RequestRecordingData} from '@app/domain/entities';
+import { EFilingRequest, FilingRequestStatusType,
+         ProcedureType, Requester } from '@app/domain/entities';
 
 
 @Injectable()
-export class ElectronicFilingApiHttpProvider extends ElectronicFilingApiProvider {
+export class ElectronicFilingApiHttpProvider extends EFilingRequestApiProvider {
 
   constructor(private http: HttpService) {
     super();
   }
 
 
-  getRequest(uid: string): Observable<Request> {
+  getEFilingRequest(uid: string): Observable<EFilingRequest> {
     Assertion.assertValue(uid, 'uid');
 
-    const path = `v2/electronic-filing/requests/${uid}`;
+    const path = `v2/electronic-filing/filing-requests/${uid}`;
 
-    return this.http.get<Request>(path);
+    return this.http.get<EFilingRequest>(path);
   }
 
 
-  getRequests(status?: RequestStatus,
-              keywords?: string): Observable<Request[]> {
-    let path = `v2/electronic-filing/requests`;
+  getEFilingRequestList(status?: FilingRequestStatusType,
+                        keywords?: string): Observable<EFilingRequest[]> {
+    let path = `v2/electronic-filing/filing-requests`;
 
     if (status && keywords) {
       path += `/?status=${status}&keywords=${keywords}`;
@@ -48,72 +47,99 @@ export class ElectronicFilingApiHttpProvider extends ElectronicFilingApiProvider
       // no-op
     }
 
-    return this.http.get<Request[]>(path);
+    return this.http.get<EFilingRequest[]>(path);
   }
 
 
   // command methods
 
 
-  createPreventiveNote(data: PreventiveNoteEditionData): Observable<PreventiveNote> {
-    Assertion.assertValue(data, 'data');
+  createEFilingRequest(procedureType: ProcedureType,
+                       requestedBy: Requester): Observable<EFilingRequest> {
+    Assertion.assertValue(procedureType, 'procedureType');
+    Assertion.assert(procedureType !== 'NoDeterminado', 'procedureType has an invalid value.');
+    Assertion.assertValue(requestedBy, 'requestedBy');
 
-    const path = `v2/electronic-filing/requests/create-preventive-note`;
+    const path = `v2/electronic-filing/filing-requests`;
 
-    return this.http.post<PreventiveNote>(path, data);
+    const body = {
+      procedureType,
+      requestedBy
+    };
+
+    return this.http.post<EFilingRequest>(path, body);
   }
 
 
-  generatePaymentOrder(request: Request,
-                       data: RequestPaymentOrderData): Observable<Request> {
+  generatePaymentOrder(request: EFilingRequest): Observable<EFilingRequest> {
     Assertion.assertValue(request, 'request');
 
-    const path = `v2/electronic-filing/requests/${request.uid}/generate-payment-order`;
+    const path = `v2/electronic-filing/filing-requests/${request.uid}/generate-payment-order`;
 
-    return this.http.post<Request>(path, data);
+    return this.http.post<EFilingRequest>(path);
   }
 
 
-  revokeRequestSign(request: Request,
-                    revokeSignToken: string) {
+  revokeEFilingRequestSign(request: EFilingRequest,
+                           revokeSignToken: string) {
     Assertion.assertValue(request, 'request');
     Assertion.assertValue(revokeSignToken, 'revokeSignToken');
 
-    const path = `v2/electronic-filing/requests/${request.uid}/revoke-sign`;
+    const path = `v2/electronic-filing/filing-requests/${request.uid}/revoke-sign`;
 
-    return this.http.post<Request>(path, { revokeSignToken });
+    return this.http.post<EFilingRequest>(path, { revokeSignToken });
   }
 
 
-  signRequest(request: Request,
-              signToken: string): Observable<Request> {
+  setPaymentReceipt(request: EFilingRequest,
+                    receiptNo: string): Observable<EFilingRequest> {
+    Assertion.assertValue(request, 'request');
+    Assertion.assertValue(receiptNo, 'receiptNo');
+
+    const path = `v2/electronic-filing/filing-requests/${request.uid}/set-payment-receipt`;
+
+    return this.http.post<EFilingRequest>(path, { receiptNo });
+  }
+
+  signEFilingRequest(request: EFilingRequest,
+                     signToken: string): Observable<EFilingRequest> {
     Assertion.assertValue(request, 'request');
     Assertion.assertValue(signToken, 'signToken');
 
-    const path = `v2/electronic-filing/requests/${request.uid}/sign`;
+    const path = `v2/electronic-filing/filing-requests/${request.uid}/sign`;
 
-    return this.http.post<Request>(path, { signToken });
+    return this.http.post<EFilingRequest>(path, { signToken });
   }
 
 
-  submitRequest(request: Request,
-                data: RequestRecordingData) {
+  submitEFilingRequest(request: EFilingRequest): Observable<EFilingRequest> {
     Assertion.assertValue(request, 'request');
 
-    const path = `v2/electronic-filing/requests/${request.uid}/submit`;
+    const path = `v2/electronic-filing/filing-requests/${request.uid}/submit`;
 
-    return this.http.post<Request>(path, data);
+    return this.http.post<EFilingRequest>(path);
   }
 
 
-  updatePreventiveNote(preventiveNote: PreventiveNote,
-                       data: PreventiveNoteEditionData): Observable<PreventiveNote> {
-    Assertion.assertValue(preventiveNote, 'preventiveNote');
-    Assertion.assertValue(data, 'data');
+  updateApplicationForm(request: EFilingRequest, form: any): Observable<EFilingRequest> {
+    Assertion.assertValue(request, 'request');
+    Assertion.assertValue(form, 'form');
 
-    const path = `v2/electronic-filing/requests/${preventiveNote.uid}`;
+    const path = `v2/electronic-filing/filing-requests/${request.uid}/update-application-form`;
 
-    return this.http.put<PreventiveNote>(path, data);
+    return this.http.put<EFilingRequest>(path, form);
+  }
+
+
+  updateEFilingRequest(request: Partial<EFilingRequest>,
+                       requestedBy: Requester): Observable<EFilingRequest> {
+    Assertion.assertValue(request, 'request');
+    Assertion.assertValue(request.uid, 'request.uid');
+    Assertion.assertValue(requestedBy, 'requestedBy');
+
+    const path = `v2/electronic-filing/filing-requests/${request.uid}`;
+
+    return this.http.put<EFilingRequest>(path, requestedBy);
   }
 
 }

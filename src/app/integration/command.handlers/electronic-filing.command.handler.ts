@@ -13,12 +13,14 @@ import { ElectronicFilingUseCases } from '@app/domain/use-cases';
 
 
 export enum CommandType {
-  CREATE_PREVENTIVE_NOTE = 'Land.PreventiveNote.Create',
-  UPDATE_PREVENTIVE_NOTE = 'Land.PreventiveNote.Update',
-  SIGN                   = 'OnePoint.ElectronicFiling.SignRequest',
-  REVOKE_SIGN            = 'OnePoint.ElectronicFiling.RevokeRequestSign',
-  GENERATE_PAYMENT_ORDER = 'OnePoint.ElectronicFiling.GeneratePaymentOrderForRequest',
-  REQUEST_SUBMISSION     = 'OnePoint.ElectronicFiling.RequestSubmission'
+  CREATE_EFILING_REQUEST = 'OnePoint.ElectronicFiling.EFilingRequest.Create',
+  UPDATE_EFILING_REQUEST = 'OnePoint.ElectronicFiling.EFilingRequest.Update',
+  UPDATE_APPLICATION_FORM = 'OnePoint.ElectronicFiling.ApplicationForm.Update',
+  SET_PAYMENT_RECEIPT = 'OnePoint.ElectronicFiling.EFilingRequest.SetPaymentReceipt',
+  SIGN = 'OnePoint.ElectronicFiling.EFilingRequest.Sign',
+  REVOKE_SIGN = 'OnePoint.ElectronicFiling.EFilingRequest.Revokeign',
+  GENERATE_PAYMENT_ORDER = 'OnePoint.ElectronicFiling.EFilingRequest.GeneratePaymentOrder',
+  REQUEST_SUBMISSION = 'OnePoint.ElectronicFiling.EFilingRequest.Submit'
 }
 
 
@@ -33,15 +35,26 @@ export class ElectronicFilingCommandHandler extends CommandHandler {
   execute<U>(command: Command): Promise<U> {
     switch (command.type as CommandType) {
 
-      case CommandType.CREATE_PREVENTIVE_NOTE:
+      case CommandType.CREATE_EFILING_REQUEST:
         return toPromise<U>(
-          this.useCases.createPreventiveNote(command.payload.data)
+          this.useCases.createRequest(command.payload.procedureType, command.payload.requestedBy)
         );
 
-      case CommandType.UPDATE_PREVENTIVE_NOTE:
+      case CommandType.UPDATE_EFILING_REQUEST:
         return toPromise<U>(
-          this.useCases.updatePreventiveNote(command.payload.request, command.payload.data)
+          this.useCases.updateRequest(command.payload.request, command.payload.requestedBy)
         );
+
+      case CommandType.UPDATE_APPLICATION_FORM:
+        return toPromise<U>(
+          this.useCases.updateApplicationForm(command.payload.request, command.payload.form)
+        );
+
+      case CommandType.SET_PAYMENT_RECEIPT:
+        return toPromise<U>(
+          this.useCases.setPaymentReceipt(command.payload.request, command.payload.receiptNo)
+        );
+
 
       case CommandType.SIGN:
         return toPromise<U>(
@@ -55,16 +68,16 @@ export class ElectronicFilingCommandHandler extends CommandHandler {
 
       case CommandType.GENERATE_PAYMENT_ORDER:
         return toPromise<U>(
-          this.useCases.generatePaymentOrder(command.payload.request, command.payload.data)
+          this.useCases.generatePaymentOrder(command.payload.request)
         );
 
       case CommandType.REQUEST_SUBMISSION:
         return toPromise<U>(
-          this.useCases.submitRequest(command.payload.request, {})
+          this.useCases.submitRequest(command.payload.request)
         );
 
       default:
-          throw this.unhandledCommand(command);
+        throw this.unhandledCommand(command);
     }
   }
 
