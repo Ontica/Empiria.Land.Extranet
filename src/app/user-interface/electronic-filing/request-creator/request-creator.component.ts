@@ -9,7 +9,8 @@ import { Component, Output, EventEmitter } from '@angular/core';
 
 import { EventInfo } from '@app/core';
 import { FrontController } from '@app/core/presentation';
-
+import { ProcedureType, Requester } from '@app/domain/models';
+import { ElectronicFilingCommandType } from '@app/core/presentation/commands';
 
 @Component({
   selector: 'emp-one-request-creator',
@@ -20,9 +21,14 @@ export class RequestCreatorComponent {
 
   @Output() closeEvent = new EventEmitter<void>();
 
-  requestType = '';
+  procedureType: ProcedureType = 'NoDeterminado';
 
   constructor(private frontController: FrontController) { }
+
+
+  get procedureSelected() {
+    return this.procedureType !== 'NoDeterminado';
+  }
 
 
   onClose() {
@@ -30,9 +36,23 @@ export class RequestCreatorComponent {
   }
 
 
-  processEvent(event: EventInfo) {
+  onRequesterDataChanged(requester: Requester) {
+    this.sendCreateEFilingRequestEvent(requester);
+  }
+
+
+  private sendCreateEFilingRequestEvent(requestedBy: Requester) {
+    const event: EventInfo = {
+      type: ElectronicFilingCommandType.CREATE_EFILING_REQUEST,
+      payload: {
+        procedureType: this.procedureType,
+        requestedBy
+      }
+    };
+
     this.frontController.dispatch<void>(event)
       .then(() => this.closeEvent.emit());
+
   }
 
 }

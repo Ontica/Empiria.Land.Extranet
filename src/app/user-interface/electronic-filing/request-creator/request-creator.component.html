@@ -4,55 +4,40 @@
 
   <mat-horizontal-stepper linear #stepper labelPosition="bottom" color="accent">
 
-      <mat-step [completed]="requestType !== ''">
-        <ng-template matStepLabel>Seleccionar el tipo de solicitud</ng-template>
+    <mat-step [completed]="procedureSelected">
+      <ng-template matStepLabel>Seleccionar el tipo de solicitud</ng-template>
 
-        <label>¿Qúe tipo de solicitud se desea registrar?</label>
-        <mat-radio-group class="radio-group" [(ngModel)]="requestType">
-          <mat-radio-button class="radio-button" value="PreventiveNote">Aviso preventivo</mat-radio-button>
-          <mat-radio-button class="radio-button" value="DefinitiveNote">Segundo aviso definitivo</mat-radio-button>
-          <mat-radio-button class="radio-button" value="NotaryDeed">Inscripción de escritura pública</mat-radio-button>
+      <label>¿Qúe tipo de solicitud se desea registrar?</label>
 
-          <div></div>
-          <mat-radio-button class="radio-button" value="CertificadoInscripcion">Certificado de inscripción</mat-radio-button>
-          <mat-radio-button class="radio-button" value="CertificadoPropiedad">Certificado de propiedad</mat-radio-button>
-          <mat-radio-button class="radio-button" value="CertificadoNoInscripcion">Certificado de NO inscripción</mat-radio-button>
-          <mat-radio-button class="radio-button" value="CertificadoLibertad">Certificado de libertad de gravamen o gravamen</mat-radio-button>
-          <mat-radio-button class="radio-button" value="CopiaCertificada">Emisión de copia certificada</mat-radio-button>
-          <div></div>
-          <mat-radio-button class="radio-button" value="CancelacionAvisoPreventivo">Cancelación de aviso preventivo</mat-radio-button>
-          <div></div>
-          <mat-radio-button class="radio-button" value="FolioRealRequest">Solicitar expedición de folio real</mat-radio-button>
-          <mat-radio-button class="radio-button" value="Correccion">Solicitar aclaración</mat-radio-button>
-        </mat-radio-group>
-        <div class="right">
-          <button [class.btn]="!requestType" [class.btn-action]="requestType" [disabled]="!requestType" matStepperNext>Siguiente</button>
-        </div>
-      </mat-step>
+      <mat-radio-group class="radio-group" [(ngModel)]="procedureType">
+        <mat-radio-button class="radio-button" value="AvisoPreventivo">Aviso preventivo</mat-radio-button>
+        <mat-radio-button class="radio-button" value="SegundoAvisoDefinitivo">Segundo aviso definitivo</mat-radio-button>
+        <mat-radio-button class="radio-button" value="InscripcionEscrituraPublica">Inscripción de escritura pública</mat-radio-button>
 
-      <mat-step>
-        <ng-template matStepLabel>Llenar el formulario</ng-template>
-        <ng-container *ngIf="requestType === 'PreventiveNote'">
-          <emp-land-preventive-note
-            (editionEvent)="processEvent($event)">
-          </emp-land-preventive-note>
-        </ng-container>
-        <ng-container *ngIf="requestType === 'DefinitiveNote'">
-          <emp-land-definitive-note
-            (editionEvent)="processEvent($event)">
-          </emp-land-definitive-note>
-        </ng-container>
-        <ng-container *ngIf="requestType === 'NotaryDeed'">
-          <emp-land-deed
-            (editionEvent)="processEvent($event)">
-          </emp-land-deed>
-        </ng-container>
-        <ng-container *ngIf="requestType === 'FolioRealRequest'">
-          <emp-land-folio-real-request
-            (editionEvent)="processEvent($event)">
-          </emp-land-folio-real-request>
-        </ng-container>
-      </mat-step>
+        <div></div>
+        <mat-radio-button class="radio-button" value="CertificadoLibertad">Certificado de libertad de gravamen / gravamen</mat-radio-button>
+        <mat-radio-button class="radio-button" value="CertificadoInscripcion">Certificado de inscripción</mat-radio-button>
+        <!-- <mat-radio-button class="radio-button" value="CertificadoNoInscripcion">Certificado de NO inscripción</mat-radio-button> -->
+        <mat-radio-button class="radio-button" value="CertificadoPropiedad">Certificado de propiedad / No propiedad</mat-radio-button>
+        <mat-radio-button class="radio-button" value="CopiaCertificada">Emisión de copia certificada</mat-radio-button>
+        <div></div>
+        <mat-radio-button class="radio-button" value="CancelacionAvisoPreventivo">Cancelación de aviso preventivo</mat-radio-button>
+        <div></div>
+        <mat-radio-button class="radio-button" value="Aclaracion">Solicitar aclaración</mat-radio-button>
+        <mat-radio-button class="radio-button" value="SolicitudFolioReal">Solicitar expedición de folio real</mat-radio-button>
+      </mat-radio-group>
+      <div class="right">
+        <button [class.btn]="!procedureSelected" [class.btn-action]="procedureSelected" [disabled]="!procedureSelected" matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Datos del solicitante</ng-template>
+      <emp-one-requester-data
+        [procedureType]="procedureType"
+        (editRequester)="onRequesterDataChanged($event)">
+      </emp-one-requester-data>
+    </mat-step>
 
   </mat-horizontal-stepper>
 

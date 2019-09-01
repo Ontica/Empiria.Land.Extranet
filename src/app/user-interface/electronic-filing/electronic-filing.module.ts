@@ -18,6 +18,7 @@ import { SharedIndicatorsModule } from '@app/shared/indicators/shared-indicators
 
 import { ElectronicFilingMainPageComponent } from './main-page/electronic-filing-main-page.component';
 import { RequestCreatorComponent } from './request-creator/request-creator.component';
+import { RequesterDataComponent } from './requester-data/requester-data.component';
 import { RequestListComponent } from './request-list/request-list.component';
 import { RequestListItemComponent } from './request-list/request-list-item.component';
 import { RequestSignerComponent } from './request-signer/request-signer.component';
@@ -27,6 +28,7 @@ import { RequestTabbedViewComponent } from './request-tabbed-view/request-tabbed
 import { ApplicationFormsModule } from '../application-forms/application-forms.module';
 
 import { ElectronicFilingRoutingModule } from './electronic-filing-routing.module';
+
 
 
 @NgModule({
@@ -50,6 +52,7 @@ import { ElectronicFilingRoutingModule } from './electronic-filing-routing.modul
   declarations: [
     ElectronicFilingMainPageComponent,
     RequestCreatorComponent,
+    RequesterDataComponent,
     RequestListComponent,
     RequestListItemComponent,
     RequestSignerComponent,
