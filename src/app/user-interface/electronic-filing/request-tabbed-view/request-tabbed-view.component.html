@@ -1,25 +1,34 @@
-<emp-ng-card [title]="request.name"
-             [hint]="request.requestedBy"
+<emp-ng-card [title]="request.procedureType"
+             [hint]="request.requestedBy.name"
              (cardClose)="onClose()">
 
   <mat-horizontal-stepper linear #stepper labelPosition="bottom" color="accent">
 
-    <mat-step>
-      <ng-template matStepLabel>{{request.signed ? 'Ver' : 'Llenar'}}<br>el formulario</ng-template>
-      <ng-container *ngIf="requestType === 'PreventiveNote'">
+
+    <mat-step completed="true">
+      <ng-template matStepLabel>Datos del solicitante</ng-template>
+      <emp-one-requester-data
+        [requester]="request.requestedBy"
+        [procedureType]="request.procedureType"
+        (editRequester)="onRequesterDataChanged($event)">
+      </emp-one-requester-data>
+    </mat-step>
+
+    <mat-step [completed]="request?.form?.fields">
+      <ng-template matStepLabel>{{signed ? 'Ver' : 'Llenar'}}<br>el formulario</ng-template>
+      <ng-container *ngIf="request.procedureType === 'AvisoPreventivo'">
         <emp-land-preventive-note
-            [preventiveNote]="request"
-            [readonly] = "request.signed"
+            [request]="request"
             (editionEvent)="processEvent($event)">
         </emp-land-preventive-note>
       </ng-container>
-      <ng-container *ngIf="requestType === 'DefinitiveNote'">
+      <ng-container *ngIf="request.procedureType === 'SegundoAvisoDefinitivo'">
         <emp-land-definitive-note></emp-land-definitive-note>
       </ng-container>
-      <ng-container *ngIf="requestType === 'NotaryDeed'">
+      <ng-container *ngIf="request.procedureType === 'InscripcionEscrituraPublica'">
         <emp-land-deed></emp-land-deed>
       </ng-container>
-      <ng-container *ngIf="requestType === 'FolioRealRequest'">
+      <ng-container *ngIf="request.procedureType === 'SolicitudFolioReal'">
         <emp-land-folio-real-request></emp-land-folio-real-request>
       </ng-container>
       <div class="right">
@@ -27,7 +36,7 @@
       </div>
     </mat-step>
 
-    <mat-step [completed]="false" *ngIf="requestType === 'NotaryDeed'">
+    <mat-step [completed]="true" *ngIf="request.procedureType === 'InscripcionEscrituraPublica'">
       <ng-template matStepLabel>Adjuntar<br>archivos</ng-template>
       <emp-ng-file-control></emp-ng-file-control>
 
@@ -37,33 +46,29 @@
       </div>
     </mat-step>
 
-    <mat-step [completed]="request.signed">
-      <ng-template matStepLabel>{{request.signed ? 'Firma electrónica' : 'Firmar la solicitud'}}</ng-template>
+    <mat-step [completed]="signed">
+      <ng-template matStepLabel>{{signed ? 'Firma electrónica' : 'Firmar la solicitud'}}</ng-template>
 
       <emp-one-request-signer
           [request]="request"
-          [readonly] = "request.submitted"
+          [readonly] = "submitted"
           (editionEvent)="processEvent($event)">
       </emp-one-request-signer>
 
       <div class="right">
         <button mat-button matStepperPrevious>Anterior</button>
-        <button [class.btn]="!request.signed" [class.btn-action]="request.signed"
-                [disabled]="!request.signed" matStepperNext>Siguiente</button>
+        <button [class.btn]="!signed" [class.btn-action]="signed"
+                [disabled]="!signed" matStepperNext>Siguiente</button>
       </div>
     </mat-step>
 
-    <mat-step [completed]="request.submitted">
-      <ng-template matStepLabel>{{request.submitted ? 'Información del trámite' : 'Solicitar el trámite'}}</ng-template>
+    <mat-step [completed]="submitted">
+      <ng-template matStepLabel>{{submitted ? 'Información del trámite' : 'Solicitar el trámite'}}</ng-template>
 
       <emp-one-request-submitter
           [request]="request"
           (editionEvent)="processEvent($event)">
       </emp-one-request-submitter>
-
-      <div class="right">
-        <button mat-button matStepperPrevious>Anterior</button>
-      </div>
     </mat-step>
 
   </mat-horizontal-stepper>
