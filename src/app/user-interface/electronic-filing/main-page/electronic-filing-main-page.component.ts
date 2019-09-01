@@ -15,8 +15,8 @@ import { PresentationState } from '@app/core/presentation';
 import { ElectronicFilingStateSelector, ElectronicFilingAction,
          MainUIStateSelector } from '@app/core/presentation/state.commands';
 
-import { Request, EmptyRequest, RequestStatus,
-         RequestFilter, EmptyRequestFilter } from '@app/domain/models';
+import { EFilingRequest, EmptyEFilingRequest, FilingRequestStatusType,
+         EFilingRequestFilter, EmptyEFilingRequestFilter } from '@app/domain/models';
 
 import { View } from '@app/user-interface/main-layout';
 
@@ -32,9 +32,9 @@ export class ElectronicFilingMainPageComponent implements OnInit, OnDestroy {
   displayEditor = false;
   currentView: View;
 
-  requestList: Request[] = [];
-  selectedRequest: Request = EmptyRequest;
-  filter: RequestFilter = EmptyRequestFilter;
+  requestList: EFilingRequest[] = [];
+  selectedRequest: EFilingRequest = EmptyEFilingRequest;
+  filter: EFilingRequestFilter = EmptyEFilingRequestFilter;
 
   displayRequestCreator = false;
 
@@ -46,7 +46,7 @@ export class ElectronicFilingMainPageComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.store.select<Request[]>(ElectronicFilingStateSelector.REQUESTS_LIST)
+    this.store.select<EFilingRequest[]>(ElectronicFilingStateSelector.REQUESTS_LIST)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(x => {
         this.requestList = x;
@@ -59,14 +59,14 @@ export class ElectronicFilingMainPageComponent implements OnInit, OnDestroy {
         this.onChangeView(x)
       );
 
-    this.store.select<Request>(ElectronicFilingStateSelector.SELECTED_REQUEST)
+    this.store.select<EFilingRequest>(ElectronicFilingStateSelector.SELECTED_REQUEST)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(x => {
         this.selectedRequest = x;
         this.displayEditor = !isEmpty(this.selectedRequest);
       });
 
-    this.store.select<RequestFilter>(ElectronicFilingStateSelector.LIST_FILTER)
+    this.store.select<EFilingRequestFilter>(ElectronicFilingStateSelector.LIST_FILTER)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(x =>
         this.filter = x
@@ -117,7 +117,7 @@ export class ElectronicFilingMainPageComponent implements OnInit, OnDestroy {
   }
 
 
-  private getRequestStatusForView(view: View): RequestStatus {
+  private getRequestStatusForView(view: View): FilingRequestStatusType {
     switch (view.name) {
       case 'Requests.Pending':
         return 'Pending';
@@ -142,7 +142,7 @@ export class ElectronicFilingMainPageComponent implements OnInit, OnDestroy {
 
 
   private loadRequests(data?: { keywords: string }) {
-    const currentKeywords = this.store.getValue<RequestFilter>(ElectronicFilingStateSelector.LIST_FILTER).keywords;
+    const currentKeywords = this.store.getValue<EFilingRequestFilter>(ElectronicFilingStateSelector.LIST_FILTER).keywords;
 
     const filter = {
       status: this.getRequestStatusForView(this.currentView),

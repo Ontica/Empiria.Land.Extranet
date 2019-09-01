@@ -2,29 +2,29 @@
 
   <div fxFlex="10%">
     <div class="label">Tipo de solicitud</div>
-    <div class="primary-text nowrap"><b>{{preventiveNote.typeName}}</b></div>
-    {{(preventiveNote.issueDate || preventiveNote.postingTime) | date:'dd/LLL/yyyy'}}
+    <div class="primary-text nowrap"><b>{{request.procedureType}}</b></div>
+    {{request.lastUpdateTime | date:'dd/LLL/yyyy'}}
   </div>
 
-  <div *ngIf="preventiveNote.property && preventiveNote.property.uid" fxFlex="auto">
+  <div *ngIf="request?.form?.fields['propertyUID']" fxFlex="auto">
     <div class="label">Folio real del predio</div>
-    <div class="primary-text nowrap"><b>{{preventiveNote.property.uid}}</b></div>
-    <div>{{preventiveNote.property.name}}</div>
+    <div class="primary-text nowrap"><b>{{request?.form?.fields['propertyUID']}}</b></div>
+    <div>{{request?.form?.fields['propertyName']}}</div>
   </div>
 
   <div fxFlex="15%">
-    <div *ngIf="request.transaction.uid">
+    <div *ngIf="request?.transaction?.uid">
       <div class="label">Trámite RPP</div>
       <div>
-        <div class="primary-text nowrap"><b>{{preventiveNote.transaction.uid}}</b></div>
-        <div>{{preventiveNote.transaction.total | currency }}</div>
+        <div class="primary-text nowrap"><b>{{request?.transaction?.uid}}</b></div>
+        <div>{{request?.paymentOrder?.total | currency }}</div>
       </div>
     </div>
   </div>
 
   <div fxFlex="8%">
     <div class="label">Estado:</div>
-    <div>{{preventiveNote.statusName}}</div>
+    <div>{{request.status.name}}</div>
   </div>
 
 </div>

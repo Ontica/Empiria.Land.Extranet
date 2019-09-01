@@ -11,8 +11,8 @@ import { EventInfo } from '@app/core';
 
 import { PresentationState } from '@app/core/presentation';
 
-import { Request, EmptyRequest,
-         RequestFilter, EmptyRequestFilter } from '@app/domain/models';
+import { EFilingRequest, EmptyEFilingRequest,
+         EFilingRequestFilter, EmptyEFilingRequestFilter } from '@app/domain/models';
 
 import { ElectronicFilingAction } from '@app/core/presentation/state.commands';
 
@@ -29,11 +29,11 @@ export enum RequestListEventType {
 })
 export class RequestListComponent implements OnChanges {
 
-  @Input() requestList: Request[] = [];
+  @Input() requestList: EFilingRequest[] = [];
 
-  @Input() selectedRequest: Request = EmptyRequest;
+  @Input() selectedRequest: EFilingRequest = EmptyEFilingRequest;
 
-  @Input() filter: RequestFilter = EmptyRequestFilter;
+  @Input() filter: EFilingRequestFilter = EmptyEFilingRequestFilter;
 
   @Input() title: 'Solicitudes';
 
@@ -54,7 +54,7 @@ export class RequestListComponent implements OnChanges {
   }
 
 
-  isSelected(request: Request) {
+  isSelected(request: EFilingRequest) {
     return (this.selectedRequest.uid === request.uid);
   }
 
@@ -64,7 +64,7 @@ export class RequestListComponent implements OnChanges {
   }
 
 
-  onSelect(request: Request) {
+  onSelect(request: EFilingRequest) {
     this.store.dispatch(ElectronicFilingAction.SELECT_REQUEST, { request });
   }
 

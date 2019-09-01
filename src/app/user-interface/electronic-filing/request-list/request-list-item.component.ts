@@ -7,7 +7,7 @@
 
 import { Component, Input } from '@angular/core';
 
-import { Request, PreventiveNote } from '@app/domain/models';
+import { EFilingRequest, PreventiveNote } from '@app/domain/models';
 
 
 @Component({
@@ -16,11 +16,6 @@ import { Request, PreventiveNote } from '@app/domain/models';
 })
 export class RequestListItemComponent {
 
-  @Input() request: Request;
-
-
-  get preventiveNote() {
-    return (this.request as PreventiveNote);
-  }
+  @Input() request: EFilingRequest;
 
 }

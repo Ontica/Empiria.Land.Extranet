@@ -36,7 +36,7 @@
 
         <div class="list-item-name">
           <b><a #trigger
-              (click)="onSelect(request)">{{request.requestedBy}}</a></b>
+              (click)="onSelect(request)">{{request.requestedBy.name}}</a></b>
         </div>
 
         <emp-one-request-list-item [request]="request"></emp-one-request-list-item>
