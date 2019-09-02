@@ -5,35 +5,38 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { EventInfo } from '@app/core';
 
 import { ElectronicFilingCommandType } from '@app/core/presentation/commands';
 
-import { Request, RequestPaymentOrderData } from '@app/domain/models';
+import { EFilingRequest } from '@app/domain/models';
 
 
 @Component({
   selector: 'emp-one-request-submitter',
   templateUrl: './request-submitter.component.html'
 })
-export class RequestSubmitterComponent implements OnChanges {
+export class RequestSubmitterComponent {
 
-  @Input() request: Request;
+  @Input() request: EFilingRequest;
 
   @Output() editionEvent = new EventEmitter<EventInfo>();
 
 
-  form = new FormGroup({
-    sendTo: new FormControl('', Validators.email),
-    rfc: new FormControl(''),
-  });
+  get hasRouteNumber() {
+    return this.request.paymentOrder && this.request.paymentOrder.routeNumber;
+  }
 
 
-  ngOnChanges() {
-    this.resetForm();
+  get readyForSubmission() {
+    return this.hasRouteNumber && this.request.paymentOrder.receiptNo && !this.submitted;
+  }
+
+
+  get submitted() {
+    return this.request.transaction && this.request.transaction.presentationDate;
   }
 
 
@@ -41,6 +44,10 @@ export class RequestSubmitterComponent implements OnChanges {
     this.generatePaymentOrder();
   }
 
+
+  onSavePaymentReceipt() {
+    this.submitPaymentReceipt();
+  }
 
   onSubmitRequest() {
     this.submitRequest();
@@ -50,24 +57,11 @@ export class RequestSubmitterComponent implements OnChanges {
   // private members
 
 
-  private getFormData() {
-    const formModel = this.form.value;
-
-    const data: RequestPaymentOrderData = {
-      rfc: (formModel.rfc as string).toUpperCase(),
-      sendTo: (formModel.sendTo as string).toLowerCase()
-    };
-
-    return data;
-  }
-
-
   private generatePaymentOrder() {
     const event: EventInfo = {
       type: ElectronicFilingCommandType.GENERATE_PAYMENT_ORDER,
       payload: {
-        request: this.request,
-        data: this.getFormData()
+        request: this.request
       }
     };
 
@@ -75,13 +69,17 @@ export class RequestSubmitterComponent implements OnChanges {
   }
 
 
-  private resetForm() {
-    this.form.reset({
-      sendTo: this.request.transaction.sendTo || '',
-      rfc: this.request.transaction.rfc || ''
-    });
-  }
+  private submitPaymentReceipt() {
+    const event: EventInfo = {
+      type: ElectronicFilingCommandType.SET_PAYMENT_RECEIPT,
+      payload: {
+        request: this.request,
+        receiptNo: this.request.paymentOrder.receiptNo
+      }
+    };
 
+    this.editionEvent.emit(event);
+  }
 
   private submitRequest() {
     const event: EventInfo = {
