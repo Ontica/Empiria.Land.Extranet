@@ -10,7 +10,7 @@ import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core
 import { EventInfo } from '@app/core';
 import { ElectronicFilingCommandType } from '@app/core/presentation/commands';
 
-import { Request } from '@app/domain/models';
+import { EFilingRequest } from '@app/domain/models';
 
 
 @Component({
@@ -19,7 +19,7 @@ import { Request } from '@app/domain/models';
 })
 export class RequestSignerComponent implements OnChanges {
 
-  @Input() request: Request;
+  @Input() request: EFilingRequest;
 
   @Input() readonly = false;
 
@@ -30,6 +30,11 @@ export class RequestSignerComponent implements OnChanges {
 
   ngOnChanges() {
     this.revokeMode = false;
+  }
+
+
+  get isSigned() {
+    return this.request.esign && this.request.esign.sign;
   }
 
 

@@ -1,4 +1,4 @@
-<ng-container *ngIf="request.signed">
+<ng-container *ngIf="isSigned">
 
   <form class="form-container">
 
@@ -13,7 +13,7 @@
             <label i18n>Firma electrónica:</label>
           </td>
           <td>
-            <textarea class="text-area" rows="4" disabled readonly="readonly" [value]="request.esign?.sign"></textarea>
+            <textarea class="text-area" rows="4" disabled readonly="readonly" [value]="request.esign.sign"></textarea>
           </td>
         </tr>
         <tr>
@@ -21,7 +21,7 @@
             <label i18n>Sello digital:</label>
           </td>
           <td>
-            <textarea class="text-area" rows="4" disabled readonly="readonly" [value]="request.esign?.seal"></textarea>
+            <textarea class="text-area" rows="4" disabled readonly="readonly" [value]="request.esign.seal"></textarea>
           </td>
         </tr>
         <tr>
@@ -29,7 +29,7 @@
             <label i18n>Código de seguridad:</label>
           </td>
           <td>
-            <input type="text" class="text-box" disabled readonly="readonly" [value]="request.esign?.hash" style="max-width: 120px;">
+            <input type="text" class="text-box" disabled readonly="readonly" [value]="request.esign.hash" style="max-width: 120px;">
           </td>
         </tr>
         <tr *ngIf="!readonly">
@@ -45,6 +45,6 @@
   </form>
 </ng-container>
 
-<ng-container *ngIf="(!request.signed || revokeMode) && !readonly">
+<ng-container *ngIf="(!isSigned || revokeMode) && !readonly">
     <emp-ng-esign-input [revokeMode]="revokeMode" (signTokenReceived)="onSignTokenReceived($event)"></emp-ng-esign-input>
 </ng-container>
