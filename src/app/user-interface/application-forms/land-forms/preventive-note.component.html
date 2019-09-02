@@ -9,7 +9,7 @@
       <tr>
         <td>Solicitante:</td>
         <td colspan="3" style="width:100%">
-          <input type="text" class="text-box uppercase" formControlName="requestedBy">
+          <input type="text" class="text-box uppercase" disabled [value]="request.requestedBy.name">
         </td>
       </tr>
       <tr>
@@ -72,10 +72,10 @@
         </td>
       </tr>
       <tr *ngIf="!readonly">
-          <td colspan="4" class="text-align-right" style='background-color:white;border-top: 2px solid #afafaf'>
+          <td colspan="4" class="text-align-right" style='background-color:white;border-top: 1px solid #afafaf'>
             <button type="button" class="right"
                     [disabled]="!isReadyForSave" [class.btn]="!isReadyForSave" [class.btn-action]="isReadyForSave"
-                    (click)="onSave()">{{preventiveNote && preventiveNote.uid ? 'Guardar cambios':  'Crear el aviso preventivo'}}</button>
+                    (click)="onSave()">Guardar cambios</button>
           </td>
         </tr>
     </table>

@@ -15,7 +15,7 @@ import { PresentationState } from '@app/core/presentation';
 import { ElectronicFilingCommandType } from '@app/core/presentation/commands';
 import { RepositoryStateAction } from '@app/core/presentation/state.commands';
 
-import { EmptyRealEstate, PreventiveNote, PreventiveNoteEditionData, RealEstate } from '@app/domain/models';
+import { EmptyRealEstate, PreventiveNote, RealEstate, EFilingRequest } from '@app/domain/models';
 
 
 @Component({
@@ -24,9 +24,7 @@ import { EmptyRealEstate, PreventiveNote, PreventiveNoteEditionData, RealEstate 
 })
 export class PreventiveNoteComponent implements OnInit, OnChanges {
 
-  @Input() preventiveNote: PreventiveNote;
-
-  @Input() readonly = false;
+  @Input() request: EFilingRequest;
 
   @Output() editionEvent = new EventEmitter<EventInfo>();
 
@@ -34,11 +32,12 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
   isLoading = false;
 
+
   form = new FormGroup({
-    requestedBy: new FormControl('', Validators.required),
     propertyUID: new FormControl('', Validators.required),
     projectedOperation: new FormControl('', Validators.required),
   });
+
 
   constructor(private store: PresentationState) { }
 
@@ -53,6 +52,11 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
   }
 
 
+  get readonly() {
+    return this.request.esign && this.request.esign.sign;
+  }
+
+
   get isReadyForSave() {
     return this.form.valid && !this.form.pristine && !this.readonly;
   }
@@ -64,37 +68,20 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
 
   onSave() {
-    if (this.preventiveNote && this.preventiveNote.uid) {
-      this.updatePreventiveNote();
-    } else {
-      this.createPreventiveNote();
-    }
+    this.sendUpdateApplicationFormEvent();
   }
 
 
   // private members
 
 
-  private createPreventiveNote() {
-    const event: EventInfo = {
-      type: ElectronicFilingCommandType.CREATE_PREVENTIVE_NOTE,
-      payload: {
-        data: this.getFormData()
-      }
-    };
-
-    this.editionEvent.emit(event);
-  }
-
-
-  private getFormData(): PreventiveNoteEditionData {
+  private getFormData(): PreventiveNote {
     Assertion.assert(this.form.valid,
-      'Programming error: form must be validated before command execution.');
+         'Programming error: form must be validated before command execution.');
 
     const formModel = this.form.value;
 
     const data = {
-      requestedBy: (formModel.requestedBy as string).toUpperCase(),
       propertyUID: this.realEstate.uid.toUpperCase(),
       projectedOperation: (formModel.projectedOperation as string).toUpperCase()
     };
@@ -104,10 +91,18 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
 
   private resetForm() {
+    if (!this.request.form) {
+      this.form.reset();
+      this.realEstate = EmptyRealEstate;
+      this.form.enable();
+      return;
+    }
+
+    const appForm = this.request.form.fields as PreventiveNote;
+
     this.form.reset({
-      requestedBy: this.preventiveNote.requestedBy,
-      propertyUID: this.preventiveNote.property ? this.preventiveNote.property.uid : '',
-      projectedOperation: this.preventiveNote.projectedOperation
+      propertyUID: appForm.propertyUID || '',
+      projectedOperation: appForm.projectedOperation || ''
     });
 
     this.loadRealEstateData();
@@ -120,12 +115,12 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
   }
 
 
-  private updatePreventiveNote() {
+  private sendUpdateApplicationFormEvent() {
     const event: EventInfo = {
-      type: ElectronicFilingCommandType.UPDATE_PREVENTIVE_NOTE,
+      type: ElectronicFilingCommandType.UPDATE_APPLICATION_FORM,
       payload: {
-        request: this.preventiveNote,
-        data: this.getFormData()
+        request: this.request,
+        form: this.getFormData()
       }
     };
 
@@ -147,7 +142,10 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
           this.realEstate = x;
           this.isLoading = false;
        })
-      .catch(err => console.log('Display something with real estate not found error', JSON.stringify(err)));
+      .catch(err => {
+        this.isLoading = false;
+        alert('No existe ningún predio con el folio real proporcionado.');
+      });
   }
 
 }
