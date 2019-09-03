@@ -1,7 +1,7 @@
 {
   "appName": "Empiria Land Extranet Web Site",
   "version": "5.0",
-  "date": "2019-06-16",
+  "date": "2019-09-03",
   "settings": [{
       "key": "APPLICATION_KEY",
       "value": "tlxSyshOLNv8GYCWdyR2GA47NqRdeiztrCDZBLCcmXaSJBDLXiBuJvpkJ5mNdL7t"
@@ -9,6 +9,10 @@
     {
       "key": "HTTP_API_BASE_ADDRESS",
       "value": "http://empiria.land/web.api/"
+    },
+    {
+      "key": "PAYMENT_ORDERS_HTTP_BASE_ADDRESS",
+      "value": "https://registropublico.tlaxcala.gob.mx/pruebas.intranet/"
     },
     {
       "key": "displayVedaElectoralUI",

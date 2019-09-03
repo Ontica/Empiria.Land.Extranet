@@ -40,8 +40,7 @@
 <table class="form-section" *ngIf="hasRouteNumber">
   <tr>
     <td colspan="2">
-      <a target="_blank"
-          href="https://registropublico.tlaxcala.gob.mx/pruebas.intranet/land.registration.system.transactions/bank.payment.order.aspx?id={{request.transaction.id}}">Imprimir la boleta de pago</a>
+      <a target="_blank" [href]="paymentOrderUrl">Imprimir la boleta de pago</a>
     </td>
   </tr>
   <tr>

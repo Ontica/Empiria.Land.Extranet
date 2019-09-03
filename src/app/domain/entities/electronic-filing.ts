@@ -11,7 +11,6 @@ import { RealEstate } from './property';
 
 
 export interface Transaction extends Entity {
-  id: number;
   status: string;
   presentationDate: DateString;
 }
@@ -50,6 +49,7 @@ export interface Preparer {
 
 
 export interface PaymentOrderData {
+  urlPath: string;
   routeNumber: string;
   dueDate: DateString;
   total: number;
@@ -110,7 +110,6 @@ export interface Deed {
 
 
 export const EmptyTransaction: Transaction = {
-  id: 0,
   uid: '',
   status: '',
   presentationDate: ''

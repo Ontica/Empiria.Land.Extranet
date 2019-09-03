@@ -5,24 +5,34 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 
-import { EventInfo } from '@app/core';
+import { EventInfo, SessionService } from '@app/core';
 
 import { ElectronicFilingCommandType } from '@app/core/presentation/commands';
 
 import { EFilingRequest } from '@app/domain/models';
 
 
+
 @Component({
   selector: 'emp-one-request-submitter',
   templateUrl: './request-submitter.component.html'
 })
-export class RequestSubmitterComponent {
+export class RequestSubmitterComponent implements OnChanges {
 
   @Input() request: EFilingRequest;
 
   @Output() editionEvent = new EventEmitter<EventInfo>();
+
+  paymentOrderUrl = '';
+
+  constructor(private session: SessionService) { }
+
+
+  ngOnChanges() {
+    this.buildPaymentOrderUrl();
+  }
 
 
   get hasRouteNumber() {
@@ -55,6 +65,20 @@ export class RequestSubmitterComponent {
 
 
   // private members
+
+
+  private buildPaymentOrderUrl() {
+    if (!this.request.paymentOrder) {
+      this.paymentOrderUrl = '';
+      return;
+    }
+
+    this.session.getSettings().then(
+      settings => {
+        const baseAddress = settings.get<string>('PAYMENT_ORDERS_HTTP_BASE_ADDRESS');
+        this.paymentOrderUrl = `${baseAddress}${this.request.paymentOrder.urlPath}`;
+      });
+  }
 
 
   private generatePaymentOrder() {
