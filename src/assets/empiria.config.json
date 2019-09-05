@@ -4,7 +4,7 @@
   "date": "2019-09-03",
   "settings": [{
       "key": "APPLICATION_KEY",
-      "value": "tlxSyshOLNv8GYCWdyR2GA47NqRdeiztrCDZBLCcmXaSJBDLXiBuJvpkJ5mNdL7t"
+      "value": "notDEVaDuOkU3rd7IO5OqIaAdvp7VSe8AZQtLsN4YwP12tUo3igSg10UfLe9RPnP"
     },
     {
       "key": "HTTP_API_BASE_ADDRESS",
@@ -12,7 +12,7 @@
     },
     {
       "key": "PAYMENT_ORDERS_HTTP_BASE_ADDRESS",
-      "value": "https://registropublico.tlaxcala.gob.mx/pruebas.intranet/"
+      "value": "http://empiria.land/intranet/"
     },
     {
       "key": "displayVedaElectoralUI",

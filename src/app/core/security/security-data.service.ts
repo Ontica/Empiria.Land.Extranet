@@ -38,7 +38,7 @@ export class SecurityDataService {
       password: userPassword
     };
 
-    return this.httpHandler.post<ExternalSessionToken>('v1.5/security/login', body)
+    return this.httpHandler.post<ExternalSessionToken>('v1.6/security/login', body)
                .toPromise()
                .then(x => this.mapToSessionToken(x));
   }
