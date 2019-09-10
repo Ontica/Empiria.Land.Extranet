@@ -6,7 +6,7 @@
 
 
     <mat-step completed="true">
-      <ng-template matStepLabel>Datos del solicitante</ng-template>
+      <ng-template matStepLabel>Datos del interesado</ng-template>
       <emp-one-requester-data
         [requester]="request.requestedBy"
         [procedureType]="request.procedureType"
@@ -31,19 +31,20 @@
       <ng-container *ngIf="request.procedureType === 'SolicitudFolioReal'">
         <emp-land-folio-real-request></emp-land-folio-real-request>
       </ng-container>
-      <div class="right">
+      <!-- <div class="right">
         <button class="btn-action" matStepperNext>Siguiente</button>
-      </div>
+      </div> -->
     </mat-step>
 
-    <mat-step [completed]="true" *ngIf="request.procedureType === 'InscripcionEscrituraPublica'">
+    <mat-step>
       <ng-template matStepLabel>Adjuntar<br>archivos</ng-template>
+
       <emp-ng-file-control></emp-ng-file-control>
 
-      <div class="right">
+      <!-- <div class="right">
         <button mat-button matStepperPrevious>Anterior</button>
         <button class="btn-action" matStepperNext>Siguiente</button>
-      </div>
+      </div> -->
     </mat-step>
 
     <mat-step [completed]="signed">
@@ -55,11 +56,11 @@
           (editionEvent)="processEvent($event)">
       </emp-one-request-signer>
 
-      <div class="right">
+      <!-- <div class="right">
         <button mat-button matStepperPrevious>Anterior</button>
         <button [class.btn]="!signed" [class.btn-action]="signed"
                 [disabled]="!signed" matStepperNext>Siguiente</button>
-      </div>
+      </div> -->
     </mat-step>
 
     <mat-step [completed]="submitted">
