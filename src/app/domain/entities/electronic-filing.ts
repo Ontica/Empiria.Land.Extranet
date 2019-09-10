@@ -101,7 +101,19 @@ export interface EFilingRequest extends Entity {
 export interface PreventiveNote {
   propertyUID: string;
   projectedOperation: string;
+  grantors: string;
+  grantees: string;
+  createPartition?: boolean;
+  partitionName?: string;
+  observations?: string;
 }
+
+export const EmptyPreventiveNote: PreventiveNote = {
+  propertyUID: '',
+  projectedOperation: '',
+  grantors: '',
+  grantees: ''
+};
 
 
 export interface Deed {
