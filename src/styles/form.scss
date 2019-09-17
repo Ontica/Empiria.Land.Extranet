@@ -29,8 +29,15 @@ fieldset {
 }
 
 
-form.submitted .ng-invalid:not(form)  {
+form.submitted input.ng-invalid,
+form.submitted textarea.ng-invalid,
+form.submitted select.ng-invalid {
   border-left: 5px solid $warning-color;
+}
+
+
+.invalid-control {
+  border-left: 5px solid $warning-color !important;
 }
 
 

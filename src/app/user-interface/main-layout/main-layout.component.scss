@@ -64,14 +64,12 @@ mat-sidenav {
 
 
   .logo {
-    @include small-hide;
-
     max-height: 46px;
     margin-left: 15px;
   }
 
   .main-menu {
-    margin-left: 30px;
+    margin-left: 16px;
   }
 
 }

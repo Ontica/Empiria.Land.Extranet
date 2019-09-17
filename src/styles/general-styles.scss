@@ -223,6 +223,11 @@ textarea:focus {
   white-space: normal;
 }
 
+.warning-text {
+  color: $warning-color;
+  font-weight: 600;
+}
+
 .remove-min-width {
   min-width: 0px;
 }
@@ -245,7 +250,6 @@ textarea:focus {
 @mixin raised-header {
   box-shadow: 0 4px 5px 0px rgba(0,0,0,0.28);
 }
-
 
 
 .small-italic-notification {
