@@ -12,56 +12,10 @@
           <input type="text" class="text-box uppercase" disabled [value]="request.requestedBy.name">
         </td>
       </tr>
-      <tr>
-        <td class="form-section-title" colspan="4">Información del predio</td>
-      </tr>
-      <tr>
-        <td>Folio real:</td>
-        <td>
-          <input type="text" class="text-box uppercase" style="width:170px" maxlength="19"
-                 formControlName="propertyUID">
-          <button type="button" *ngIf="!readonly" class="btn" [disabled]="readonly"
-                  (click)="onReadRealEstateData()">Leer</button>
-        </td>
-        <td>Clave catastral:</td>
-        <td>
-          <input type="text" class="text-box" maxlength="31" disabled
-                 [value]="realEstate.cadastralKey">
-        </td>
-      </tr>
-      <tr>
-        <td>Distrito:</td>
-        <td>
-          <input type="text" class="text-box" style="width:170px" disabled [value]="realEstate.district.name">
-        </td>
-        <td>Municipio:</td>
-        <td>
-          <input type="text" class="text-box" disabled [value]="realEstate.municipality.name">
-        </td>
-      </tr>
-      <tr>
-        <td>Tipo de predio:</td>
-        <td>
-          <input type="text" class="text-box" style="width:170px" disabled [value]="realEstate.realEstateType.name">
-        </td>
-        <td>Denominado:</td>
-        <td>
-          <input type="text" class="text-box" disabled [value]="realEstate.name">
-        </td>
-      </tr>
-      <tr>
-        <td class="align-top">Ubicado en:</td>
-        <td colspan="3">
-          <textarea class="text-area" rows="2" disabled [value]="realEstate.location"></textarea>
-        </td>
-      </tr>
-      <tr>
-        <td class="align-top">Medidas y<br>colindancias:</td>
-        <td colspan="3">
-          <textarea class="text-area" rows="3" disabled [value]="realEstate.metesAndBounds"></textarea>
-        </td>
-      </tr>
     </table>
+
+    <emp-land-real-estate-picker formControlName="propertyUID">
+    </emp-land-real-estate-picker>
 
     <table class="form-section">
       <tr>

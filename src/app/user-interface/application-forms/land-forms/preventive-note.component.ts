@@ -5,32 +5,28 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Component, Input, OnChanges, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Assertion, EventInfo } from '@app/core';
 
-import { PresentationState } from '@app/core/presentation';
 import { ElectronicFilingCommandType } from '@app/core/presentation/commands';
-import { RepositoryStateAction } from '@app/core/presentation/state.commands';
 
-import { EmptyRealEstate, PreventiveNote, RealEstate, EFilingRequest } from '@app/domain/models';
+import { PreventiveNote, EFilingRequest } from '@app/domain/models';
 
 
 @Component({
   selector: 'emp-land-preventive-note',
   templateUrl: './preventive-note.component.html'
 })
-export class PreventiveNoteComponent implements OnInit, OnChanges {
+export class PreventiveNoteComponent implements OnChanges {
 
   @Input() request: EFilingRequest;
 
   @Output() editionEvent = new EventEmitter<EventInfo>();
 
   exceptionMsg = '';
-
-  realEstate = EmptyRealEstate;
 
   isLoading = false;
 
@@ -47,14 +43,6 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
     partitionName: new FormControl({value: '', disabled: true}),
     observations: new FormControl(''),
   });
-
-
-  constructor(private store: PresentationState) { }
-
-
-  ngOnInit() {
-    this.realEstate = EmptyRealEstate;
-  }
 
 
   ngOnChanges() {
@@ -101,15 +89,12 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
   }
 
 
-  onReadRealEstateData() {
-    this.loadRealEstateData();
-  }
-
-
   onSubmit() {
     if (!this.isReadyForSave) {
       return;
     }
+
+    console.log('onSubmit', this.form.get('propertyUID').value, this.form.valid, this.form.get('propertyUID').valid, this.form.get('propertyUID').status);
 
     this.submitted = true;
     this.validate();
@@ -128,8 +113,8 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
         this.updateCreatePartitionUI();
         break;
     }
-
   }
+
 
   // private members
 
@@ -141,7 +126,7 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
     const formModel = this.form.value;
 
     const data = {
-      propertyUID: this.realEstate.uid.toUpperCase(),
+      propertyUID: formModel.propertyUID,
       projectedOperation: this.toUpperCase('projectedOperation'),
       grantors: this.toUpperCase('grantors'),
       grantees: this.toUpperCase('grantees'),
@@ -162,7 +147,6 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
     if (!this.request.form) {
       this.form.reset();
-      this.realEstate = EmptyRealEstate;
       return;
     }
 
@@ -177,8 +161,6 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
       partitionName: appForm.partitionName || '',
       observations: appForm.observations || ''
     });
-
-    this.loadRealEstateData();
   }
 
 
@@ -201,7 +183,6 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
     if (control.value === '' || control.value === 'null') {
       control.setErrors({ required: true });
       this.exceptionMsg = noValidMessage ? noValidMessage : '';
-      // control.markAsDirty();
     }
   }
 
@@ -246,6 +227,7 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
 
 
   private validate() {
+    this.form.get('propertyUID').updateValueAndValidity();
     this.validatePartition();
   }
 
@@ -258,27 +240,6 @@ export class PreventiveNoteComponent implements OnInit, OnChanges {
     } else {
       this.setControlAsOptional('partitionName');
     }
-  }
-
-
-  private loadRealEstateData() {
-    if (!this.form.value.propertyUID) {
-      this.realEstate = EmptyRealEstate;
-      return;
-    }
-
-    const propertyUID = this.form.value.propertyUID.toUpperCase();
-
-    this.isLoading = true;
-    this.store.dispatch<RealEstate>(RepositoryStateAction.LOAD_REAL_ESTATE, { uid: propertyUID })
-        .then(x => {
-          this.realEstate = x;
-          this.isLoading = false;
-       })
-      .catch(err => {
-        this.isLoading = false;
-        alert('No existe ningún predio con el folio real proporcionado.');
-      });
   }
 
 }

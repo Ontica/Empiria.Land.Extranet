@@ -15,13 +15,7 @@ import { AngularFlexLayoutModule } from '@app/shared/angular-flex-layout.module'
 import { SharedContainersModule } from '@app/shared/containers/shared-containers.module';
 import { SharedFormControlsModule } from '@app/shared/form-controls/shared-form-controls.module';
 import { SharedIndicatorsModule } from '@app/shared/indicators/shared-indicators.module';
-
-import { DeedComponent } from '../application-forms/land-forms/deed.component';
-import { DefinitiveNoteComponent } from '../application-forms/land-forms/definitive-note.component';
-import { FolioRealRequestComponent } from '../application-forms/land-forms/folio-real-request.component';
-import { PreventiveNoteComponent } from '../application-forms/land-forms/preventive-note.component';
-
-import { LandControlsModule } from '../land-controls/land.controls.module';
+import { RealEstatePickerComponent } from './real-estate-picker/real-estate-picker.component';
 
 
 @NgModule({
@@ -35,24 +29,16 @@ import { LandControlsModule } from '../land-controls/land.controls.module';
 
     SharedContainersModule,
     SharedFormControlsModule,
-    SharedIndicatorsModule,
-
-    LandControlsModule
+    SharedIndicatorsModule
   ],
 
   declarations: [
-    DeedComponent,
-    DefinitiveNoteComponent,
-    FolioRealRequestComponent,
-    PreventiveNoteComponent
+    RealEstatePickerComponent
   ],
 
   exports: [
-    DeedComponent,
-    DefinitiveNoteComponent,
-    FolioRealRequestComponent,
-    PreventiveNoteComponent
+    RealEstatePickerComponent
   ]
 
 })
-export class LandFormsModule { }
+export class LandControlsModule { }
