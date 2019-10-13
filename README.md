@@ -8,7 +8,7 @@ Provides Empiria Land services for large users like notaries, judges and other g
 
 ## Quick start
 
-This project is being built with Angular 8.2.4 and TypeScript 3.5.3
+This project is being built with Angular 8.2.10 and TypeScript 3.5.3
 
 It uses [Angular CLI](https://github.com/angular/angular-cli), so both the CLI and generated project, have dependencies that require Node 10.16 or higher, together with NPM 6.9 or higher.
 
