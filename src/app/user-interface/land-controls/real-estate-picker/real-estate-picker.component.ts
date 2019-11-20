@@ -98,8 +98,6 @@ export class RealEstatePickerComponent implements ControlValueAccessor, Validato
     this.form.get('propertyUID').setValue(propertyUID, { emitEvent : false });
 
     this.loadRealEstateData(propertyUID);
-
-    console.log('writeValue', propertyUID);
   }
 
 

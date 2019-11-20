@@ -59,6 +59,7 @@ export class RequestSubmitterComponent implements OnChanges {
     this.submitPaymentReceipt();
   }
 
+
   onSubmitRequest() {
     this.submitRequest();
   }
@@ -104,6 +105,7 @@ export class RequestSubmitterComponent implements OnChanges {
 
     this.editionEvent.emit(event);
   }
+
 
   private submitRequest() {
     const event: EventInfo = {
