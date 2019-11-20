@@ -121,12 +121,10 @@ export class ElectronicFilingMainPageComponent implements OnInit, OnDestroy {
     switch (view.name) {
       case 'Requests.Pending':
         return 'Pending';
-      case 'Requests.Signed':
-        return 'Signed';
+      case 'Requests.OnSign':
+        return 'OnSign';
       case 'Requests.OnPayment':
         return 'OnPayment';
-      case 'Requests.Signed':
-        return 'Signed';
       case 'Requests.Submitted':
         return 'Submitted';
       case 'Requests.Finished':

@@ -7,9 +7,6 @@
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { Cryptography } from '@app/core/security/cryptography';
-
-
 @Component({
   selector: 'emp-ng-esign-input',
   templateUrl: './esign-input.component.html'
@@ -25,18 +22,7 @@ export class ESignInputComponent {
   onSubmit() {
     const esignToken = this.esign;
 
-    // const token = 'abracadabra';
-    // const encrypted = Cryptography.encrypt(esignToken, token);
-    // console.log('encrypted', encrypted);
-    // const decrypted = Cryptography.decrypt(encrypted, token);
-    // console.log('decrypted', decrypted);
-
-    if (this.esign === 's3cur1ty') {
-      this.signTokenReceived.emit(esignToken);
-    } else {
-      alert('No reconozco la firma electrónica proporcionada.');
-      this.esign = '';
-    }
+    this.signTokenReceived.emit(esignToken);
   }
 
 }

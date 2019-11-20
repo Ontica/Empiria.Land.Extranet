@@ -16,10 +16,10 @@ export const RequestsViews: View[] = [
     url: '/electronic-filing/requests/pending'
   },
   {
-    name: 'Requests.Signed',
-    title: 'Solicitudes firmadas',
-    menuTitle: 'Firmadas',
-    url: '/electronic-filing/requests/signed'
+    name: 'Requests.OnSign',
+    title: 'Solicitudes pendientes de firma',
+    menuTitle: 'En firma',
+    url: '/electronic-filing/requests/on-sign'
   },
   {
     name: 'Requests.OnPayment',

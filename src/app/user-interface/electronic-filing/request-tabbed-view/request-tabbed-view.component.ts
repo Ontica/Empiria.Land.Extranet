@@ -16,8 +16,7 @@ import { ElectronicFilingCommandType } from '@app/core/presentation/commands';
 
 @Component({
   selector: 'emp-one-request-tabbed-view',
-  templateUrl: './request-tabbed-view.component.html',
-  styleUrls: ['./request-tabbed-view.component.scss']
+  templateUrl: './request-tabbed-view.component.html'
 })
 export class RequestTabbedViewComponent {
 
@@ -31,6 +30,10 @@ export class RequestTabbedViewComponent {
 
   get signed() {
     return (this.request.esign && this.request.esign.sign);
+  }
+
+  get isSigner() {
+    return (false);
   }
 
 
@@ -50,7 +53,10 @@ export class RequestTabbedViewComponent {
 
 
   processEvent(event: EventInfo) {
-    this.frontController.dispatch<void>(event);
+    this.frontController.dispatch<void>(event)
+        .catch(err => alert(err.error.response.data.errorMessage ||
+                            'Ocurrió un problema: \n\n' + JSON.stringify(err))
+        );
   }
 
 

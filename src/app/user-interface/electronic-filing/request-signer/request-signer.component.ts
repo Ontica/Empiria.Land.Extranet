@@ -48,6 +48,11 @@ export class RequestSignerComponent implements OnChanges {
   }
 
 
+  signPermissions() {
+    return (this.request.permissions.canSendToSign || this.request.permissions.canSign);
+  }
+
+
   toggleRevokeMode() {
     this.revokeMode = !this.revokeMode;
   }

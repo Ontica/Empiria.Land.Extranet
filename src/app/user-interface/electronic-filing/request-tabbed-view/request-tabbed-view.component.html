@@ -10,6 +10,7 @@
       <emp-one-requester-data
         [requester]="request.requestedBy"
         [procedureType]="request.procedureType"
+        [readonly] = "signed"
         (editRequester)="onRequesterDataChanged($event)">
       </emp-one-requester-data>
     </mat-step>
@@ -31,9 +32,6 @@
       <ng-container *ngIf="request.procedureType === 'SolicitudFolioReal'">
         <emp-land-folio-real-request></emp-land-folio-real-request>
       </ng-container>
-      <!-- <div class="right">
-        <button class="btn-action" matStepperNext>Siguiente</button>
-      </div> -->
     </mat-step>
 
     <mat-step>
@@ -41,26 +39,16 @@
 
       <emp-ng-file-control></emp-ng-file-control>
 
-      <!-- <div class="right">
-        <button mat-button matStepperPrevious>Anterior</button>
-        <button class="btn-action" matStepperNext>Siguiente</button>
-      </div> -->
     </mat-step>
 
     <mat-step [completed]="signed">
-      <ng-template matStepLabel>{{signed ? 'Firma electrónica' : 'Firmar la solicitud'}}</ng-template>
+      <ng-template matStepLabel>{{signed ? 'Firma electrónica' : (isSigner ? 'Firmar la solicitud' : 'Enviar a firma')}}</ng-template>
 
       <emp-one-request-signer
           [request]="request"
           [readonly] = "submitted"
           (editionEvent)="processEvent($event)">
       </emp-one-request-signer>
-
-      <!-- <div class="right">
-        <button mat-button matStepperPrevious>Anterior</button>
-        <button [class.btn]="!signed" [class.btn-action]="signed"
-                [disabled]="!signed" matStepperNext>Siguiente</button>
-      </div> -->
     </mat-step>
 
     <mat-step [completed]="submitted">

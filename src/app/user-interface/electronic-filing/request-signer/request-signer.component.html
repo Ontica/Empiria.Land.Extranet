@@ -45,6 +45,6 @@
   </form>
 </ng-container>
 
-<ng-container *ngIf="(!isSigned || revokeMode) && !readonly">
+<ng-container *ngIf="(!isSigned || revokeMode) && !readonly && signPermissions">
     <emp-ng-esign-input [revokeMode]="revokeMode" (signTokenReceived)="onSignTokenReceived($event)"></emp-ng-esign-input>
 </ng-container>

@@ -18,7 +18,7 @@ export enum CommandType {
   UPDATE_APPLICATION_FORM = 'OnePoint.ElectronicFiling.ApplicationForm.Update',
   SET_PAYMENT_RECEIPT = 'OnePoint.ElectronicFiling.EFilingRequest.SetPaymentReceipt',
   SIGN = 'OnePoint.ElectronicFiling.EFilingRequest.Sign',
-  REVOKE_SIGN = 'OnePoint.ElectronicFiling.EFilingRequest.Revokeign',
+  REVOKE_SIGN = 'OnePoint.ElectronicFiling.EFilingRequest.RevokeSign',
   GENERATE_PAYMENT_ORDER = 'OnePoint.ElectronicFiling.EFilingRequest.GeneratePaymentOrder',
   REQUEST_SUBMISSION = 'OnePoint.ElectronicFiling.EFilingRequest.Submit'
 }

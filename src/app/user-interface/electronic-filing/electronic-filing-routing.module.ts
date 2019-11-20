@@ -13,7 +13,7 @@ import { ElectronicFilingMainPageComponent } from './main-page/electronic-filing
 
 const routes: Routes = [
   { path: 'pending', component: ElectronicFilingMainPageComponent },
-  { path: 'signed', component: ElectronicFilingMainPageComponent },
+  { path: 'on-sign', component: ElectronicFilingMainPageComponent },
   { path: 'on-payment', component: ElectronicFilingMainPageComponent },
   { path: 'submitted', component: ElectronicFilingMainPageComponent },
   { path: 'finished', component: ElectronicFilingMainPageComponent },

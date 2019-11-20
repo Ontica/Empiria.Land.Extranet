@@ -16,7 +16,7 @@ export interface Transaction extends Entity {
 }
 
 
-export type FilingRequestStatusType = 'Pending' | 'Signed' | 'OnPayment' | 'Submitted' |
+export type FilingRequestStatusType = 'Pending' | 'OnSign' | 'OnPayment' | 'Submitted' |
                                       'Finished' | 'Rejected' | 'All';
 
 
@@ -95,6 +95,7 @@ export interface EFilingRequest extends Entity {
   paymentOrder?: PaymentOrderData;
   esign?: ESignData;
   transaction?: Transaction;
+  permissions: FilingRequestPermissions;
 }
 
 
@@ -149,7 +150,13 @@ export const EmptyEFilingRequest: EFilingRequest = {
     name: 'Pendiente'
   },
   esign: null,
-  transaction: EmptyTransaction
+  transaction: EmptyTransaction,
+  permissions: {
+    canManage: false,
+    canRegister: false,
+    canSendToSign: false,
+    canSign: false
+  }
 };
 
 
@@ -163,3 +170,11 @@ export const EmptyEFilingRequestFilter: EFilingRequestFilter = {
   status: 'All',
   keywords: '',
 };
+
+
+export interface FilingRequestPermissions {
+  canManage: boolean;
+  canRegister: boolean;
+  canSendToSign: boolean;
+  canSign: boolean;
+}
