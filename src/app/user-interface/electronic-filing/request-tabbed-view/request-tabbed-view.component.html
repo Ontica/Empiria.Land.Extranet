@@ -30,7 +30,10 @@
         <emp-land-deed></emp-land-deed>
       </ng-container>
       <ng-container *ngIf="request.procedureType === 'SolicitudFolioReal'">
-        <emp-land-folio-real-request></emp-land-folio-real-request>
+        <emp-land-folio-real-request
+          [request]="request"
+          (editionEvent)="processEvent($event)">
+        </emp-land-folio-real-request>
       </ng-container>
     </mat-step>
 

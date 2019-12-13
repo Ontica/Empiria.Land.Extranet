@@ -94,8 +94,6 @@ export class PreventiveNoteComponent implements OnChanges {
       return;
     }
 
-    console.log('onSubmit', this.form.get('propertyUID').value, this.form.valid, this.form.get('propertyUID').valid, this.form.get('propertyUID').status);
-
     this.submitted = true;
     this.validate();
 

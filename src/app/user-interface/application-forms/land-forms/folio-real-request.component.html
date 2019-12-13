@@ -1,3 +1,71 @@
-<p>
-  folio-real-request works!
-</p>
+<form class="form-container" [class.submitted]="submitted" autocomplete="off" [formGroup]="form" [empNgSpinnerHost]="spinner">
+  <emp-ng-spinner #spinner [visible]="isLoading"></emp-ng-spinner>
+
+  <fieldset>
+    <table class="form-section">
+      <tr>
+        <td class="form-section-title" colspan="4">Solicitud de asignación de folio real</td>
+      </tr>
+      <tr>
+        <td>Interesado:</td>
+        <td colspan="3" style="width:100%">
+          <input type="text" class="text-box uppercase" disabled [value]="request.requestedBy.name">
+        </td>
+      </tr>
+    </table>
+
+    <table class="form-section">
+      <tr>
+        <td class="form-section-title" colspan="5">Antecedente registral e información del predio</td>
+      </tr>
+      <tr>
+        <td class="align-top">Distrito, libro, sección y partida</td>
+        <td colspan="4">
+          <textarea class="text-area uppercase" rows="3" formControlName="antecedent"></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td class="align-top">Información del predio:</td>
+        <td colspan="4">
+          <textarea class="text-area uppercase" rows="3" formControlName="propertyDescription"></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td class="form-section-title" colspan="5">Observaciones para el Registro Público</td>
+      </tr>
+      <tr>
+        <td colspan="5">
+          <textarea class="text-area uppercase" rows="3" formControlName="observations"></textarea>
+        </td>
+      </tr>
+    </table>
+
+  </fieldset>
+
+  <div class="form-errors" *ngIf="exceptionMsg">{{exceptionMsg}}</div>
+
+  <div class="form-footer" *ngIf="!readonly">
+    <table class="form-section">
+      <tr>
+        <td>
+          <button *ngIf="canDelete" type="button" class="btn-warning"
+                  (click)="onDelete()">Eliminar</button>
+        </td>
+        <td class="text-align-right">
+
+          <button *ngIf="editionMode" type="submit" class="btn btn-margin-right"
+                  [class.btn]="!isReadyForSave" [class.btn-action]="isReadyForSave"
+                  (click)="onSubmit()">Guardar cambios</button>
+
+          <button *ngIf="canEdit" type="button" class="btn-action right"
+                  (click)="onEdit()">Editar</button>
+
+          <button *ngIf="editionMode" type="button" class="btn right"
+                  (click)="onCancel()">Cancelar edición</button>
+
+        </td>
+      </tr>
+    </table>
+  </div>
+
+</form>
