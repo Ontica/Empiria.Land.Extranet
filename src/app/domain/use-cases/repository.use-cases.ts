@@ -6,21 +6,22 @@
  */
 
 import { Injectable } from '@angular/core';
+
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { Assertion } from '@app/core';
+import { Assertion, Cache, Identifiable } from '@app/core';
 
 import { RealEstate, Property } from '@app/domain/models';
 
 import { RepositoryApiProvider } from '../providers';
 
 
+
 @Injectable()
 export class RepositoryUseCases {
 
-  private realEstateCache = new Map<string, Property>();
-
+  private realEstateCache = new Cache<Property>();
 
   constructor(private backend: RepositoryApiProvider) { }
 
@@ -38,6 +39,30 @@ export class RepositoryUseCases {
           this.realEstateCache.set(x.uid, x);
         })
       );
+  }
+
+
+  getRealEstateTypeList() {
+    return this.backend.getRealEstateTypeList();
+  }
+
+
+  getRecorderOfficeList(): Observable<Identifiable[]> {
+    return this.backend.getRecorderOfficeList();
+  }
+
+
+  getRecorderOfficeDomainBookList(recorderOfficeUID: string): Observable<Identifiable[]> {
+    Assertion.assertValue(recorderOfficeUID, 'recorderOfficeUID');
+
+    return this.backend.getRecorderOfficeDomainBookList(recorderOfficeUID);
+  }
+
+
+  getRecorderOfficeMuncipalityList(recorderOfficeUID: string): Observable<Identifiable[]> {
+    Assertion.assertValue(recorderOfficeUID, 'recorderOfficeUID');
+
+    return this.backend.getRecorderOfficeMuncipalityList(recorderOfficeUID);
   }
 
 }
