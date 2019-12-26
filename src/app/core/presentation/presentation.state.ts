@@ -61,12 +61,12 @@ export class PresentationState {
   }
 
 
-  select<T>(selector: StateSelector): Observable<T> {
+  select<T>(selector: StateSelector, params?: any): Observable<T> {
     Assertion.assertValue(selector, 'selector');
 
     const stateHandler = this.getStateHandlerForSelector(selector);
 
-    return stateHandler.select<T>(selector);
+    return stateHandler.select<T>(selector, params);
   }
 
 
@@ -95,7 +95,6 @@ export class PresentationState {
       `There is not defined a presentation state handler for selector '${selector}'.`
     );
   }
-
 
 
   private tryGetStateHandlerForCommand(command: CommandResult): StateHandler | undefined {

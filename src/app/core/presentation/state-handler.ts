@@ -9,7 +9,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 
 import { Assertion } from '../general/assertion';
 
-import { CommandResult, KeyValue, resolve } from '../data-types';
+import { Cache, CommandResult, KeyValue, resolve } from '../data-types';
 
 import { StateAction, StateSelector } from './state.commands';
 import { CommandType } from './commands';
@@ -18,6 +18,7 @@ import { UpdateStateUtilities } from './update-state-utilities';
 
 
 export type StateValues = KeyValue[];
+
 
 export interface StateHandler {
 
@@ -33,9 +34,10 @@ export interface StateHandler {
 
   getValue<U>(selector: StateSelector): U;
 
-  select<U>(selector: StateSelector): Observable<U>;
+  select<U>(selector: StateSelector, params?: any): Observable<U>;
 
 }
+
 
 export abstract class AbstractStateHandler<T> implements StateHandler {
 
@@ -48,7 +50,7 @@ export abstract class AbstractStateHandler<T> implements StateHandler {
   private stateItems = new Map<string, BehaviorSubject<any>>();
 
 
-  constructor(initialState: StateValues, selectors: any, actions: any, effects: any) {
+  constructor(initialState: StateValues, selectors: any, actions?: any, effects?: any) {
     Assertion.assertValue(initialState, 'initialState');
     Assertion.assertValue(selectors, 'selectors');
 
@@ -80,10 +82,49 @@ export abstract class AbstractStateHandler<T> implements StateHandler {
   }
 
 
-  select<U>(selector: StateSelector): Observable<U> {
+  select<U>(selector: StateSelector, params?: any): Observable<U> {
     const stateItem = this.getStateMapItem(selector);
 
     return stateItem.asObservable() as Observable<U>;
+  }
+
+
+
+  selectCached<U>(selector: StateSelector, funct: () => any, key: string): Observable<U> {
+    Assertion.assertValue(key, 'key');
+
+    const stateItem = this.getStateMapItem(selector);
+
+    const cache: Cache<Observable<U>> = stateItem.value as Cache<Observable<U>>;
+
+    if (!cache) {
+      Assertion.assertNoReachThisCode(`Uninitialized cache for selector ${selector}.`);
+    }
+
+    if (cache.has(key)) {
+      console.log('cached key', key, cache.get(key));
+      return cache.get(key);
+    }
+
+
+    cache.set(key, funct());
+
+    return cache.get(key);
+  }
+
+
+  selectFirst<U>(selector: StateSelector, funct: () => any): Observable<U> {
+    const stateItem = this.getStateMapItem(selector);
+
+    if (stateItem.value && (Array.isArray(stateItem.value) && stateItem.value.length > 0)) {
+      console.log('memoized from selectFirst ', selector, stateItem.value);
+
+      return stateItem.asObservable() as Observable<U>;
+    }
+
+    this.setValue(selector, funct());
+
+    return this.getSubject<U>(selector).asObservable();
   }
 
 

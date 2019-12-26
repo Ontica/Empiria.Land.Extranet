@@ -27,6 +27,11 @@ export interface PartitionedType {
 }
 
 
+export class Cache<T> extends Map<string, T> {
+
+}
+
+
 export interface Quantity {
   unit: Identifiable;
   amount: number;
