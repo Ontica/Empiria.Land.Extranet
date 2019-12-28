@@ -15,7 +15,10 @@ import { AngularFlexLayoutModule } from '@app/shared/angular-flex-layout.module'
 import { SharedContainersModule } from '@app/shared/containers/shared-containers.module';
 import { SharedFormControlsModule } from '@app/shared/form-controls/shared-form-controls.module';
 import { SharedIndicatorsModule } from '@app/shared/indicators/shared-indicators.module';
+
+import { PhysicalRecordingDataComponent } from './physical-recording-data/physical-recording-data.component';
 import { RealEstatePickerComponent } from './real-estate-picker/real-estate-picker.component';
+
 
 
 @NgModule({
@@ -33,10 +36,12 @@ import { RealEstatePickerComponent } from './real-estate-picker/real-estate-pick
   ],
 
   declarations: [
+    PhysicalRecordingDataComponent,
     RealEstatePickerComponent
   ],
 
   exports: [
+    PhysicalRecordingDataComponent,
     RealEstatePickerComponent
   ]
 
