@@ -13,8 +13,8 @@ import { AbstractStateHandler, StateValues } from '@app/core/presentation/state-
 
 import { ElectronicFilingUseCases } from '@app/domain/use-cases';
 
-import { EFilingRequest, EFilingRequestFilter,
-         EmptyEFilingRequestFilter, EmptyEFilingRequest } from '@app/domain/models';
+import { EmptyEFilingRequestFilter, EmptyEFilingRequest } from '@app/domain/models';
+
 import { ElectronicFilingCommandType } from '../command.handlers/commands';
 
 
@@ -43,13 +43,6 @@ enum CommandEffectType {
 }
 
 
-export interface ElectronicFilingState {
-  readonly requestsList: EFilingRequest[];
-  readonly listFilter: EFilingRequestFilter;
-  readonly selectedRequest: EFilingRequest;
-}
-
-
 const initialState: StateValues = [
   { key: SelectorType.REQUESTS_LIST, value: [] },
   { key: SelectorType.LIST_FILTER, value: EmptyEFilingRequestFilter },
@@ -58,19 +51,10 @@ const initialState: StateValues = [
 
 
 @Injectable()
-export class ElectronicFilingStateHandler extends AbstractStateHandler<ElectronicFilingState> {
+export class ElectronicFilingStateHandler extends AbstractStateHandler {
 
   constructor(private useCases: ElectronicFilingUseCases) {
     super(initialState, SelectorType, ActionType, CommandEffectType);
-  }
-
-
-  get state(): ElectronicFilingState {
-    return {
-      requestsList: this.getValue(SelectorType.REQUESTS_LIST),
-      listFilter: this.getValue(SelectorType.LIST_FILTER),
-      selectedRequest: this.getValue(SelectorType.SELECTED_REQUEST)
-    };
   }
 
 
@@ -107,7 +91,7 @@ export class ElectronicFilingStateHandler extends AbstractStateHandler<Electroni
         this.setValue(SelectorType.LIST_FILTER, payload.filter);
 
         return this.setValue<U>(SelectorType.REQUESTS_LIST,
-                                this.useCases.getRequests(this.state.listFilter));
+                                this.useCases.getRequests(payload.filter));
 
       case ActionType.SELECT_REQUEST:
         Assertion.assertValue(payload.request, 'payload.request');

@@ -52,7 +52,7 @@ const initialState: StateValues = [
 
 
 @Injectable()
-export class MainUserInterfaceStateHandler extends AbstractStateHandler<MainUserInterfaceState> {
+export class MainUserInterfaceStateHandler extends AbstractStateHandler {
 
   constructor() {
     super(initialState, SelectorType, ActionType, CommandEffectType);

@@ -6,13 +6,13 @@
  */
 
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { Assertion, Cache, CommandResult, toPromise, Identifiable } from '@app/core';
 
 import { AbstractStateHandler, StateValues } from '@app/core/presentation/state-handler';
 
 import { RepositoryUseCases } from '@app/domain/use-cases';
-import { Observable } from 'rxjs';
 
 
 export enum ActionType {
@@ -33,31 +33,19 @@ enum CommandEffectType {
 }
 
 
-export interface RepositoryState {
-  readonly districtList: Identifiable[];
-}
-
-
 const initialState: StateValues = [
   { key: SelectorType.DISTRICT_LIST, value: [] },
   { key: SelectorType.DISTRICT_MUNICIPALITY_LIST, value: new Cache<Identifiable[]>()},
-  { key: SelectorType.DISTRICT_DOMAIN_RECORDING_BOOKS_LIST, value: [] },
+  { key: SelectorType.DISTRICT_DOMAIN_RECORDING_BOOKS_LIST, value: new Cache<Identifiable[]>() },
   { key: SelectorType.REAL_ESTATE_TYPE_LIST, value: [] }
 ];
 
 
 @Injectable()
-export class RepositoryStateHandler extends AbstractStateHandler<RepositoryState> {
+export class RepositoryStateHandler extends AbstractStateHandler {
 
   constructor(private repository: RepositoryUseCases) {
     super(initialState, SelectorType, ActionType);
-  }
-
-
-  get state(): RepositoryState {
-    return {
-      districtList: this.getValue(SelectorType.DISTRICT_LIST)
-    };
   }
 
 

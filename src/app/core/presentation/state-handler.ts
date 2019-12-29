@@ -39,7 +39,7 @@ export interface StateHandler {
 }
 
 
-export abstract class AbstractStateHandler<T> implements StateHandler {
+export abstract class AbstractStateHandler implements StateHandler {
 
   readonly selectors: string[] = [];
   readonly actions: string[] = [];
@@ -126,9 +126,6 @@ export abstract class AbstractStateHandler<T> implements StateHandler {
 
     return this.getSubject<U>(selector).asObservable();
   }
-
-
-  abstract get state(): T;
 
 
   protected getSubject<U>(selector: StateSelector): BehaviorSubject<U> {
