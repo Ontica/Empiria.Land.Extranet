@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 
 import { Assertion, CommandResult, Exception } from '@app/core';
 
-import { AbstractStateHandler, StateValues } from '@app/core/presentation/state-handler';
+import { AbstractStateHandler, StateValues, SelectorConfig } from '@app/core/presentation/state-handler';
 
 import { NavigationHeader, DefaultNavigationHeader,
          buildNavigationHeader,
@@ -31,10 +31,6 @@ export enum SelectorType {
   IS_PROCESSING     = 'Empiria.UI-Item.MainUserInterface.IsProcessing'
 }
 
-enum CommandEffectType {
-
-}
-
 export interface MainUserInterfaceState {
   readonly layout: Layout;
   readonly navigationHeader: NavigationHeader;
@@ -43,19 +39,11 @@ export interface MainUserInterfaceState {
 }
 
 
-const initialState: StateValues = [
-  { key: SelectorType.LAYOUT, value: APP_LAYOUTS[0] },
-  { key: SelectorType.NAVIGATION_HEADER, value: DefaultNavigationHeader },
-  { key: SelectorType.CURRENT_VIEW, value: DefaultView },
-  { key: SelectorType.IS_PROCESSING, value: false }
-];
-
-
 @Injectable()
 export class MainUserInterfaceStateHandler extends AbstractStateHandler {
 
   constructor() {
-    super(initialState, SelectorType, ActionType, CommandEffectType);
+    super({ selectors: SelectorType, actions: ActionType });
   }
 
 
@@ -70,11 +58,7 @@ export class MainUserInterfaceStateHandler extends AbstractStateHandler {
 
 
   applyEffects(command: CommandResult): void {
-    switch ((command.type as any) as CommandEffectType) {
-
-      default:
-        throw this.unhandledCommandOrActionType(command);
-    }
+    throw this.unhandledCommandOrActionType(command);
   }
 
 
@@ -95,6 +79,26 @@ export class MainUserInterfaceStateHandler extends AbstractStateHandler {
 
       default:
         throw this.unhandledCommandOrActionType(actionType);
+    }
+  }
+
+
+  protected getSelectorConfig(selector: SelectorType): SelectorConfig {
+    switch (selector) {
+      case SelectorType.LAYOUT:
+        return { initialState: APP_LAYOUTS[0] };
+
+      case SelectorType.NAVIGATION_HEADER:
+        return { initialState: DefaultNavigationHeader };
+
+      case SelectorType.CURRENT_VIEW:
+        return { initialState: DefaultView };
+
+      case SelectorType.IS_PROCESSING:
+        return { initialState: false };
+
+      default:
+        throw this.unhandledCommandOrActionType(selector);
     }
   }
 

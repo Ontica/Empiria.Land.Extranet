@@ -38,6 +38,17 @@ export interface StateHandler {
 
 }
 
+export interface SelectorConfig {
+  initialState?: any;
+}
+
+
+export interface StateHandlerConfig {
+  selectors: any;
+  actions?: any;
+  effects?: any;
+}
+
 
 export abstract class AbstractStateHandler implements StateHandler {
 
@@ -50,20 +61,24 @@ export abstract class AbstractStateHandler implements StateHandler {
   private stateItems = new Map<string, BehaviorSubject<any>>();
 
 
-  constructor(initialState: StateValues, selectors: any, actions?: any, effects?: any) {
-    Assertion.assertValue(initialState, 'initialState');
-    Assertion.assertValue(selectors, 'selectors');
+  constructor(config: StateHandlerConfig) {
+    Assertion.assertValue(config, 'config');
+    Assertion.assertValue(config.selectors, 'config.selectors');
 
-    initialState.forEach(x => this.stateItems.set(x.key, new BehaviorSubject(x.value)));
+    this.selectors = Object.keys(config.selectors).map(k => config.selectors[k as StateSelector]);
 
-    this.selectors = Object.keys(selectors).map(k => selectors[k as StateSelector]);
+    this.selectors.forEach(x => {
+      const selectorInitialState = this.getSelectorConfig(x as StateSelector).initialState;
 
-    if (actions) {
-      this.actions = Object.keys(actions).map(k => actions[k as StateAction]);
+      this.stateItems.set(x, new BehaviorSubject(selectorInitialState));
+    });
+
+    if (config.actions) {
+      this.actions = Object.keys(config.actions).map(k => config.actions[k as StateAction]);
     }
 
-    if (effects) {
-      this.effects = Object.keys(effects).map(k => effects[k as CommandType]);
+    if (config.effects) {
+      this.effects = Object.keys(config.effects).map(k => config.effects[k as CommandType]);
     }
 
     this.stateUpdater = new UpdateStateUtilities(this, this.setValue);
@@ -71,6 +86,7 @@ export abstract class AbstractStateHandler implements StateHandler {
 
 
   abstract applyEffects(command: CommandResult): void;
+
 
   abstract dispatch<U>(actionType: StateAction, payload?: any): Promise<U> | void;
 
@@ -135,9 +151,14 @@ export abstract class AbstractStateHandler implements StateHandler {
   }
 
 
+  protected abstract getSelectorConfig(selector: StateSelector): SelectorConfig;
+
+
   protected setValue(selector: StateSelector, value: any): void;
 
+
   protected setValue<U>(selector: StateSelector, value: Observable<any>): Promise<U>;
+
 
   protected setValue<U>(selector: StateSelector, value: Observable<any> | any): Promise<U> {
     const stateItem = this.getStateMapItem(selector);
