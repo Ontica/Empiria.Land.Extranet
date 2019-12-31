@@ -106,19 +106,19 @@ export class ElectronicFilingStateHandler extends AbstractStateHandler {
 
 
   protected getSelectorConfig(selector: SelectorType): SelectorConfig {
-      switch (selector) {
-        case SelectorType.REQUESTS_LIST:
-          return { initialState: [] };
+    switch (selector) {
+      case SelectorType.REQUESTS_LIST:
+        return { initialState: [] };
 
-        case SelectorType.LIST_FILTER:
-          return { initialState: EmptyEFilingRequestFilter };
+      case SelectorType.LIST_FILTER:
+        return { initialState: EmptyEFilingRequestFilter };
 
-        case SelectorType.SELECTED_REQUEST:
-          return { initialState: EmptyEFilingRequest };
+      case SelectorType.SELECTED_REQUEST:
+        return { initialState: EmptyEFilingRequest };
 
-        default:
-          throw this.unhandledCommandOrActionType(selector);
-      }
+      default:
+        throw this.unhandledCommandOrActionType(selector);
+    }
   }
 
 }

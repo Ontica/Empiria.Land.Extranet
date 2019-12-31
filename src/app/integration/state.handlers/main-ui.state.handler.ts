@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 
 import { Assertion, CommandResult, Exception } from '@app/core';
 
-import { AbstractStateHandler, StateValues, SelectorConfig } from '@app/core/presentation/state-handler';
+import { AbstractStateHandler, SelectorConfig } from '@app/core/presentation/state-handler';
 
 import { NavigationHeader, DefaultNavigationHeader,
          buildNavigationHeader,

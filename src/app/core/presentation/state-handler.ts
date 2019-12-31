@@ -106,7 +106,7 @@ export abstract class AbstractStateHandler implements StateHandler {
 
 
 
-  selectCached<U>(selector: StateSelector, funct: () => any, key: string): Observable<U> {
+  selectMemoized<U>(selector: StateSelector, funct: () => any, key: string): Observable<U> {
     Assertion.assertValue(key, 'key');
 
     const stateItem = this.getStateMapItem(selector);
@@ -121,7 +121,6 @@ export abstract class AbstractStateHandler implements StateHandler {
       console.log('cached key', key, cache.get(key));
       return cache.get(key);
     }
-
 
     cache.set(key, funct());
 

@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 
 import { Assertion, Cache, CommandResult, toPromise, Identifiable } from '@app/core';
 
-import { AbstractStateHandler, StateValues, SelectorConfig } from '@app/core/presentation/state-handler';
+import { AbstractStateHandler, SelectorConfig } from '@app/core/presentation/state-handler';
 
 import { RepositoryUseCases } from '@app/domain/use-cases';
 
@@ -65,6 +65,7 @@ export class RepositoryStateHandler extends AbstractStateHandler {
       case SelectorType.DISTRICT_MUNICIPALITY_LIST:
         return { initialState: new Cache<Identifiable[]>() };
 
+
       case SelectorType.DISTRICT_DOMAIN_RECORDING_BOOKS_LIST:
         return { initialState: new Cache<Identifiable[]>() };
 
@@ -74,11 +75,6 @@ export class RepositoryStateHandler extends AbstractStateHandler {
       default:
         throw this.unhandledCommandOrActionType(selector);
     }
-  }
-
-
-  selector<U>(selectorType: SelectorType, params?: any): any {
-    return () => this.repository.getRecorderOfficeList();
   }
 
 
@@ -93,17 +89,17 @@ export class RepositoryStateHandler extends AbstractStateHandler {
       case SelectorType.DISTRICT_MUNICIPALITY_LIST:
         Assertion.assertValue(params.districtUID, 'params.districtUID');
 
-        return super.selectCached<U>(selectorType,
-                                     () => this.repository.getRecorderOfficeMuncipalityList(params.districtUID),
-                                     params.districtUID);
+        return super.selectMemoized<U>(selectorType,
+                                       () => this.repository.getRecorderOfficeMuncipalityList(params.districtUID),
+                                       params.districtUID);
 
 
       case SelectorType.DISTRICT_DOMAIN_RECORDING_BOOKS_LIST:
         Assertion.assertValue(params.districtUID, 'params.districtUID');
 
-        return super.selectCached<U>(selectorType,
-                                     () => this.repository.getRecorderOfficeDomainBookList(params.districtUID),
-                                     params.districtUID);
+        return super.selectMemoized<U>(selectorType,
+                                       () => this.repository.getRecorderOfficeDomainBookList(params.districtUID),
+                                       params.districtUID);
 
 
       case SelectorType.REAL_ESTATE_TYPE_LIST:
@@ -115,7 +111,6 @@ export class RepositoryStateHandler extends AbstractStateHandler {
         return super.select<U>(selectorType, params);
 
     }
-
   }
 
 }
