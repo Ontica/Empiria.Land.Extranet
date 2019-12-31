@@ -13,7 +13,7 @@ import { PresentationState } from '@app/core/presentation';
 
 import { EmptyRealEstate, RealEstate } from '@app/domain/models';
 
-import { RepositoryStateAction } from '@app/core/presentation/state.commands';
+import { LandRepositoryStateSelector } from '@app/core/presentation/state.commands';
 
 
 @Component({
@@ -76,8 +76,6 @@ export class RealEstatePickerComponent implements ControlValueAccessor, Validato
 
 
   validate(control: AbstractControl): ValidationErrors | null {
-    console.log('validate', this.form.status, this.form.valid, this.isDirty, this.form.disabled || (this.form.valid && !this.isDirty));
-
     if (this.form.disabled || (this.form.valid && !this.isDirty)) {
       return null;
     } else {
@@ -154,17 +152,18 @@ export class RealEstatePickerComponent implements ControlValueAccessor, Validato
 
     this.isLoading = true;
 
-    return this.store.dispatch<RealEstate>(RepositoryStateAction.LOAD_REAL_ESTATE, { uid: propertyUID })
-      .then(x => {
-        this.realEstate = x;
-        this.isLoading = false;
-      })
-      .catch(() => {
-        this.realEstate = EmptyRealEstate;
-        this.isLoading = false;
+    return this.store.select<RealEstate>(LandRepositoryStateSelector.REAL_ESTATE, { uid: propertyUID })
+        .toPromise()
+        .then(x => {
+          this.realEstate = x;
+          this.isLoading = false;
+        })
+        .catch(() => {
+          this.realEstate = EmptyRealEstate;
+          this.isLoading = false;
 
-        this.errorMsg = 'No existe ningún predio con el folio real proporcionado.';
-    });
+          this.errorMsg = 'No existe ningún predio con el folio real proporcionado.';
+      });
   }
 
 

@@ -21,6 +21,6 @@ export abstract class RepositoryApiProvider {
 
   abstract getRecorderOfficeDomainBookList(recorderOfficeUID: string): Observable<Identifiable[]>;
 
-  abstract getRecorderOfficeMuncipalityList(recorderOfficeUID: string): Observable<Identifiable[]>;
+  abstract getRecorderOfficeMunicipalityList(recorderOfficeUID: string): Observable<Identifiable[]>;
 
 }

@@ -38,13 +38,10 @@ export interface StateHandler {
 
 }
 
-export interface SelectorConfig {
-  initialState?: any;
-}
-
 
 export interface StateHandlerConfig {
-  selectors: any;
+  initialState?: StateValues;
+  selectors?: any;
   actions?: any;
   effects?: any;
 }
@@ -65,13 +62,12 @@ export abstract class AbstractStateHandler implements StateHandler {
     Assertion.assertValue(config, 'config');
     Assertion.assertValue(config.selectors, 'config.selectors');
 
+
+    if (config.initialState) {
+      config.initialState.forEach(x => this.stateItems.set(x.key, new BehaviorSubject(x.value)));
+    }
+
     this.selectors = Object.keys(config.selectors).map(k => config.selectors[k as StateSelector]);
-
-    this.selectors.forEach(x => {
-      const selectorInitialState = this.getSelectorConfig(x as StateSelector).initialState;
-
-      this.stateItems.set(x, new BehaviorSubject(selectorInitialState));
-    });
 
     if (config.actions) {
       this.actions = Object.keys(config.actions).map(k => config.actions[k as StateAction]);
@@ -85,10 +81,14 @@ export abstract class AbstractStateHandler implements StateHandler {
   }
 
 
-  abstract applyEffects(command: CommandResult): void;
+  applyEffects(command: CommandResult): void {
+
+  }
 
 
-  abstract dispatch<U>(actionType: StateAction, payload?: any): Promise<U> | void;
+  dispatch<U>(actionType: StateAction, payload?: any): Promise<U> | void {
+    throw this.unhandledCommandOrActionType(actionType);
+  }
 
 
   getValue<U>(selector: StateSelector): U {
@@ -148,9 +148,6 @@ export abstract class AbstractStateHandler implements StateHandler {
 
     return stateItem as BehaviorSubject<U>;
   }
-
-
-  protected abstract getSelectorConfig(selector: StateSelector): SelectorConfig;
 
 
   protected setValue(selector: StateSelector, value: any): void;

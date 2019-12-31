@@ -13,12 +13,8 @@ import { ActionType as ElectronicFilingAction } from './electronic-filing.state.
 export { ActionType as ElectronicFilingAction } from './electronic-filing.state.handler';
 
 
-import { ActionType as RepositoryStateAction } from './repository.state.handler';
-export { ActionType as RepositoryStateAction } from './repository.state.handler';
-
-
 export type StateAction
   = MainUIStateAction
   | ElectronicFilingAction
-  | RepositoryStateAction
+
 ;

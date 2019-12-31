@@ -8,73 +8,37 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Assertion, Cache, CommandResult, toPromise, Identifiable } from '@app/core';
+import { Assertion, Cache, Identifiable } from '@app/core';
 
-import { AbstractStateHandler, SelectorConfig } from '@app/core/presentation/state-handler';
+import { AbstractStateHandler, StateValues } from '@app/core/presentation/state-handler';
 
 import { RepositoryUseCases } from '@app/domain/use-cases';
-
-
-export enum ActionType {
-  LOAD_REAL_ESTATE = 'Land.UI-Action.Repository.LoadRealEstate'
-}
+import { RealEstate } from '@app/domain/models';
 
 
 export enum SelectorType {
   DISTRICT_LIST = 'Land.UI-Item.Repository.DistrictList',
   DISTRICT_MUNICIPALITY_LIST = 'Land.UI-Item.Repository.DistrictMuncipalityList',
   DISTRICT_DOMAIN_RECORDING_BOOKS_LIST = 'Land.UI-Item.Repository.DistrictDomainRecordingBooksList',
+  REAL_ESTATE = 'Land.UI-Action.Repository.RealEstate',
   REAL_ESTATE_TYPE_LIST = 'Land.UI-Item.Repository.RealEstateTypeList',
 }
+
+
+const initialState: StateValues = [
+  { key: SelectorType.DISTRICT_LIST, value: [] },
+  { key: SelectorType.DISTRICT_MUNICIPALITY_LIST, value: new Cache<Identifiable[]>()},
+  { key: SelectorType.DISTRICT_DOMAIN_RECORDING_BOOKS_LIST, value: new Cache<Identifiable[]>() },
+  { key: SelectorType.REAL_ESTATE, value: new Cache<RealEstate[]>() },
+  { key: SelectorType.REAL_ESTATE_TYPE_LIST, value: [] }
+];
 
 
 @Injectable()
 export class RepositoryStateHandler extends AbstractStateHandler {
 
   constructor(private repository: RepositoryUseCases) {
-    super({ selectors: SelectorType, actions: ActionType });
-  }
-
-
-  applyEffects(command: CommandResult): void {
-    throw this.unhandledCommandOrActionType(command);
-  }
-
-
-  dispatch<U>(actionType: ActionType, payload?: any): Promise<U> | void {
-    switch (actionType) {
-
-      case ActionType.LOAD_REAL_ESTATE:
-        Assertion.assertValue(payload.uid, 'payload.uid');
-
-        return toPromise<U>(
-          this.repository.getRealEstate(payload.uid)
-        );
-
-      default:
-        throw this.unhandledCommandOrActionType(actionType);
-    }
-  }
-
-
-  protected getSelectorConfig(selector: SelectorType): SelectorConfig {
-    switch (selector) {
-      case SelectorType.DISTRICT_LIST:
-        return { initialState: [] };
-
-      case SelectorType.DISTRICT_MUNICIPALITY_LIST:
-        return { initialState: new Cache<Identifiable[]>() };
-
-
-      case SelectorType.DISTRICT_DOMAIN_RECORDING_BOOKS_LIST:
-        return { initialState: new Cache<Identifiable[]>() };
-
-      case SelectorType.REAL_ESTATE_TYPE_LIST:
-        return { initialState: [] };
-
-      default:
-        throw this.unhandledCommandOrActionType(selector);
-    }
+    super({ initialState, selectors: SelectorType });
   }
 
 
@@ -90,7 +54,7 @@ export class RepositoryStateHandler extends AbstractStateHandler {
         Assertion.assertValue(params.districtUID, 'params.districtUID');
 
         return super.selectMemoized<U>(selectorType,
-                                       () => this.repository.getRecorderOfficeMuncipalityList(params.districtUID),
+                                       () => this.repository.getRecorderOfficeMunicipalityList(params.districtUID),
                                        params.districtUID);
 
 
@@ -101,6 +65,13 @@ export class RepositoryStateHandler extends AbstractStateHandler {
                                        () => this.repository.getRecorderOfficeDomainBookList(params.districtUID),
                                        params.districtUID);
 
+
+      case SelectorType.REAL_ESTATE:
+        Assertion.assertValue(params.uid, 'params.uid');
+
+        return super.selectMemoized<U>(selectorType,
+                                       () => this.repository.getRealEstate(params.uid),
+                                       params.uid);
 
       case SelectorType.REAL_ESTATE_TYPE_LIST:
         return super.selectFirst<U>(selectorType,

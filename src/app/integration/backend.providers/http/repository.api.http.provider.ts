@@ -59,7 +59,7 @@ export class RepositoryApiHttpProvider extends RepositoryApiProvider {
   }
 
 
-  getRecorderOfficeMuncipalityList(recorderOfficeUID: string): Observable<Identifiable[]> {
+  getRecorderOfficeMunicipalityList(recorderOfficeUID: string): Observable<Identifiable[]> {
     Assertion.assertValue(recorderOfficeUID, 'recorderOfficeUID');
 
     const path = `v2/catalogues/recorder-offices/${recorderOfficeUID}/municipalities`;

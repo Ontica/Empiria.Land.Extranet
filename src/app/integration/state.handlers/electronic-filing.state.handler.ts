@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 
 import { Assertion, CommandResult } from '@app/core';
 
-import { AbstractStateHandler, SelectorConfig } from '@app/core/presentation/state-handler';
+import { AbstractStateHandler, StateValues } from '@app/core/presentation/state-handler';
 
 import { ElectronicFilingUseCases } from '@app/domain/use-cases';
 
@@ -43,11 +43,24 @@ enum CommandEffectType {
 }
 
 
+const initialState: StateValues = [
+  { key: SelectorType.REQUESTS_LIST, value: [] },
+  { key: SelectorType.LIST_FILTER, value: EmptyEFilingRequestFilter },
+  { key: SelectorType.SELECTED_REQUEST, value: EmptyEFilingRequest }
+];
+
+
 @Injectable()
 export class ElectronicFilingStateHandler extends AbstractStateHandler {
 
+
   constructor(private useCases: ElectronicFilingUseCases) {
-    super({ selectors: SelectorType, actions: ActionType, effects: CommandEffectType });
+    super({
+      initialState,
+      selectors: SelectorType,
+      actions: ActionType,
+      effects: CommandEffectType
+    });
   }
 
 
@@ -101,23 +114,6 @@ export class ElectronicFilingStateHandler extends AbstractStateHandler {
 
       default:
         throw this.unhandledCommandOrActionType(actionType);
-    }
-  }
-
-
-  protected getSelectorConfig(selector: SelectorType): SelectorConfig {
-    switch (selector) {
-      case SelectorType.REQUESTS_LIST:
-        return { initialState: [] };
-
-      case SelectorType.LIST_FILTER:
-        return { initialState: EmptyEFilingRequestFilter };
-
-      case SelectorType.SELECTED_REQUEST:
-        return { initialState: EmptyEFilingRequest };
-
-      default:
-        throw this.unhandledCommandOrActionType(selector);
     }
   }
 

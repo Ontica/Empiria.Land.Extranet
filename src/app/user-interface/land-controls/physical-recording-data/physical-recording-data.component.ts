@@ -18,7 +18,7 @@ import { PresentationState } from '@app/core/presentation';
 
 import { EmptyRealEstate, RealEstate } from '@app/domain/models';
 
-import { RepositoryStateAction, LandRepositoryStateSelector } from '@app/core/presentation/state.commands';
+import { LandRepositoryStateSelector } from '@app/core/presentation/state.commands';
 
 
 @Component({
