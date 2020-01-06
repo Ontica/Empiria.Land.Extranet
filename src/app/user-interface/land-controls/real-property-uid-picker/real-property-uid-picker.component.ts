@@ -17,14 +17,14 @@ import { LandRepositoryStateSelector } from '@app/core/presentation/state.comman
 
 
 @Component({
-  selector: 'emp-land-real-estate-picker',
-  templateUrl: './real-estate-picker.component.html',
+  selector: 'emp-land-real-property-uid-picker',
+  templateUrl: './real-property-uid-picker.component.html',
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => RealEstatePickerComponent), multi: true },
-    { provide: NG_VALIDATORS, useExisting: forwardRef(() => RealEstatePickerComponent), multi: true }
+    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => RealPropertyUIDPickerComponent), multi: true },
+    { provide: NG_VALIDATORS, useExisting: forwardRef(() => RealPropertyUIDPickerComponent), multi: true }
   ]
 })
-export class RealEstatePickerComponent implements ControlValueAccessor, Validator {
+export class RealPropertyUIDPickerComponent implements ControlValueAccessor, Validator {
 
   @Input() disabled = false;
 
@@ -40,11 +40,11 @@ export class RealEstatePickerComponent implements ControlValueAccessor, Validato
 
   isLoading = false;
 
-  onChange = (propertyUID: string) => {};
+  onChange = (propertyUID: string) => { };
 
-  onTouched = () => {};
+  onTouched = () => { };
 
-  onValidate = () => {};
+  onValidate = () => { };
 
   constructor(private store: PresentationState) {}
 
@@ -76,7 +76,7 @@ export class RealEstatePickerComponent implements ControlValueAccessor, Validato
 
 
   validate(control: AbstractControl): ValidationErrors | null {
-    if (this.form.disabled || (this.form.valid && !this.isDirty)) {
+    if (this.form.disabled || this.form.valid) {
       return null;
     } else {
       return { valid: false };
@@ -96,16 +96,6 @@ export class RealEstatePickerComponent implements ControlValueAccessor, Validato
     this.form.get('propertyUID').setValue(propertyUID, { emitEvent : false });
 
     this.loadRealEstateData(propertyUID);
-  }
-
-
-  touch() {
-    // this.onTouched();
-
-    // if (this.isDirty) {
-    //   this.errorMsg = '';
-    //   this.onChange(this.realEstate.uid);
-    // }
   }
 
 

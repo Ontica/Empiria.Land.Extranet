@@ -1,15 +1,12 @@
 <emp-ng-spinner #spinner [visible]="isLoading"></emp-ng-spinner>
 
-<table class="form-section" [empNgSpinnerHost]="spinner">
+<table class="form-section" [empNgSpinnerHost]="spinner" [formGroup]="form">
   <tr>
-    <td class="form-section-title" colspan="4">Información del predio</td>
-  </tr>
-  <tr [formGroup]="form">
     <td>Folio real:</td>
     <td>
       <input type="text" class="text-box uppercase" style="width:170px" maxlength="19"
-             [class.invalid-control]="isDirty || errorMsg"
-             formControlName="propertyUID" (change)="touch()">
+             [class.invalid-control]="isDirty && errorMsg"
+             formControlName="propertyUID">
       <button type="button" *ngIf="!disabled" [class.btn]="!isDirty" [class.btn-action]="isDirty"
               (click)="onReadRealEstateData()">Leer</button>
       <div *ngIf="errorMsg" class='warning-text'>{{errorMsg}}</div>
