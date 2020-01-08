@@ -16,8 +16,8 @@ import { SharedContainersModule } from '@app/shared/containers/shared-containers
 import { SharedFormControlsModule } from '@app/shared/form-controls/shared-form-controls.module';
 import { SharedIndicatorsModule } from '@app/shared/indicators/shared-indicators.module';
 
-import { PhysicalRecordingDataComponent } from './physical-recording-data/physical-recording-data.component';
-import { RealEstatePickerComponent } from './real-estate-picker/real-estate-picker.component';
+import { RecordingSeekFormComponent } from './recording-seek-form/recording-seek-form.component';
+import { RealPropertyUIDPickerComponent } from './real-property-uid-picker/real-property-uid-picker.component';
 
 
 
@@ -36,13 +36,13 @@ import { RealEstatePickerComponent } from './real-estate-picker/real-estate-pick
   ],
 
   declarations: [
-    PhysicalRecordingDataComponent,
-    RealEstatePickerComponent
+    RecordingSeekFormComponent,
+    RealPropertyUIDPickerComponent
   ],
 
   exports: [
-    PhysicalRecordingDataComponent,
-    RealEstatePickerComponent
+    RecordingSeekFormComponent,
+    RealPropertyUIDPickerComponent
   ]
 
 })
