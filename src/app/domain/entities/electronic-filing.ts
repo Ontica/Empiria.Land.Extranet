@@ -99,8 +99,29 @@ export interface EFilingRequest extends Entity {
 }
 
 
+export interface RecordingSeekData {
+  districtUID: string;
+  municipalityUID: string;
+  recordingBookUID: string;
+  recordingNo: string;
+  recordingFraction?: string;
+  ownership?: string;
+  cadastralKey?: string;
+  propertyType?: string;
+  propertyName?: string;
+  location?: string;
+  searchNotes?: string;
+}
+
+
+export interface RealPropertyData {
+  propertyUID?: string;
+  recordingSeekData?: RecordingSeekData;
+}
+
+
 export interface PreventiveNote {
-  propertyUID: string;
+  propertyData: RealPropertyData;
   projectedOperation: string;
   grantors: string;
   grantees: string;
@@ -109,8 +130,9 @@ export interface PreventiveNote {
   observations?: string;
 }
 
+
 export const EmptyPreventiveNote: PreventiveNote = {
-  propertyUID: '',
+  propertyData: {},
   projectedOperation: '',
   grantors: '',
   grantees: ''
