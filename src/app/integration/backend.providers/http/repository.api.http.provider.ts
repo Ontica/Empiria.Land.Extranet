@@ -35,16 +35,12 @@ export class RepositoryApiHttpProvider extends RepositoryApiProvider {
   getRealEstateTypeList(): Observable<Identifiable[]> {
     const path = `v2/catalogues/real-estate-types`;
 
-    console.log('getRealEstateTypeList called');
-
     return this.http.get<Identifiable[]>(path);
   }
 
 
   getRecorderOfficeList(): Observable<Identifiable[]> {
     const path = `v2/catalogues/recorder-offices`;
-
-    console.log('getRecorderOfficeList called');
 
     return this.http.get<Identifiable[]>(path);
   }

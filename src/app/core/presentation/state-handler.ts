@@ -118,7 +118,6 @@ export abstract class AbstractStateHandler implements StateHandler {
     }
 
     if (cache.has(key)) {
-      console.log('cached key', key, cache.get(key));
       return cache.get(key);
     }
 
@@ -132,9 +131,7 @@ export abstract class AbstractStateHandler implements StateHandler {
     const stateItem = this.getStateMapItem(selector);
 
     if (stateItem.value && (Array.isArray(stateItem.value) && stateItem.value.length > 0)) {
-      console.log('memoized from selectFirst ', selector, stateItem.value);
-
-      return stateItem.asObservable() as Observable<U>;
+     return stateItem.asObservable() as Observable<U>;
     }
 
     this.setValue(selector, funct());

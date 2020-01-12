@@ -53,4 +53,4 @@ This web application is distributed by the [GNU AFFERO](https://github.com/Ontic
 
 ## Copyright
 
-Copyright © 2017-2019. La Vía Óntica SC, Ontica LLC and contributors.
+Copyright © 2017-2020. La Vía Óntica SC, Ontica LLC and contributors.
