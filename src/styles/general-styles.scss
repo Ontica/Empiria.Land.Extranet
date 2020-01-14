@@ -220,7 +220,7 @@ textarea:focus {
 
 .wrap {
   word-wrap: break-word;
-  white-space: normal;
+  white-space: normal !important;
 }
 
 .warning-text {

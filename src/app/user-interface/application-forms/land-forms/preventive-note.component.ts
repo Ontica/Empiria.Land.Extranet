@@ -13,7 +13,7 @@ import { Assertion, EventInfo } from '@app/core';
 
 import { ElectronicFilingCommandType } from '@app/core/presentation/commands';
 
-import { PreventiveNote, EFilingRequest } from '@app/domain/models';
+import { PreventiveNote, EFilingRequest, RealPropertyData } from '@app/domain/models';
 
 
 @Component({
@@ -34,13 +34,16 @@ export class PreventiveNoteComponent implements OnChanges {
 
   editionMode = false;
 
+  useRecordingSeekData = false;
+
   form = new FormGroup({
-    propertyUID: new FormControl('', Validators.required),
+    propertyUID: new FormControl(''),
+    recordingSeekData: new FormControl(),
     projectedOperation: new FormControl('', Validators.required),
     grantors: new FormControl('', Validators.required),
     grantees: new FormControl('', Validators.required),
     createPartition: new FormControl('', Validators.required),
-    partitionName: new FormControl({value: '', disabled: true}),
+    partitionName: new FormControl({ value: '', disabled: true }),
     observations: new FormControl(''),
   });
 
@@ -51,7 +54,8 @@ export class PreventiveNoteComponent implements OnChanges {
 
 
   get canDelete() {
-    return (this.editionMode && !this.readonly  && (!this.request.transaction || !this.request.transaction.uid));
+    return (this.editionMode && !this.readonly &&
+           (!this.request.transaction || !this.request.transaction.uid));
   }
 
 
@@ -95,12 +99,18 @@ export class PreventiveNoteComponent implements OnChanges {
     }
 
     this.submitted = true;
+
+    this.setControlsValidation();
+
     this.validate();
 
     if (this.form.valid) {
       this.sendUpdateApplicationFormEvent();
       this.editionMode = false;
       this.form.disable();
+    } else {
+      console.log('physicalRecording is valid', this.form.get('recordingSeekData').valid);
+      console.log('propertyPick is valid', this.form.get('propertyUID').valid);
     }
   }
 
@@ -114,17 +124,48 @@ export class PreventiveNoteComponent implements OnChanges {
   }
 
 
+  toggleUseRecordingSeekData() {
+    if (!this.editionMode) {
+      return;
+    }
+
+    this.useRecordingSeekData = !this.useRecordingSeekData;
+
+    this.setControlsValidation();
+  }
+
+
+  private setControlsValidation() {
+    if (this.useRecordingSeekData) {
+      this.form.get('recordingSeekData').setValidators(Validators.required);
+      this.form.get('recordingSeekData').updateValueAndValidity();
+
+      this.form.get('propertyUID').clearValidators();
+      this.form.get('propertyUID').updateValueAndValidity();
+
+    } else {
+      this.form.get('recordingSeekData').clearValidators();
+      this.form.get('recordingSeekData').updateValueAndValidity();
+
+      this.form.get('propertyUID').setValidators(Validators.required);
+      this.form.get('propertyUID').updateValueAndValidity();
+    }
+  }
+
+
   // private members
 
 
   private getFormData(): PreventiveNote {
     Assertion.assert(this.form.valid,
-         'Programming error: form must be validated before command execution.');
+      'Programming error: form must be validated before command execution.');
 
     const formModel = this.form.value;
 
+    const propertyData = this.getRealPropertyFormData();
+
     const data = {
-      propertyUID: formModel.propertyUID,
+      propertyData,
       projectedOperation: this.toUpperCase('projectedOperation'),
       grantors: this.toUpperCase('grantors'),
       grantees: this.toUpperCase('grantees'),
@@ -134,6 +175,21 @@ export class PreventiveNoteComponent implements OnChanges {
     };
 
     return data;
+  }
+
+
+  private getRealPropertyFormData(): RealPropertyData {
+    const formModel = this.form.value;
+
+    if (this.useRecordingSeekData) {
+      return {
+        recordingSeekData: formModel.recordingSeekData
+      };
+    } else {
+      return {
+        propertyUID: formModel.propertyUID,
+      };
+    }
   }
 
 
@@ -151,7 +207,8 @@ export class PreventiveNoteComponent implements OnChanges {
     const appForm = this.request.form.fields as PreventiveNote;
 
     this.form.reset({
-      propertyUID: appForm.propertyUID || '',
+      propertyUID: appForm.propertyData.propertyUID || '',
+      recordingSeekData: appForm.propertyData.recordingSeekData || null,
       projectedOperation: appForm.projectedOperation || '',
       grantors: appForm.grantors || '',
       grantees: appForm.grantees || '',
@@ -159,6 +216,13 @@ export class PreventiveNoteComponent implements OnChanges {
       partitionName: appForm.partitionName || '',
       observations: appForm.observations || ''
     });
+
+    if (appForm.propertyData.recordingSeekData) {
+      this.useRecordingSeekData = true;
+    } else {
+      this.useRecordingSeekData = false;
+    }
+    this.setControlsValidation();
   }
 
 
@@ -183,6 +247,7 @@ export class PreventiveNoteComponent implements OnChanges {
       this.exceptionMsg = noValidMessage ? noValidMessage : '';
     }
   }
+
 
   private setControlAsOptional(controlName: string) {
     const control = this.form.get(controlName);
@@ -225,7 +290,6 @@ export class PreventiveNoteComponent implements OnChanges {
 
 
   private validate() {
-    this.form.get('propertyUID').updateValueAndValidity();
     this.validatePartition();
   }
 
@@ -234,7 +298,8 @@ export class PreventiveNoteComponent implements OnChanges {
     const createPartition = this.form.get('createPartition');
 
     if (createPartition.value === 'true') {
-      this.setControlAsRequired('partitionName', 'Requiero se proporcione el nombre de la fracción.');
+      this.setControlAsRequired('partitionName',
+                                'Requiero se proporcione el nombre de la fracción.');
     } else {
       this.setControlAsOptional('partitionName');
     }

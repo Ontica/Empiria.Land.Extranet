@@ -2,20 +2,61 @@
   <emp-ng-spinner #spinner [visible]="isLoading"></emp-ng-spinner>
 
   <fieldset>
+
+    <table class="form-section" *ngIf="!readonly">
+      <tr>
+        <td>
+          <button *ngIf="canDelete" type="button" class="btn-warning"
+                  (click)="onDelete()">Eliminar</button>
+        </td>
+        <td class="text-align-right">
+
+          <button *ngIf="editionMode" type="submit" class="btn btn-margin-right"
+                  [class.btn]="!isReadyForSave" [class.btn-action]="isReadyForSave"
+                  (click)="onSubmit()">Guardar cambios</button>
+
+          <button *ngIf="canEdit" type="button" class="btn-action right"
+                  (click)="onEdit()">Editar</button>
+
+          <button *ngIf="editionMode" type="button" class="btn right"
+                  (click)="onCancel()">Cancelar edición</button>
+
+        </td>
+      </tr>
+    </table>
+
     <table class="form-section">
       <tr>
-        <td class="form-section-title" colspan="4">Aviso preventivo</td>
+        <td class="form-section-title" colspan="2">Aviso preventivo</td>
       </tr>
       <tr>
         <td>Interesado:</td>
-        <td colspan="3" style="width:100%">
+        <td style="width:100%">
           <input type="text" class="text-box uppercase" disabled [value]="request.requestedBy.name">
         </td>
       </tr>
     </table>
 
-    <emp-land-real-estate-picker formControlName="propertyUID">
-    </emp-land-real-estate-picker>
+    <table class="form-section">
+      <tr>
+        <td class="form-section-title">Información del predio sobre el que se inscribirá el aviso preventivo</td>
+      </tr>
+      <tr *ngIf="editionMode">
+        <td>
+          <br/>
+          <input type="checkbox" class="check-box" [checked]="useRecordingSeekData"
+                 (change)="toggleUseRecordingSeekData()">
+          El predio está registrado en libros y no tiene folio real.
+        </td>
+      </tr>
+    </table>
+
+    <emp-land-real-property-uid-picker *ngIf="!useRecordingSeekData" formControlName="propertyUID">
+    </emp-land-real-property-uid-picker>
+
+    <emp-land-recording-seek-form *ngIf="useRecordingSeekData" formControlName="recordingSeekData">
+    </emp-land-recording-seek-form>
+
 
     <table class="form-section">
       <tr>
@@ -60,7 +101,7 @@
         </td>
       </tr>
       <tr>
-          <td class="form-section-title" colspan="5">Observaciones para el Registro Público</td>
+        <td class="form-section-title" colspan="5">Observaciones para el Registro Público</td>
       </tr>
       <tr>
         <td colspan="5">
@@ -72,29 +113,5 @@
   </fieldset>
 
   <div class="form-errors" *ngIf="exceptionMsg">{{exceptionMsg}}</div>
-
-  <div class="form-footer" *ngIf="!readonly">
-    <table class="form-section">
-      <tr>
-        <td>
-          <button *ngIf="canDelete" type="button" class="btn-warning"
-                  (click)="onDelete()">Eliminar</button>
-        </td>
-        <td class="text-align-right">
-
-          <button *ngIf="editionMode" type="submit" class="btn btn-margin-right"
-                  [class.btn]="!isReadyForSave" [class.btn-action]="isReadyForSave"
-                  (click)="onSubmit()">Guardar cambios</button>
-
-          <button *ngIf="canEdit" type="button" class="btn-action right"
-                  (click)="onEdit()">Editar</button>
-
-          <button *ngIf="editionMode" type="button" class="btn right"
-                  (click)="onCancel()">Cancelar edición</button>
-
-        </td>
-      </tr>
-    </table>
-  </div>
 
 </form>
