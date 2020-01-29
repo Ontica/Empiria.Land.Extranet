@@ -8,7 +8,7 @@
     },
     {
       "key": "HTTP_API_BASE_ADDRESS",
-      "value": "http://empiria.land/web.api/"
+      "value": "http://empiria.land/intranet/"
     },
     {
       "key": "PAYMENT_ORDERS_HTTP_BASE_ADDRESS",
