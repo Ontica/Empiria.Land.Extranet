@@ -262,6 +262,17 @@ a {
   color: $link-color;
 }
 
+.link {
+  color: $link-color;
+  text-decoration: underline;
+}
+
+.link:hover {
+  color: $selected-item-text-color;
+  text-decoration: underline;
+  color: $selected-item-text-color;
+}
+
 a:hover {
   color: $selected-item-text-color;
   cursor: pointer;

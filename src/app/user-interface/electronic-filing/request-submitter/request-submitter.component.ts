@@ -14,7 +14,6 @@ import { ElectronicFilingCommandType } from '@app/core/presentation/commands';
 import { EFilingRequest } from '@app/domain/models';
 
 
-
 @Component({
   selector: 'emp-one-request-submitter',
   templateUrl: './request-submitter.component.html'
@@ -40,6 +39,11 @@ export class RequestSubmitterComponent implements OnChanges {
   }
 
 
+  get hasOutputDocuments() {
+    return this.request.outputDocuments.length !== 0;
+  }
+
+
   get readyForSubmission() {
     return this.hasRouteNumber && this.request.paymentOrder.receiptNo && !this.submitted;
   }
@@ -47,6 +51,11 @@ export class RequestSubmitterComponent implements OnChanges {
 
   get submitted() {
     return this.request.transaction && this.request.transaction.presentationDate;
+  }
+
+
+  showExternalWindow(url: string): void {
+    window.open(url, '_blank', 'location=yes,height=700,width=800,scrollbars=yes,status=yes');
   }
 
 

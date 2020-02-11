@@ -84,6 +84,16 @@ export interface ESignData {
 }
 
 
+export interface EFilingDocument {
+  uid: string;
+  type: string;
+  typeName: string;
+  name: string;
+  contentType: string;
+  uri: string;
+}
+
+
 export interface EFilingRequest extends Entity {
   procedureType: ProcedureType;
   requestedBy: Requester;
@@ -95,6 +105,8 @@ export interface EFilingRequest extends Entity {
   paymentOrder?: PaymentOrderData;
   esign?: ESignData;
   transaction?: Transaction;
+  inputDocuments: EFilingDocument[];
+  outputDocuments: EFilingDocument[];
   permissions: FilingRequestPermissions;
 }
 
@@ -186,6 +198,8 @@ export const EmptyEFilingRequest: EFilingRequest = {
   },
   esign: null,
   transaction: EmptyTransaction,
+  inputDocuments: [],
+  outputDocuments: [],
   permissions: {
     canManage: false,
     canRegister: false,

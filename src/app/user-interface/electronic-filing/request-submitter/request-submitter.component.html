@@ -40,7 +40,7 @@
 <table class="form-section" *ngIf="hasRouteNumber">
   <tr>
     <td colspan="2">
-      <a target="_blank" [href]="paymentOrderUrl">Imprimir la boleta de pago</a>
+      <a class="link" (click)="showExternalWindow(paymentOrderUrl)">Imprimir la boleta de pago</a>
     </td>
   </tr>
   <tr>
@@ -91,6 +91,20 @@
     <td>
       <input type="text" class="text-box" style="width: 200px"
              disabled [value]="request.transaction.status">
+    </td>
+  </tr>
+</table>
+
+<table class="form-section" *ngIf="hasOutputDocuments">
+  <tr>
+    <td class="form-section-title" colspan="2">Documentos recibidos</td>
+  </tr>
+  <tr *ngFor="let document of request.outputDocuments">
+    <td>
+      <label>{{document.typeName}}:</label>
+    </td>
+    <td>
+      <a class="link" (click)="showExternalWindow(document.uri)">Ver documento</a>
     </td>
   </tr>
 </table>
