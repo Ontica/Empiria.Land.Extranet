@@ -2,8 +2,7 @@
              [hint]="request.requestedBy.name"
              (cardClose)="onClose()">
 
-  <mat-horizontal-stepper linear #stepper labelPosition="bottom" color="accent">
-
+  <mat-horizontal-stepper linear #stepper [selectedIndex]="selectedStepperIndex" labelPosition="bottom" color="accent">
 
     <mat-step completed="true">
       <ng-template matStepLabel>Datos del interesado</ng-template>
@@ -37,7 +36,7 @@
       </ng-container>
     </mat-step>
 
-    <mat-step>
+    <mat-step completed="true">
       <ng-template matStepLabel>Adjuntar<br>archivos</ng-template>
 
       <emp-ng-file-control></emp-ng-file-control>

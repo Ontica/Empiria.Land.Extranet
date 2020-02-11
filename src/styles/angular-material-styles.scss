@@ -48,6 +48,14 @@
    height: 100%;
 }
 
+//
+// stepper
+//
+
+.mat-step-header .mat-step-icon-selected {
+  background-color: $primary-color;
+}
+
 
 //
 // secondary tabs component

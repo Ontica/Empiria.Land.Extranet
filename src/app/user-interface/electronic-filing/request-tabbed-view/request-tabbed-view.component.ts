@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 
 import { EventInfo } from '@app/core';
 import { FrontController } from '@app/core/presentation';
@@ -18,19 +18,26 @@ import { ElectronicFilingCommandType } from '@app/core/presentation/commands';
   selector: 'emp-one-request-tabbed-view',
   templateUrl: './request-tabbed-view.component.html'
 })
-export class RequestTabbedViewComponent {
+export class RequestTabbedViewComponent implements OnChanges {
 
   @Input() request: EFilingRequest = EmptyEFilingRequest;
 
   @Output() closeEvent = new EventEmitter<void>();
 
+  selectedStepperIndex = 0;
 
   constructor(private frontController: FrontController) { }
+
+
+  ngOnChanges() {
+    this.setSelectedStepperIndex();
+  }
 
 
   get signed() {
     return (this.request.esign && this.request.esign.sign);
   }
+
 
   get isSigner() {
     return (false);
@@ -60,6 +67,8 @@ export class RequestTabbedViewComponent {
   }
 
 
+  // Private methods
+
   private sendCreateEFilingRequestEvent(requestedBy: Requester) {
     const event: EventInfo = {
       type: ElectronicFilingCommandType.UPDATE_EFILING_REQUEST,
@@ -70,6 +79,19 @@ export class RequestTabbedViewComponent {
     };
 
     this.processEvent(event);
+  }
+
+
+  private setSelectedStepperIndex() {
+    if (!this.request.form || !this.request.form.fields) {
+      this.selectedStepperIndex = 1;
+    } else if (this.submitted || this.signed) {
+      this.selectedStepperIndex = 4;
+    } else if (!this.signed && this.isSigner) {
+      this.selectedStepperIndex = 3;
+    } else {
+      this.selectedStepperIndex = 1;
+    }
   }
 
 }
