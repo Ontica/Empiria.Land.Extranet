@@ -15,15 +15,15 @@ const routes: Routes = [
   { path: 'electronic-filing/requests',
     component: MainLayoutComponent,
     canActivate: [SecurityGuardService],
-    loadChildren: './user-interface/electronic-filing/electronic-filing.module#ElectronicFilingModule'
+    loadChildren: () => import('./user-interface/electronic-filing/electronic-filing.module').then(m => m.ElectronicFilingModule)
   },
   { path: 'search-services',
     component: MainLayoutComponent,
     canActivate: [SecurityGuardService],
-    loadChildren: './user-interface/search-services/search-services.module#SearchServicesModule'
+    loadChildren: () => import('./user-interface/search-services/search-services.module').then(m => m.SearchServicesModule)
   },
   { path: 'security',
-    loadChildren: './user-interface/security/security-ui.module#SecurityUIModule'
+    loadChildren: () => import('./user-interface/security/security-ui.module').then(m => m.SecurityUIModule)
   },
   { path: '', redirectTo: 'electronic-filing/requests', pathMatch: 'full' },
   { path: '**', component: NoContentComponent }
