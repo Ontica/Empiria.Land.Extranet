@@ -23,7 +23,10 @@
         </emp-land-preventive-note>
       </ng-container>
       <ng-container *ngIf="request.procedureType === 'SegundoAvisoDefinitivo'">
-        <emp-land-definitive-note></emp-land-definitive-note>
+        <emp-land-definitive-note
+            [request]="request"
+            (editionEvent)="processEvent($event)">
+        </emp-land-definitive-note>
       </ng-container>
       <ng-container *ngIf="request.procedureType === 'InscripcionEscrituraPublica'">
         <emp-land-deed></emp-land-deed>

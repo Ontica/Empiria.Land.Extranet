@@ -65,7 +65,7 @@ export type ProcedureType = 'AvisoPreventivo' | 'SegundoAvisoDefinitivo' | 'Insc
 export type ApplicationFormType = ProcedureType;
 
 
-export type ApplicationFormFields = PreventiveNote | FolioRealRequest | Deed;
+export type ApplicationFormFields = PreventiveNote | DefinitiveNote | FolioRealRequest | Deed;
 
 
 export interface ApplicationForm extends Entity {
@@ -146,6 +146,23 @@ export interface PreventiveNote {
 export const EmptyPreventiveNote: PreventiveNote = {
   propertyData: {},
   projectedOperation: '',
+  grantors: '',
+  grantees: ''
+};
+
+
+export interface DefinitiveNote {
+  propertyData: RealPropertyData;
+  operation: string;
+  grantors: string;
+  grantees: string;
+  observations?: string;
+}
+
+
+export const EmptyDefinitiveNote: DefinitiveNote = {
+  propertyData: {},
+  operation: '',
   grantors: '',
   grantees: ''
 };
