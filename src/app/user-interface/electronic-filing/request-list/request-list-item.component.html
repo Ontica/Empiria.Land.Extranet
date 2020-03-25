@@ -6,9 +6,9 @@
     <div>{{preventiveNoteDueDate}}</div>
   </div>
 
-  <div *ngIf="request?.form?.fields['propertyUID']" fxFlex="auto">
+  <div *ngIf="request?.form?.fields['propertyData']?.propertyUID" fxFlex="auto">
     <div class="label">Folio real del predio</div>
-    <div class="primary-text nowrap"><b>{{request?.form?.fields['propertyUID'] || ''}}</b></div>
+    <div class="primary-text nowrap"><b>{{request?.form?.fields['propertyData']?.propertyUID || ''}}</b></div>
     <div>{{request?.form?.fields['propertyName']}}</div>
   </div>
 
