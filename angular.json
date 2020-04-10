@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "land-extranet"
+  "defaultProject": "land-extranet",
+  "cli": {
+    "analytics": "1c651aec-8879-40ff-83fb-461e42af7086"
+  }
 }
