@@ -7,22 +7,22 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeedComponent } from './deed.component';
+import { NotarialInstrumentComponent } from './notarial-instrument.component';
 
 
-describe('DeedComponent', () => {
-  let component: DeedComponent;
-  let fixture: ComponentFixture<DeedComponent>;
+describe('NotarialInstrumentComponent', () => {
+  let component: NotarialInstrumentComponent;
+  let fixture: ComponentFixture<NotarialInstrumentComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DeedComponent ]
+      declarations: [ NotarialInstrumentComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DeedComponent);
+    fixture = TestBed.createComponent(NotarialInstrumentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

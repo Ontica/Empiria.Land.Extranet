@@ -29,7 +29,7 @@
         </emp-land-definitive-note>
       </ng-container>
       <ng-container *ngIf="request.procedureType === 'InscripcionEscrituraPublica'">
-        <emp-land-deed></emp-land-deed>
+        <emp-land-notarial-instrument></emp-land-notarial-instrument>
       </ng-container>
       <ng-container *ngIf="request.procedureType === 'SolicitudFolioReal'">
         <emp-land-folio-real-request
@@ -37,13 +37,6 @@
           (editionEvent)="processEvent($event)">
         </emp-land-folio-real-request>
       </ng-container>
-    </mat-step>
-
-    <mat-step completed="true">
-      <ng-template matStepLabel>Adjuntar<br>archivos</ng-template>
-
-      <emp-ng-file-control></emp-ng-file-control>
-
     </mat-step>
 
     <mat-step [completed]="signed">

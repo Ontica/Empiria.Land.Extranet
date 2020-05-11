@@ -12,19 +12,10 @@
       <mat-radio-group class="radio-group" [(ngModel)]="procedureType">
         <mat-radio-button class="radio-button" value="AvisoPreventivo">Aviso preventivo</mat-radio-button>
         <mat-radio-button class="radio-button" value="SegundoAvisoDefinitivo">Segundo aviso definitivo</mat-radio-button>
-        <mat-radio-button class="radio-button" value="InscripcionEscrituraPublica">Inscripción de escritura pública</mat-radio-button>
+        <!-- <mat-radio-button class="radio-button" value="InscripcionEscrituraPublica">Inscripción de escritura pública</mat-radio-button> -->
 
         <div></div>
-        <mat-radio-button class="radio-button" value="CertificadoLibertad">Certificado de libertad de gravamen / gravamen</mat-radio-button>
-        <mat-radio-button class="radio-button" value="CertificadoInscripcion">Certificado de inscripción</mat-radio-button>
-        <!-- <mat-radio-button class="radio-button" value="CertificadoNoInscripcion">Certificado de NO inscripción</mat-radio-button> -->
-        <mat-radio-button class="radio-button" value="CertificadoPropiedad">Certificado de propiedad / No propiedad</mat-radio-button>
-        <mat-radio-button class="radio-button" value="CopiaCertificada">Emisión de copia certificada</mat-radio-button>
-        <div></div>
-        <mat-radio-button class="radio-button" value="CancelacionAvisoPreventivo">Cancelación de aviso preventivo</mat-radio-button>
-        <div></div>
-        <mat-radio-button class="radio-button" value="Aclaracion">Solicitar aclaración</mat-radio-button>
-        <mat-radio-button class="radio-button" value="SolicitudFolioReal">Solicitar expedición de folio real</mat-radio-button>
+
       </mat-radio-group>
       <div class="right">
         <button [class.btn]="!procedureSelected" [class.btn-action]="procedureSelected" [disabled]="!procedureSelected" matStepperNext>Siguiente</button>

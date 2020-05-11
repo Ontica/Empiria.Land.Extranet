@@ -86,9 +86,9 @@ export class RequestTabbedViewComponent implements OnChanges {
     if (!this.request.form || !this.request.form.fields) {
       this.selectedStepperIndex = 1;
     } else if (this.submitted || this.signed) {
-      this.selectedStepperIndex = 4;
-    } else if (!this.signed && this.isSigner) {
       this.selectedStepperIndex = 3;
+    } else if (!this.signed && this.isSigner) {
+      this.selectedStepperIndex = 2;
     } else {
       this.selectedStepperIndex = 1;
     }

@@ -9,10 +9,10 @@ import { Component, OnInit } from '@angular/core';
 
 
 @Component({
-  selector: 'emp-land-deed',
-  templateUrl: './deed.component.html'
+  selector: 'emp-land-notarial-instrument',
+  templateUrl: './notarial-instrument.component.html'
 })
-export class DeedComponent implements OnInit {
+export class NotarialInstrumentComponent implements OnInit {
 
   constructor() { }
 

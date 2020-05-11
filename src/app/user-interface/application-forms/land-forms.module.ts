@@ -16,11 +16,12 @@ import { SharedContainersModule } from '@app/shared/containers/shared-containers
 import { SharedFormControlsModule } from '@app/shared/form-controls/shared-form-controls.module';
 import { SharedIndicatorsModule } from '@app/shared/indicators/shared-indicators.module';
 
-import { DeedComponent } from '../application-forms/land-forms/deed.component';
 import { DefinitiveNoteComponent } from '../application-forms/land-forms/definitive-note.component';
 import { FolioRealRequestComponent } from '../application-forms/land-forms/folio-real-request.component';
+import { NotarialInstrumentComponent } from '../application-forms/land-forms/notarial-instrument.component';
 import { PreventiveNoteComponent } from '../application-forms/land-forms/preventive-note.component';
 
+import { LegalInstrumentModule } from './land-forms/legal-instrument/legal-instrument.module';
 import { LandControlsModule } from '../land-controls/land.controls.module';
 
 
@@ -37,20 +38,21 @@ import { LandControlsModule } from '../land-controls/land.controls.module';
     SharedFormControlsModule,
     SharedIndicatorsModule,
 
-    LandControlsModule
+    LandControlsModule,
+    LegalInstrumentModule,
   ],
 
   declarations: [
-    DeedComponent,
     DefinitiveNoteComponent,
     FolioRealRequestComponent,
+    NotarialInstrumentComponent,
     PreventiveNoteComponent
   ],
 
   exports: [
-    DeedComponent,
     DefinitiveNoteComponent,
     FolioRealRequestComponent,
+    NotarialInstrumentComponent,
     PreventiveNoteComponent
   ]
 
