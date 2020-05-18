@@ -23,6 +23,15 @@ export class RepositoryApiHttpProvider extends RepositoryApiProvider {
   }
 
 
+  getOwnershipRecordingSectionList(recorderOfficeUID: string): Observable<Identifiable[]> {
+    Assertion.assertValue(recorderOfficeUID, 'recorderOfficeUID');
+
+    const path = `v2/catalogues/recorder-offices/${recorderOfficeUID}/ownership-recording-sections`;
+
+    return this.http.get<Identifiable[]>(path);
+  }
+
+
   getRealEstate(uid: string): Observable<RealEstate> {
     Assertion.assertValue(uid, 'uid');
 
@@ -46,10 +55,10 @@ export class RepositoryApiHttpProvider extends RepositoryApiProvider {
   }
 
 
-  getRecorderOfficeDomainBookList(recorderOfficeUID: string): Observable<Identifiable[]> {
+  getRecorderOfficeSectionBookList(recorderOfficeUID: string, sectionUID: string): Observable<Identifiable[]> {
     Assertion.assertValue(recorderOfficeUID, 'recorderOfficeUID');
 
-    const path = `v2/catalogues/recorder-offices/${recorderOfficeUID}/domain-recording-books`;
+    const path = `v2/catalogues/recorder-offices/${recorderOfficeUID}/recording-books/${sectionUID}`;
 
     return this.http.get<Identifiable[]>(path);
   }

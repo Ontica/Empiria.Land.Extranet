@@ -6,7 +6,7 @@
     <td>
       <select #districtControl class="select-box" formControlName="districtUID"
               (change)="onChangeDistrict(districtControl.value)">
-        <option value="" i18n>( Distrito )</option>
+        <option value="">( Distrito )</option>
         <option *ngFor="let district of districtList"
                 [value]="district.uid">{{district.name}}</option>
       </select>
@@ -14,23 +14,29 @@
     <td>Municipio:</td>
     <td>
       <select class="select-box" formControlName="municipalityUID">
-        <option value="" i18n>( Municipio )</option>
+        <option value="">( Municipio )</option>
         <option *ngFor="let municipality of municipalityList"
                 [value]="municipality.uid">{{municipality.name}}</option>
       </select>
     </td>
   </tr>
   <tr>
+    <td>Sección:</td>
+    <td>
+      <select #sectionControl class="select-box" formControlName="recordingSectionUID"
+              (change)="onChangeRecordingSection(districtControl.value, sectionControl.value)">
+        <option value="">( Sección )</option>
+        <option *ngFor="let recordingSection of recordingSectionList"
+                [value]="recordingSection.uid">{{recordingSection.name}}</option>
+      </select>
+    </td>
     <td>Volumen:</td>
-    <td colspan="3">
-      <span>
-        <select class="select-box" style="width:calc(99% - 80px)" formControlName="recordingBookUID">
-          <option value="" i18n>( Volumen / Libro )</option>
-          <option *ngFor="let recordingBook of recordingBookList"
-                  [value]="recordingBook.uid">{{recordingBook.name}}</option>
-        </select>
-        Ver imágenes
-      </span>
+    <td>
+      <select class="select-box" formControlName="recordingBookUID">
+        <option value="">( Volumen )</option>
+        <option *ngFor="let recordingBook of recordingBookList"
+                [value]="recordingBook.uid">{{recordingBook.name}}</option>
+      </select>
     </td>
   </tr>
   <tr>

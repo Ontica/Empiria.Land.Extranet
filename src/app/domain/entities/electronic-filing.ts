@@ -65,7 +65,7 @@ export type ProcedureType = 'AvisoPreventivo' | 'SegundoAvisoDefinitivo' | 'Insc
 export type ApplicationFormType = ProcedureType;
 
 
-export type ApplicationFormFields = PreventiveNote | DefinitiveNote | FolioRealRequest | Deed;
+export type ApplicationFormFields = PreventiveNote | DefinitiveNote | FolioRealRequest | NotarialInstrument;
 
 
 export interface ApplicationForm extends Entity {
@@ -114,6 +114,7 @@ export interface EFilingRequest extends Entity {
 export interface RecordingSeekData {
   districtUID: string;
   municipalityUID: string;
+  recordingSectionUID: string;
   recordingBookUID: string;
   recordingNo: string;
   recordingFraction?: string;
@@ -181,7 +182,7 @@ export const EmptyFolioRealRequest: FolioRealRequest = {
 };
 
 
-export interface Deed {
+export interface NotarialInstrument {
   property: RealEstate;
 }
 

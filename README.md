@@ -4,7 +4,7 @@
 
 ## Overview
 
-Provides Empiria Land services for large users like notaries, judges and other government entities and authorities. Services include deeds recording requests, preventive notes registration, certified copies, real estate certificates emission, and documents and images search services as well.
+Provides Empiria Land services for large users like notaries, judges and other government entities and authorities. Services include recording requests of legal instruments, preventive notes registration, certified copies, real estate certificates emission, and documents and images search services as well.
 
 ## Quick start
 

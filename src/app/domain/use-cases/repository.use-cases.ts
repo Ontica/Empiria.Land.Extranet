@@ -22,6 +22,13 @@ export class RepositoryUseCases {
   constructor(private backend: RepositoryApiProvider) { }
 
 
+  getOwnershipRecordingSectionList(recorderOfficeUID: string):  Observable<Identifiable[]> {
+    Assertion.assertValue(recorderOfficeUID, 'recorderOfficeUID');
+
+    return this.backend.getOwnershipRecordingSectionList(recorderOfficeUID);
+  }
+
+
   getRealEstate(uid: string): Observable<RealEstate> {
     Assertion.assertValue(uid, 'uid');
 
@@ -39,10 +46,11 @@ export class RepositoryUseCases {
   }
 
 
-  getRecorderOfficeDomainBookList(recorderOfficeUID: string): Observable<Identifiable[]> {
+  getRecorderOfficeSectionBookList(recorderOfficeUID: string, sectionUID: string): Observable<Identifiable[]> {
     Assertion.assertValue(recorderOfficeUID, 'recorderOfficeUID');
+    Assertion.assertValue(sectionUID, 'sectionUID');
 
-    return this.backend.getRecorderOfficeDomainBookList(recorderOfficeUID);
+    return this.backend.getRecorderOfficeSectionBookList(recorderOfficeUID, sectionUID);
   }
 
 

@@ -41,6 +41,7 @@ export class RecordingSeekFormComponent implements ControlValueAccessor, OnInit,
   form = new FormGroup({
     districtUID: new FormControl('', Validators.required),
     municipalityUID: new FormControl('', Validators.required),
+    recordingSectionUID: new FormControl('', Validators.required),
     recordingBookUID: new FormControl('', Validators.required),
     recordingNo: new FormControl('', Validators.required),
     recordingFraction: new FormControl(''),
@@ -53,6 +54,7 @@ export class RecordingSeekFormComponent implements ControlValueAccessor, OnInit,
 
   districtList: Identifiable[] = [];
   municipalityList: Identifiable[] = [];
+  recordingSectionList: Identifiable[] = [];
   recordingBookList: Identifiable[] = [];
   realEstateTypeList: Identifiable[] = [];
 
@@ -75,9 +77,9 @@ export class RecordingSeekFormComponent implements ControlValueAccessor, OnInit,
 
   ngOnInit() {
     this.initialLoad();
-    this.form.valueChanges.subscribe(
-      () => this.onFormControlChanges()
-    );
+    this.form.statusChanges
+        .pipe(takeUntil(this.unsubscribe))
+        .subscribe( () => this.onFormControlChanges());
   }
 
 
@@ -89,6 +91,11 @@ export class RecordingSeekFormComponent implements ControlValueAccessor, OnInit,
 
   onChangeDistrict(districtUID: string) {
     this.loadDistrictData(districtUID);
+  }
+
+
+  onChangeRecordingSection(districtUID: string, sectionUID: string) {
+    this.loadRecordingBooksList(districtUID, sectionUID);
   }
 
 
@@ -132,10 +139,18 @@ export class RecordingSeekFormComponent implements ControlValueAccessor, OnInit,
       this.setFormData(null);
       return;
     }
-    if (data.districtUID) {
-      this.loadDistrictData(data.districtUID);
+
+    if (!data.recordingSectionUID) {
+      data.recordingSectionUID = '1051';
     }
+
+
     this.setFormData(data);
+
+    if (data.districtUID) {
+      this.loadDistrictData(data.districtUID, data.recordingSectionUID );
+    }
+
   }
 
 
@@ -151,7 +166,6 @@ export class RecordingSeekFormComponent implements ControlValueAccessor, OnInit,
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(x => {
         this.districtList = x;
-        this.isLoading = false;
       });
 
 
@@ -164,19 +178,22 @@ export class RecordingSeekFormComponent implements ControlValueAccessor, OnInit,
   }
 
 
-  private loadDistrictData(districtUID: string) {
+  private loadDistrictData(districtUID: string, recordingSectionUID: string = '') {
+
     this.isLoading = true;
 
     if (!districtUID) {
       this.form.get('districtUID').setValue('');
       this.form.get('municipalityUID').setValue('');
+      this.form.get('recordingSectionUID').setValue('');
       this.form.get('recordingBookUID').setValue('');
       this.onTouched();
-      console.log('!discti', this.form.value);
     }
 
     this.loadMunicipalityList(districtUID);
-    this.loadRecordingBooksList(districtUID);
+    this.loadRecordingSectionList(districtUID);
+    this.loadRecordingBooksList(districtUID, recordingSectionUID);
+
   }
 
 
@@ -198,16 +215,16 @@ export class RecordingSeekFormComponent implements ControlValueAccessor, OnInit,
   }
 
 
-  private loadRecordingBooksList(districtUID: string) {
+  private loadRecordingBooksList(districtUID: string, sectionUID: string) {
     this.isLoading = true;
 
-    if (!districtUID) {
+    if (!districtUID || !sectionUID) {
       this.recordingBookList = [];
       this.isLoading = false;
       return;
     }
 
-    this.store.select<Identifiable[]>(LandRepositoryStateSelector.DISTRICT_DOMAIN_RECORDING_BOOKS_LIST, { districtUID })
+    this.store.select<Identifiable[]>(LandRepositoryStateSelector.DISTRICT_SECTION_RECORDING_BOOKS_LIST, { districtUID, sectionUID })
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(x => {
         this.recordingBookList = x;
@@ -216,7 +233,30 @@ export class RecordingSeekFormComponent implements ControlValueAccessor, OnInit,
   }
 
 
+   private loadRecordingSectionList(districtUID: string) {
+    this.isLoading = true;
+
+    if (!districtUID) {
+      this.recordingSectionList = [];
+      this.isLoading = false;
+      return;
+    }
+
+    this.store.select<Identifiable[]>(LandRepositoryStateSelector.DISTRICT_OWNERSHIP_RECORDING_SECTIONS_LIST, { districtUID })
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(x => {
+        this.recordingSectionList = x;
+        this.isLoading = false;
+      });
+  }
+
+
+
   private onFormControlChanges() {
+    if (this.disabled) {
+      return;
+    }
+
     this.onTouched();
 
     if (!this.propagateChanges()) {
@@ -239,6 +279,7 @@ export class RecordingSeekFormComponent implements ControlValueAccessor, OnInit,
     this.form.reset({
       districtUID: data.districtUID || '',
       municipalityUID: data.municipalityUID || '',
+      recordingSectionUID: data.recordingSectionUID,
       recordingBookUID: data.recordingBookUID || '',
       recordingNo: data.recordingNo || '',
       recordingFraction: data.recordingFraction || '',
@@ -260,6 +301,7 @@ export class RecordingSeekFormComponent implements ControlValueAccessor, OnInit,
     const data = {
       districtUID: formModel.districtUID,
       municipalityUID: formModel.municipalityUID,
+      recordingSectionUID: formModel.recordingSectionUID,
       recordingBookUID: formModel.recordingBookUID,
       recordingNo: this.toUpperCase('recordingNo'),
       recordingFraction: this.toUpperCase('recordingFraction'),
