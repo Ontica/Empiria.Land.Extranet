@@ -20,7 +20,7 @@ import { EFilingRequest, DefinitiveNote } from '@app/domain/models';
   selector: 'emp-land-definitive-note',
   templateUrl: './definitive-note.component.html'
 })
-export class DefinitiveNoteComponent  implements OnChanges {
+export class DefinitiveNoteComponent implements OnChanges {
 
   @Input() request: EFilingRequest;
 
