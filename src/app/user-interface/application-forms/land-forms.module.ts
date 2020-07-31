@@ -16,6 +16,7 @@ import { SharedContainersModule } from '@app/shared/containers/shared-containers
 import { SharedFormControlsModule } from '@app/shared/form-controls/shared-form-controls.module';
 import { SharedIndicatorsModule } from '@app/shared/indicators/shared-indicators.module';
 
+import { AvisoTestamentarioComponent } from './land-forms/aviso-testamentario.component';
 import { DefinitiveNoteComponent } from '../application-forms/land-forms/definitive-note.component';
 import { FolioRealRequestComponent } from '../application-forms/land-forms/folio-real-request.component';
 import { NotarialInstrumentComponent } from '../application-forms/land-forms/notarial-instrument.component';
@@ -43,6 +44,7 @@ import { LandControlsModule } from '../land-controls/land.controls.module';
   ],
 
   declarations: [
+    AvisoTestamentarioComponent,
     DefinitiveNoteComponent,
     FolioRealRequestComponent,
     NotarialInstrumentComponent,
@@ -50,6 +52,7 @@ import { LandControlsModule } from '../land-controls/land.controls.module';
   ],
 
   exports: [
+    AvisoTestamentarioComponent,
     DefinitiveNoteComponent,
     FolioRealRequestComponent,
     NotarialInstrumentComponent,

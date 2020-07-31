@@ -28,6 +28,12 @@
             (editionEvent)="processEvent($event)">
         </emp-land-definitive-note>
       </ng-container>
+      <ng-container *ngIf="request.procedureType === 'AvisoTestamentario'">
+        <emp-land-aviso-testamentario
+            [request]="request"
+            (editionEvent)="processEvent($event)">
+        </emp-land-aviso-testamentario>
+      </ng-container>
       <ng-container *ngIf="request.procedureType === 'InscripcionEscrituraPublica'">
         <emp-land-notarial-instrument></emp-land-notarial-instrument>
       </ng-container>

@@ -56,16 +56,14 @@ export interface PaymentOrderData {
   receiptNo?: string;
 }
 
-export type ProcedureType = 'AvisoPreventivo' | 'SegundoAvisoDefinitivo' | 'InscripcionEscrituraPublica' |
-                            'CertificadoLibertad' | 'CertificadoInscripcion' | 'CertificadoNoInscripcion' |
-                            'CertificadoPropiedad' | 'CopiaCertificada' | 'CancelacionAvisoPreventivo' |
-                            'SolicitudFolioReal' | 'Aclaracion' | 'NoDeterminado';
+export type ProcedureType = 'AvisoPreventivo' | 'AvisoTestamentario' | 'SegundoAvisoDefinitivo' |
+                            'InscripcionEscrituraPublica' | 'SolicitudFolioReal' | 'NoDeterminado';
 
 
 export type ApplicationFormType = ProcedureType;
 
 
-export type ApplicationFormFields = PreventiveNote | DefinitiveNote | FolioRealRequest | NotarialInstrument;
+export type ApplicationFormFields = AvisoTestamentario | PreventiveNote | DefinitiveNote | FolioRealRequest | NotarialInstrument;
 
 
 export interface ApplicationForm extends Entity {
@@ -166,6 +164,17 @@ export const EmptyDefinitiveNote: DefinitiveNote = {
   operation: '',
   grantors: '',
   grantees: ''
+};
+
+
+export interface AvisoTestamentario {
+  text: string;
+  observations?: string;
+}
+
+
+export const EmptyAvisoTestamentario: AvisoTestamentario = {
+  text: ''
 };
 
 

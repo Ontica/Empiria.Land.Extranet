@@ -13,13 +13,13 @@
         <mat-radio-button class="radio-button" value="AvisoPreventivo">Aviso preventivo</mat-radio-button>
         <mat-radio-button class="radio-button" value="SegundoAvisoDefinitivo">Segundo aviso definitivo</mat-radio-button>
         <!-- <mat-radio-button class="radio-button" value="InscripcionEscrituraPublica">Inscripción de escritura pública</mat-radio-button> -->
-
-        <div></div>
-
+        <mat-radio-button class="radio-button" value="AvisoTestamentario">Aviso testamentario</mat-radio-button>
       </mat-radio-group>
+
       <div class="right">
         <button [class.btn]="!procedureSelected" [class.btn-action]="procedureSelected" [disabled]="!procedureSelected" matStepperNext>Siguiente</button>
       </div>
+
     </mat-step>
 
     <mat-step>
