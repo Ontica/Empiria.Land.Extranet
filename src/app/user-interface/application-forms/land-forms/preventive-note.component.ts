@@ -89,7 +89,20 @@ export class PreventiveNoteComponent implements OnChanges {
 
 
   onDelete() {
-    console.log('onDelete not Implemented');
+    const msg = '¿Elimino este solicitud?';
+
+    if (!confirm(msg)) {
+      return;
+    }
+
+    const event: EventInfo = {
+      type: ElectronicFilingCommandType.DELETE_EFILING_REQUEST,
+      payload: {
+        request: this.request
+      }
+    };
+
+    this.editionEvent.emit(event);
   }
 
 

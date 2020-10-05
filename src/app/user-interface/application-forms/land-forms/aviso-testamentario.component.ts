@@ -80,7 +80,20 @@ export class AvisoTestamentarioComponent implements OnChanges {
 
 
   onDelete() {
-    console.log('onDelete not Implemented');
+    const msg = '¿Elimino esta solicitud?';
+
+    if (!confirm(msg)) {
+      return;
+    }
+
+    const event: EventInfo = {
+      type: ElectronicFilingCommandType.DELETE_EFILING_REQUEST,
+      payload: {
+        request: this.request
+      }
+    };
+
+    this.editionEvent.emit(event);
   }
 
 

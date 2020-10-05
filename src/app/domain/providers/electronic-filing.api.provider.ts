@@ -13,6 +13,7 @@ import { EFilingRequest, FilingRequestStatusType,
 
 export abstract class EFilingRequestApiProvider {
 
+
   abstract getEFilingRequest(uid: string): Observable<EFilingRequest>;
 
 
@@ -24,6 +25,9 @@ export abstract class EFilingRequestApiProvider {
 
   abstract createEFilingRequest(procedureType: ProcedureType,
                                 requestedBy: Requester): Observable<EFilingRequest>;
+
+
+  abstract deleteRequest(request: EFilingRequest): Promise<void>;
 
 
   abstract generatePaymentOrder(request: EFilingRequest): Observable<EFilingRequest>;

@@ -34,6 +34,7 @@ export enum SelectorType {
 
 enum CommandEffectType {
   CREATE_EFILING_REQUEST  = ElectronicFilingCommandType.CREATE_EFILING_REQUEST,
+  DELETE_EFILING_REQUEST  = ElectronicFilingCommandType.DELETE_EFILING_REQUEST,
   UPDATE_EFILING_REQUEST  = ElectronicFilingCommandType.UPDATE_EFILING_REQUEST,
   UPDATE_APPLICATION_FORM = ElectronicFilingCommandType.UPDATE_APPLICATION_FORM,
   SIGN                    = ElectronicFilingCommandType.SIGN,
@@ -70,6 +71,15 @@ export class ElectronicFilingStateHandler extends AbstractStateHandler {
       case CommandEffectType.CREATE_EFILING_REQUEST:
         this.stateUpdater.appendToStart(SelectorType.REQUESTS_LIST, command.result);
         this.setValue(SelectorType.SELECTED_REQUEST, command.result);
+
+        return;
+
+      case CommandEffectType.DELETE_EFILING_REQUEST:
+        this.stateUpdater.removeEntity(SelectorType.REQUESTS_LIST, command.payload.request);
+
+        this.dispatch(ActionType.UNSELECT_REQUEST);
+        this.dispatch(ActionType.LOAD_REQUESTS_LIST);
+
         return;
 
       case CommandEffectType.UPDATE_APPLICATION_FORM:
@@ -92,12 +102,12 @@ export class ElectronicFilingStateHandler extends AbstractStateHandler {
     switch (actionType) {
 
       case ActionType.LOAD_REQUESTS_LIST:
-        Assertion.assertValue(payload.filter, 'payload.filter');
+        const filter = payload?.filter || this.getValue(SelectorType.LIST_FILTER);
 
-        this.setValue(SelectorType.LIST_FILTER, payload.filter);
+        this.setValue(SelectorType.LIST_FILTER, filter);
 
         return this.setValue<U>(SelectorType.REQUESTS_LIST,
-                                this.useCases.getRequests(payload.filter));
+                                this.useCases.getRequests(filter));
 
 
       case ActionType.SELECT_REQUEST:

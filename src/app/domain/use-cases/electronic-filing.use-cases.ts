@@ -41,6 +41,13 @@ export class ElectronicFilingUseCases {
   }
 
 
+  deleteRequest(request: EFilingRequest): Promise<void> {
+    Assertion.assertValue(request, 'request');
+
+    return this.backend.deleteRequest(request);
+  }
+
+
   generatePaymentOrder(request: EFilingRequest): Observable<EFilingRequest> {
     Assertion.assertValue(request, 'request');
 

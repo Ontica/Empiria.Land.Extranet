@@ -14,6 +14,7 @@ import { ElectronicFilingUseCases } from '@app/domain/use-cases';
 
 export enum CommandType {
   CREATE_EFILING_REQUEST = 'OnePoint.ElectronicFiling.EFilingRequest.Create',
+  DELETE_EFILING_REQUEST = 'OnePoint.ElectronicFiling.EFilingRequest.Delete',
   UPDATE_EFILING_REQUEST = 'OnePoint.ElectronicFiling.EFilingRequest.Update',
   UPDATE_APPLICATION_FORM = 'OnePoint.ElectronicFiling.ApplicationForm.Update',
   SET_PAYMENT_RECEIPT = 'OnePoint.ElectronicFiling.EFilingRequest.SetPaymentReceipt',
@@ -38,6 +39,11 @@ export class ElectronicFilingCommandHandler extends CommandHandler {
       case CommandType.CREATE_EFILING_REQUEST:
         return toPromise<U>(
           this.useCases.createRequest(command.payload.procedureType, command.payload.requestedBy)
+        );
+
+      case CommandType.DELETE_EFILING_REQUEST:
+        return toPromise<U>(
+          this.useCases.deleteRequest(command.payload.request)
         );
 
       case CommandType.UPDATE_EFILING_REQUEST:

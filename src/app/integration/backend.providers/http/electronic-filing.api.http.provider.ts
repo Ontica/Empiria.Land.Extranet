@@ -71,6 +71,16 @@ export class ElectronicFilingApiHttpProvider extends EFilingRequestApiProvider {
   }
 
 
+  deleteRequest(request: EFilingRequest): Promise<void> {
+    Assertion.assertValue(request, 'request');
+
+    const path = `v2/electronic-filing/filing-requests/${request.uid}`;
+
+    return this.http.delete<void>(path)
+                    .toPromise();
+  }
+
+
   generatePaymentOrder(request: EFilingRequest): Observable<EFilingRequest> {
     Assertion.assertValue(request, 'request');
 
