@@ -40,6 +40,26 @@ export class UpdateStateUtilities {
   }
 
 
+  removeEntity(arraySelector: StateSelector, entity: Entity): void {
+    Assertion.assertValue(arraySelector, 'arraySelector');
+    Assertion.assertValue(entity, 'entity');
+
+    const currentArray = this.stateHandler.getValue(arraySelector);
+
+    if (!(currentArray instanceof Array)) {
+      throw new Exception(`State selector ${arraySelector} has a value that is not an array.`);
+    }
+
+    const index = currentArray.findIndex(x => x.uid === entity.uid);
+
+    if (index !== -1) {
+      const newArray = currentArray.splice(index);
+
+      this.setValueFunction.call(this.stateHandler, arraySelector, newArray);
+    }
+  }
+
+
   replaceEntity(arraySelector: StateSelector, entity: Entity): void {
     Assertion.assertValue(arraySelector, 'arraySelector');
     Assertion.assertValue(entity, 'entity');
