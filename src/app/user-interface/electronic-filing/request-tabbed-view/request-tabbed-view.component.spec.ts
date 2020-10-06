@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RequestTabbedViewComponent } from './request-tabbed-view.component';
 
@@ -14,7 +14,7 @@ describe('RequestTabbedViewComponent', () => {
   let component: RequestTabbedViewComponent;
   let fixture: ComponentFixture<RequestTabbedViewComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RequestTabbedViewComponent ]
     })

@@ -63,7 +63,9 @@ export type ProcedureType = 'AvisoPreventivo' | 'AvisoTestamentario' | 'SegundoA
 export type ApplicationFormType = ProcedureType;
 
 
-export type ApplicationFormFields = AvisoTestamentario | PreventiveNote | DefinitiveNote | FolioRealRequest | NotarialInstrument;
+export type ApplicationFormFields = AvisoTestamentario | PreventiveNote |
+                                    DefinitiveNote | FolioRealRequest |
+                                    NotarialInstrument;
 
 
 export interface ApplicationForm extends Entity {

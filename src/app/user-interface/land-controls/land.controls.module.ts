@@ -17,8 +17,10 @@ import { SharedFormControlsModule } from '@app/shared/form-controls/shared-form-
 import { SharedIndicatorsModule } from '@app/shared/indicators/shared-indicators.module';
 
 import { RecordingSeekFormComponent } from './recording-seek-form/recording-seek-form.component';
-import { RealPropertyUIDPickerComponent } from './real-property-uid-picker/real-property-uid-picker.component';
 
+import {
+  RealPropertyUIDPickerComponent
+ } from './real-property-uid-picker/real-property-uid-picker.component';
 
 
 @NgModule({

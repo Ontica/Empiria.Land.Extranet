@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RealPropertyUIDPickerComponent } from './real-property-uid-picker.component';
 
@@ -6,7 +6,7 @@ describe('RealPropertyUIDPickerComponent', () => {
   let component: RealPropertyUIDPickerComponent;
   let fixture: ComponentFixture<RealPropertyUIDPickerComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RealPropertyUIDPickerComponent ]
     })

@@ -140,7 +140,8 @@ export class ElectronicFilingMainPageComponent implements OnInit, OnDestroy {
 
 
   private loadRequests(data?: { keywords: string }) {
-    const currentKeywords = this.store.getValue<EFilingRequestFilter>(ElectronicFilingStateSelector.LIST_FILTER).keywords;
+    const currentKeywords =
+                this.store.getValue<EFilingRequestFilter>(ElectronicFilingStateSelector.LIST_FILTER).keywords;
 
     const filter = {
       status: this.getRequestStatusForView(this.currentView),

@@ -179,7 +179,6 @@ export class RecordingSeekFormComponent implements ControlValueAccessor, OnInit,
 
 
   private loadDistrictData(districtUID: string, recordingSectionUID: string = '') {
-
     this.isLoading = true;
 
     if (!districtUID) {
@@ -193,7 +192,6 @@ export class RecordingSeekFormComponent implements ControlValueAccessor, OnInit,
     this.loadMunicipalityList(districtUID);
     this.loadRecordingSectionList(districtUID);
     this.loadRecordingBooksList(districtUID, recordingSectionUID);
-
   }
 
 
@@ -206,7 +204,9 @@ export class RecordingSeekFormComponent implements ControlValueAccessor, OnInit,
       return;
     }
 
-    this.store.select<Identifiable[]>(LandRepositoryStateSelector.DISTRICT_MUNICIPALITY_LIST, { districtUID })
+    this.store.select<Identifiable[]>(
+      LandRepositoryStateSelector.DISTRICT_MUNICIPALITY_LIST, { districtUID }
+    )
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(x => {
         this.municipalityList = x;
@@ -224,7 +224,9 @@ export class RecordingSeekFormComponent implements ControlValueAccessor, OnInit,
       return;
     }
 
-    this.store.select<Identifiable[]>(LandRepositoryStateSelector.DISTRICT_SECTION_RECORDING_BOOKS_LIST, { districtUID, sectionUID })
+    this.store.select<Identifiable[]>(
+      LandRepositoryStateSelector.DISTRICT_SECTION_RECORDING_BOOKS_LIST, { districtUID, sectionUID }
+    )
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(x => {
         this.recordingBookList = x;
@@ -233,7 +235,7 @@ export class RecordingSeekFormComponent implements ControlValueAccessor, OnInit,
   }
 
 
-   private loadRecordingSectionList(districtUID: string) {
+  private loadRecordingSectionList(districtUID: string) {
     this.isLoading = true;
 
     if (!districtUID) {
@@ -242,7 +244,9 @@ export class RecordingSeekFormComponent implements ControlValueAccessor, OnInit,
       return;
     }
 
-    this.store.select<Identifiable[]>(LandRepositoryStateSelector.DISTRICT_OWNERSHIP_RECORDING_SECTIONS_LIST, { districtUID })
+    this.store.select<Identifiable[]>(
+      LandRepositoryStateSelector.DISTRICT_OWNERSHIP_RECORDING_SECTIONS_LIST, { districtUID }
+    )
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(x => {
         this.recordingSectionList = x;

@@ -55,7 +55,8 @@ export class RepositoryApiHttpProvider extends RepositoryApiProvider {
   }
 
 
-  getRecorderOfficeSectionBookList(recorderOfficeUID: string, sectionUID: string): Observable<Identifiable[]> {
+  getRecorderOfficeSectionBookList(recorderOfficeUID: string,
+                                   sectionUID: string): Observable<Identifiable[]> {
     Assertion.assertValue(recorderOfficeUID, 'recorderOfficeUID');
 
     const path = `v2/catalogues/recorder-offices/${recorderOfficeUID}/recording-books/${sectionUID}`;

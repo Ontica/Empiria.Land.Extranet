@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NotarialInstrumentComponent } from './notarial-instrument.component';
 
@@ -14,7 +14,7 @@ describe('NotarialInstrumentComponent', () => {
   let component: NotarialInstrumentComponent;
   let fixture: ComponentFixture<NotarialInstrumentComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NotarialInstrumentComponent ]
     })

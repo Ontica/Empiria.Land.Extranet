@@ -20,8 +20,16 @@ import { LandRepositoryStateSelector } from '@app/core/presentation/state.comman
   selector: 'emp-land-real-property-uid-picker',
   templateUrl: './real-property-uid-picker.component.html',
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => RealPropertyUIDPickerComponent), multi: true },
-    { provide: NG_VALIDATORS, useExisting: forwardRef(() => RealPropertyUIDPickerComponent), multi: true }
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => RealPropertyUIDPickerComponent),
+      multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => RealPropertyUIDPickerComponent),
+      multi: true
+    }
   ]
 })
 export class RealPropertyUIDPickerComponent implements ControlValueAccessor, Validator {

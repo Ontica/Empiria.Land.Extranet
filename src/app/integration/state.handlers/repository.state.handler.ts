@@ -45,54 +45,62 @@ export class RepositoryStateHandler extends AbstractStateHandler {
 
 
   select<U>(selectorType: SelectorType, params?: any): Observable<U> {
+    let dataProvider: () => any;
+
     switch (selectorType) {
 
       case SelectorType.DISTRICT_LIST:
-        return super.selectFirst<U>(selectorType,
-                                    () => this.repository.getRecorderOfficeList());
+
+        dataProvider = () => this.repository.getRecorderOfficeList();
+
+        return super.selectFirst<U>(selectorType, dataProvider);
 
 
       case SelectorType.DISTRICT_MUNICIPALITY_LIST:
         Assertion.assertValue(params.districtUID, 'params.districtUID');
 
+        dataProvider = () => this.repository.getRecorderOfficeMunicipalityList(params.districtUID);
 
-        return super.selectMemoized<U>(selectorType,
-                                       () => this.repository.getRecorderOfficeMunicipalityList(params.districtUID),
-                                       params.districtUID);
+        return super.selectMemoized<U>(selectorType, dataProvider, params.districtUID);
 
 
       case SelectorType.DISTRICT_SECTION_RECORDING_BOOKS_LIST:
         Assertion.assertValue(params.districtUID, 'params.districtUID');
         Assertion.assertValue(params.districtUID, 'params.sectionUID');
 
-        return super.selectMemoized<U>(selectorType,
-                                       () => this.repository.getRecorderOfficeSectionBookList(params.districtUID, params.sectionUID),
-                                       params.districtUID + params.sectionUID);
+        dataProvider =
+            () => this.repository.getRecorderOfficeSectionBookList(params.districtUID, params.sectionUID);
+
+        return super.selectMemoized<U>(selectorType, dataProvider, params.districtUID + params.sectionUID);
 
 
       case SelectorType.DISTRICT_OWNERSHIP_RECORDING_SECTIONS_LIST:
         Assertion.assertValue(params.districtUID, 'params.districtUID');
 
-        return super.selectMemoized<U>(selectorType,
-                                        () => this.repository.getOwnershipRecordingSectionList(params.districtUID),
-                                        params.districtUID);
+        dataProvider = () => this.repository.getOwnershipRecordingSectionList(params.districtUID);
+
+        return super.selectMemoized<U>(selectorType, dataProvider, params.districtUID);
+
 
       case SelectorType.REAL_ESTATE:
         Assertion.assertValue(params.uid, 'params.uid');
 
-        return super.selectMemoized<U>(selectorType,
-                                       () => this.repository.getRealEstate(params.uid),
-                                       params.uid);
+        dataProvider = () => this.repository.getRealEstate(params.uid);
+
+        return super.selectMemoized<U>(selectorType, dataProvider, params.uid);
+
 
       case SelectorType.REAL_ESTATE_TYPE_LIST:
-        return super.selectFirst<U>(selectorType,
-                                    () => this.repository.getRealEstateTypeList());
+        dataProvider = () => this.repository.getRealEstateTypeList();
+
+        return super.selectFirst<U>(selectorType, dataProvider);
 
 
       default:
         return super.select<U>(selectorType, params);
 
     }
+
   }
 
 }

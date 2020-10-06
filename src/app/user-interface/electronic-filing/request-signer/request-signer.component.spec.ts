@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RequestSignerComponent } from './request-signer.component';
 
@@ -14,7 +14,7 @@ describe('RequestSignerComponent', () => {
   let component: RequestSignerComponent;
   let fixture: ComponentFixture<RequestSignerComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RequestSignerComponent ]
     })

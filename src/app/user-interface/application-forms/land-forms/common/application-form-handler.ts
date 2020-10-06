@@ -42,7 +42,7 @@ export class ApplicationFormHandler {
   private appFormComponent: ApplicationFormComponent;
 
 
-  constructor (appFormComponent: ApplicationFormComponent) {
+  constructor(appFormComponent: ApplicationFormComponent) {
     this.appFormComponent = appFormComponent;
   }
 

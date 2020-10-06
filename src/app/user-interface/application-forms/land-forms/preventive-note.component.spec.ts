@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { PreventiveNoteComponent } from './preventive-note.component';
 
@@ -14,7 +14,7 @@ describe('PreventiveNoteComponent', () => {
   let component: PreventiveNoteComponent;
   let fixture: ComponentFixture<PreventiveNoteComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ PreventiveNoteComponent ]
     })

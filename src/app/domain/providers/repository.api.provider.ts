@@ -23,6 +23,7 @@ export abstract class RepositoryApiProvider {
 
   abstract getRecorderOfficeMunicipalityList(recorderOfficeUID: string): Observable<Identifiable[]>;
 
-  abstract getRecorderOfficeSectionBookList(recorderOfficeUID: string, sectionUID: string): Observable<Identifiable[]>;
+  abstract getRecorderOfficeSectionBookList(recorderOfficeUID: string,
+                                            sectionUID: string): Observable<Identifiable[]>;
 
 }
