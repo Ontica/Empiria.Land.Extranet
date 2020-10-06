@@ -9,30 +9,22 @@ import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Assertion, EventInfo } from '@app/core';
-
-import { ElectronicFilingCommandType } from '@app/core/presentation/commands';
+import { EventInfo } from '@app/core';
 
 import { FolioRealRequest, EFilingRequest } from '@app/domain/models';
+
+import { ApplicationFormComponent, ApplicationFormHandler } from './common/application-form-handler';
 
 
 @Component({
   selector: 'emp-land-folio-real-request',
   templateUrl: './folio-real-request.component.html'
 })
-export class FolioRealRequestComponent implements OnChanges {
+export class FolioRealRequestComponent implements ApplicationFormComponent, OnChanges {
 
   @Input() request: EFilingRequest;
 
   @Output() editionEvent = new EventEmitter<EventInfo>();
-
-  exceptionMsg = '';
-
-  isLoading = false;
-
-  submitted = false;
-
-  editionMode = false;
 
   form = new FormGroup({
     antecedent: new FormControl('', Validators.required),
@@ -40,103 +32,34 @@ export class FolioRealRequestComponent implements OnChanges {
     observations: new FormControl(''),
   });
 
+  formHandler: ApplicationFormHandler;
+
+
+  constructor() {
+    this.formHandler = new ApplicationFormHandler(this);
+  }
+
 
   ngOnChanges() {
     this.resetForm();
   }
 
 
-  get canDelete() {
-    return (this.editionMode && !this.readonly  && (!this.request.transaction || !this.request.transaction.uid));
-  }
-
-
-  get canEdit() {
-    return (!this.editionMode && !this.readonly);
-  }
-
-
-  get readonly() {
-    return (this.request.esign && this.request.esign.sign);
-  }
-
-
-  get isReadyForSave() {
-    return (!this.form.pristine && !this.readonly);
-  }
-
-
-  onCancel() {
-    this.resetForm();
-  }
-
-
-  onEdit() {
-    if (!this.readonly) {
-      this.editionMode = true;
-      this.form.enable();
-    }
-  }
-
-
-  onDelete() {
-    const msg = '¿Elimino esta solicitud?';
-
-    if (!confirm(msg)) {
-      return;
-    }
-
-    const event: EventInfo = {
-      type: ElectronicFilingCommandType.DELETE_EFILING_REQUEST,
-      payload: {
-        request: this.request
-      }
-    };
-
-    this.editionEvent.emit(event);
-  }
-
-
-  onSubmit() {
-    if (!this.isReadyForSave) {
-      return;
-    }
-
-    this.submitted = true;
-
-    if (this.form.valid) {
-      this.sendUpdateApplicationFormEvent();
-      this.editionMode = false;
-      this.form.disable();
-    }
-  }
-
-
-  // private members
-
-
-  private getFormData(): FolioRealRequest {
-    Assertion.assert(this.form.valid,
-         'Programming error: form must be validated before command execution.');
-
+  getFormData(): FolioRealRequest {
     const data = {
-      antecedent: this.toUpperCase('antecedent'),
-      propertyDescription: this.toUpperCase('propertyDescription'),
-      observations: this.toUpperCase('observations')
+      antecedent: this.formHandler.toUpperCase('antecedent'),
+      propertyDescription: this.formHandler.toUpperCase('propertyDescription'),
+      observations: this.formHandler.toUpperCase('observations')
     };
 
     return data;
   }
 
 
-  private resetForm() {
-    this.editionMode = false;
-    this.submitted = false;
-    this.exceptionMsg = '';
-    this.form.disable();
+  resetForm() {
+    this.formHandler.clearForm();
 
     if (!this.request.form) {
-      this.form.reset();
       return;
     }
 
@@ -147,35 +70,6 @@ export class FolioRealRequestComponent implements OnChanges {
       propertyDescription: appForm.propertyDescription || '',
       observations: appForm.observations || ''
     });
-  }
-
-
-  private sendUpdateApplicationFormEvent() {
-    const event: EventInfo = {
-      type: ElectronicFilingCommandType.UPDATE_APPLICATION_FORM,
-      payload: {
-        request: this.request,
-        form: this.getFormData()
-      }
-    };
-
-    this.editionEvent.emit(event);
-  }
-
-
-  private toUpperCase(controlName: string) {
-    const control = this.form.get(controlName);
-
-    if (!control) {
-      console.log('Invalid control name', controlName);
-      return '';
-    }
-
-    if (control.value) {
-      return (control.value as string).toUpperCase();
-    } else {
-      return '';
-    }
   }
 
 }

@@ -9,35 +9,34 @@ import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Assertion, EventInfo } from '@app/core';
-
-import { ElectronicFilingCommandType } from '@app/core/presentation/commands';
+import { EventInfo } from '@app/core';
 
 import { EFilingRequest, AvisoTestamentario } from '@app/domain/models';
+
+import { ApplicationFormComponent, ApplicationFormHandler } from './common/application-form-handler';
 
 
 @Component({
   selector: 'emp-land-aviso-testamentario',
   templateUrl: './aviso-testamentario.component.html'
 })
-export class AvisoTestamentarioComponent implements OnChanges {
+export class AvisoTestamentarioComponent implements ApplicationFormComponent, OnChanges{
 
   @Input() request: EFilingRequest;
 
   @Output() editionEvent = new EventEmitter<EventInfo>();
 
-  exceptionMsg = '';
-
-  isLoading = false;
-
-  submitted = false;
-
-  editionMode = false;
-
   form = new FormGroup({
     text: new FormControl('', Validators.required),
     observations: new FormControl(''),
   });
+
+  formHandler: ApplicationFormHandler;
+
+
+  constructor() {
+    this.formHandler = new ApplicationFormHandler(this);
+  }
 
 
   ngOnChanges() {
@@ -45,110 +44,22 @@ export class AvisoTestamentarioComponent implements OnChanges {
   }
 
 
-  get canDelete() {
-    return (this.editionMode && !this.readonly &&
-           (!this.request.transaction || !this.request.transaction.uid));
-  }
-
-
-  get canEdit() {
-    return (!this.editionMode && !this.readonly);
-  }
-
-
-  get readonly() {
-    return (this.request.esign && this.request.esign.sign);
-  }
-
-
-  get isReadyForSave() {
-    return (!this.form.pristine && !this.readonly);
-  }
-
-
-  onCancel() {
-    this.resetForm();
-  }
-
-
-  onEdit() {
-    if (!this.readonly) {
-      this.editionMode = true;
-      this.form.enable();
-    }
-  }
-
-
-  onDelete() {
-    const msg = '¿Elimino esta solicitud?';
-
-    if (!confirm(msg)) {
-      return;
-    }
-
-    const event: EventInfo = {
-      type: ElectronicFilingCommandType.DELETE_EFILING_REQUEST,
-      payload: {
-        request: this.request
-      }
-    };
-
-    this.editionEvent.emit(event);
-  }
-
-
-  onSubmit() {
-    if (!this.isReadyForSave) {
-      return;
-    }
-
-    this.submitted = true;
-
-    this.validate();
-
-    if (this.form.valid) {
-      this.sendUpdateApplicationFormEvent();
-      this.editionMode = false;
-      this.form.disable();
-    } else {
-      console.log('Invalid form data');
-    }
-  }
-
-
-  onUpdateUI(control: string) {
-    switch (control) {
-      default:
-        break;
-    }
-  }
-
-  // private members
-
-
-  private getFormData(): AvisoTestamentario {
-    Assertion.assert(this.form.valid,
-      'Programming error: form must be validated before command execution.');
-
+  getFormData(): AvisoTestamentario {
     const formModel = this.form.value;
 
     const data = {
-      text: this.toUpperCase('text'),
-      observations: this.toUpperCase('observations')
+      text: this.formHandler.toUpperCase('text'),
+      observations: this.formHandler.toUpperCase('observations')
     };
 
     return data;
   }
 
 
-  private resetForm() {
-    this.editionMode = false;
-    this.submitted = false;
-    this.exceptionMsg = '';
-    this.form.disable();
+  resetForm() {
+    this.formHandler.clearForm();
 
     if (!this.request.form) {
-      this.form.reset();
       return;
     }
 
@@ -158,40 +69,6 @@ export class AvisoTestamentarioComponent implements OnChanges {
       text: appForm.text || '',
       observations: appForm.observations || ''
     });
-  }
-
-
-  private sendUpdateApplicationFormEvent() {
-    const event: EventInfo = {
-      type: ElectronicFilingCommandType.UPDATE_APPLICATION_FORM,
-      payload: {
-        request: this.request,
-        form: this.getFormData()
-      }
-    };
-
-    this.editionEvent.emit(event);
-  }
-
-
-  private toUpperCase(controlName: string) {
-    const control = this.form.get(controlName);
-
-    if (!control) {
-      console.log('Invalid control name', controlName);
-      return '';
-    }
-
-    if (control.value) {
-      return (control.value as string).toUpperCase();
-    } else {
-      return '';
-    }
-  }
-
-
-  private validate() {
-
   }
 
 }

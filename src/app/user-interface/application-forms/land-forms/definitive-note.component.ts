@@ -9,30 +9,22 @@ import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Assertion, EventInfo } from '@app/core';
-
-import { ElectronicFilingCommandType } from '@app/core/presentation/commands';
+import { EventInfo } from '@app/core';
 
 import { EFilingRequest, DefinitiveNote } from '@app/domain/models';
+
+import { ApplicationFormComponent, ApplicationFormHandler } from './common/application-form-handler';
 
 
 @Component({
   selector: 'emp-land-definitive-note',
   templateUrl: './definitive-note.component.html'
 })
-export class DefinitiveNoteComponent implements OnChanges {
+export class DefinitiveNoteComponent implements ApplicationFormComponent, OnChanges {
 
   @Input() request: EFilingRequest;
 
   @Output() editionEvent = new EventEmitter<EventInfo>();
-
-  exceptionMsg = '';
-
-  isLoading = false;
-
-  submitted = false;
-
-  editionMode = false;
 
   form = new FormGroup({
     propertyUID: new FormControl('', Validators.required),
@@ -42,127 +34,38 @@ export class DefinitiveNoteComponent implements OnChanges {
     observations: new FormControl(''),
   });
 
+  formHandler: ApplicationFormHandler;
+
+
+  constructor() {
+    this.formHandler = new ApplicationFormHandler(this);
+  }
+
 
   ngOnChanges() {
     this.resetForm();
   }
 
 
-  get canDelete() {
-    return (this.editionMode && !this.readonly &&
-           (!this.request.transaction || !this.request.transaction.uid));
-  }
-
-
-  get canEdit() {
-    return (!this.editionMode && !this.readonly);
-  }
-
-
-  get readonly() {
-    return (this.request.esign && this.request.esign.sign);
-  }
-
-
-  get isReadyForSave() {
-    return (!this.form.pristine && !this.readonly);
-  }
-
-
-  onCancel() {
-    this.resetForm();
-  }
-
-
-  onEdit() {
-    if (!this.readonly) {
-      this.editionMode = true;
-      this.form.enable();
-    }
-  }
-
-
-  onDelete() {
-    const msg = '¿Elimino esta solicitud?';
-
-    if (!confirm(msg)) {
-      return;
-    }
-
-    const event: EventInfo = {
-      type: ElectronicFilingCommandType.DELETE_EFILING_REQUEST,
-      payload: {
-        request: this.request
-      }
-    };
-
-    this.editionEvent.emit(event);
-  }
-
-
-  onSubmit() {
-    if (!this.isReadyForSave) {
-      return;
-    }
-
-    this.submitted = true;
-
-    this.setControlsValidation();
-
-    this.validate();
-
-    if (this.form.valid) {
-      this.sendUpdateApplicationFormEvent();
-      this.editionMode = false;
-      this.form.disable();
-    } else {
-      console.log('propertyPick is valid', this.form.get('propertyUID').valid);
-    }
-  }
-
-
-  onUpdateUI(control: string) {
-    switch (control) {
-      default:
-        break;
-    }
-  }
-
-
-  private setControlsValidation() {
-
-  }
-
-
-  // private members
-
-
-  private getFormData(): DefinitiveNote {
-    Assertion.assert(this.form.valid,
-      'Programming error: form must be validated before command execution.');
-
+  getFormData(): DefinitiveNote {
     const formModel = this.form.value;
 
     const data = {
       propertyData: { propertyUID: formModel.propertyUID },
-      operation: this.toUpperCase('operation'),
-      grantors: this.toUpperCase('grantors'),
-      grantees: this.toUpperCase('grantees'),
-      observations: this.toUpperCase('observations')
+      operation: this.formHandler.toUpperCase('operation'),
+      grantors: this.formHandler.toUpperCase('grantors'),
+      grantees: this.formHandler.toUpperCase('grantees'),
+      observations: this.formHandler.toUpperCase('observations')
     };
 
     return data;
   }
 
 
-  private resetForm() {
-    this.editionMode = false;
-    this.submitted = false;
-    this.exceptionMsg = '';
-    this.form.disable();
+  resetForm() {
+    this.formHandler.clearForm();
 
     if (!this.request.form) {
-      this.form.reset();
       return;
     }
 
@@ -175,40 +78,6 @@ export class DefinitiveNoteComponent implements OnChanges {
       grantees: appForm.grantees || '',
       observations: appForm.observations || ''
     });
-  }
-
-
-  private sendUpdateApplicationFormEvent() {
-    const event: EventInfo = {
-      type: ElectronicFilingCommandType.UPDATE_APPLICATION_FORM,
-      payload: {
-        request: this.request,
-        form: this.getFormData()
-      }
-    };
-
-    this.editionEvent.emit(event);
-  }
-
-
-  private toUpperCase(controlName: string) {
-    const control = this.form.get(controlName);
-
-    if (!control) {
-      console.log('Invalid control name', controlName);
-      return '';
-    }
-
-    if (control.value) {
-      return (control.value as string).toUpperCase();
-    } else {
-      return '';
-    }
-  }
-
-
-  private validate() {
-
   }
 
 }
