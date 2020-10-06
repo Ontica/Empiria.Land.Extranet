@@ -1,3 +1,10 @@
+/**
+ * @license
+ * Copyright (c) La Vía Óntica SC, Ontica LLC and contributors. All rights reserved.
+ *
+ * See LICENSE.txt in the project root for complete license information.
+ */
+
 @import "../../../../styles/general-styles";
 
 $margin-size: 8px;
@@ -21,7 +28,6 @@ $margin-size: 8px;
   min-width: 160px;
   padding-top: 8px;
   padding-bottom: 8px;
-  color: $white;
   text-transform: uppercase;
 
   .breadcrumb {
@@ -37,7 +43,6 @@ $margin-size: 8px;
     margin-right: 12px;
     margin-left: 8px;
   }
-
 }
 
 .menu-bar {
@@ -45,16 +50,14 @@ $margin-size: 8px;
 
   align-items: center;
   justify-content: space-between;
-
   background-color: $primary-color-dark;
   padding-bottom: 8px;
   padding-top: 8px;
   height: 42px;
 
   select.select-box {
-    background-color: #EDEEF0;
+    background-color: #edeef0;
   }
-
 }
 
 .menu {

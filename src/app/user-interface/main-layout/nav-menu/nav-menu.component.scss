@@ -1,3 +1,10 @@
+/**
+ * @license
+ * Copyright (c) La Vía Óntica SC, Ontica LLC and contributors. All rights reserved.
+ *
+ * See LICENSE.txt in the project root for complete license information.
+ */
+
 @import "../../../../styles/general-styles";
 
 :host {
@@ -21,7 +28,8 @@ li {
   white-space: nowrap;
 }
 
-a, a:visited :not(.selected) {
+a,
+a:visited :not(.selected) {
   color: $white;
   font-weight: 400;
   text-decoration: none;
@@ -33,7 +41,8 @@ a:hover {
   padding-bottom: 10px;
 }
 
-.disabled, .disabled:hover {
+.disabled,
+.disabled:hover {
   color: $border-color-dark;
   cursor: default;
 }

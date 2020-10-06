@@ -3,7 +3,7 @@
 $green-color: #17c457 !default;
 $amber-color: #e68a00 !default;
 $red-color: #9b1b1f !default;
-$no-color: #909090!default;
+$no-color: #909090 !default;
 
 :host {
   display: inline;
@@ -20,7 +20,7 @@ $no-color: #909090!default;
 }
 
 .circle:hover {
-  opacity: 1.0;
+  opacity: 1;
 }
 
 .amber {

@@ -1,7 +1,12 @@
+/**
+ * @license
+ * Copyright (c) La Vía Óntica SC, Ontica LLC and contributors. All rights reserved.
+ *
+ * See LICENSE.txt in the project root for complete license information.
+ */
+
 @import "../../../../styles/variables";
-//
-// Navigation bar
-//
+
 .nav-bar {
   min-height: 28px;
 }
@@ -26,7 +31,8 @@
   border-right: none;
 }
 
-.nav-bar a, a:visited {
+.nav-bar a,
+a:visited {
   color: $secondary-color;
   font-weight: 400;
   text-decoration: none;
