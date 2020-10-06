@@ -1,23 +1,27 @@
-@import "general-styles";
+/**
+ * @license
+ * Copyright (c) La Vía Óntica SC, Ontica LLC and contributors. All rights reserved.
+ *
+ * See LICENSE.txt in the project root for complete license information.
+ */
 
+@import "general-styles";
 
 .list-header {
   @include row;
+
   justify-content: space-between;
   font-size: 8pt;
   width: 100%;
-
   margin-left: 4pt;
   padding: 4pt 16pt 4pt 8pt;
   border-bottom: 1pt solid $primary-color-light;
 }
 
-
 .list-item {
   @include row;
 
   align-items: flex-start;
-
   background-color: $grid-even-background-color;
   border-bottom: 1px $border-color solid;
   min-height: 38px;
@@ -25,18 +29,15 @@
   font-size: 8pt;
 }
 
-
 .list-item:hover {
   .ghost-icon {
     color: $icon-color;
   }
 }
 
-
 .list-item-selected {
   background-color: $grid-selected-background-color;
 }
-
 
 .list-item-container {
   margin-left: 4pt;
@@ -47,6 +48,7 @@
 
 .list-item-columns {
   @include row;
+
   justify-content: space-between;
   font-size: 8pt;
   width: 100%;
@@ -56,13 +58,11 @@
   padding-right: 36px;
 }
 
-
 .list-item-right-column {
   justify-content: flex-end;
   padding-right: 8pt;
   text-align: right;
 }
-
 
 .list-item-group-name {
   vertical-align: -webkit-baseline-bottom;
@@ -73,14 +73,11 @@
   padding-left: 8px;
 }
 
-
 .list-item-name {
   vertical-align: -webkit-baseline-middle;
-
   font-size: 9pt;
   font-weight: 400;
 }
-
 
 .list-item-name a:hover {
   text-decoration: underline;

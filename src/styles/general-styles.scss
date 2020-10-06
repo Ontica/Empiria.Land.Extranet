@@ -1,6 +1,12 @@
+/**
+ * @license
+ * Copyright (c) La Vía Óntica SC, Ontica LLC and contributors. All rights reserved.
+ *
+ * See LICENSE.txt in the project root for complete license information.
+ */
+
 @import "variables";
 @import "responsive";
-
 
 table {
   border: 0;
@@ -30,8 +36,8 @@ table td:last-child {
 
 .circled {
   border-radius: 50% !important;
-  height: 2.0em !important;
-  width: 2.0em !important;
+  height: 2em !important;
+  width: 2em !important;
   font-size: 1.25em !important;
   box-shadow: 1px 2px 2px $icon-color;
 }
@@ -46,6 +52,7 @@ button:hover {
 
 button.btn {
   @include input-button-settings;
+
   background-color: $button-color;
   border: $control-border;
   color: $text-color;
@@ -58,7 +65,8 @@ button.btn:hover {
 }
 
 button.btn-primary {
-  @include  input-button-settings;
+  @include input-button-settings;
+
   background-color: $primary-color;
   color: $white;
 }
@@ -69,7 +77,8 @@ button.btn-primary:hover {
 }
 
 button.btn-action {
-  @include  input-button-settings;
+  @include input-button-settings;
+
   background-color: $action-color;
   color: $white;
 }
@@ -81,6 +90,7 @@ button.btn-action:hover {
 
 button.btn-warning {
   @include input-button-settings;
+
   background-color: $warning-color;
   color: $white;
 }
@@ -106,10 +116,8 @@ button.btn-margin-right {
   margin: 2px 8px 2px 0;
   padding: 2px 2px 2px 6px;
   vertical-align: middle;
-
   height: $control-height;
   width: $control-width;
-
   border-radius: 2px;
   transition: 0.3s ease-out;
 }
@@ -125,6 +133,7 @@ select.select-box {
 
 select.select-warning {
   @include input-settings;
+
   background-color: $warning-color;
 }
 
@@ -154,7 +163,6 @@ input:focus {
   border: $selected-control-border;
 }
 
-
 .input-icon {
   position: absolute;
   right: 14px;
@@ -176,13 +184,10 @@ input:focus {
   margin: 2px 8px 2px 0;
   padding: 2px 2px 2px 6px;
   vertical-align: middle;
-
   min-height: $control-height;
   width: $control-width;
-
   border-radius: 2px;
   transition: 0.3s ease-out;
-
   resize: vertical;
 }
 
@@ -229,7 +234,7 @@ textarea:focus {
 }
 
 .remove-min-width {
-  min-width: 0px;
+  min-width: 0;
 }
 
 .hint {
@@ -246,11 +251,9 @@ textarea:focus {
   color: $icon-color-dark;
 }
 
-
 @mixin raised-header {
-  box-shadow: 0 4px 5px 0px rgba(0,0,0,0.28);
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.28);
 }
-
 
 .small-italic-notification {
   font: $control-small-font;
@@ -268,7 +271,6 @@ a {
 }
 
 .link:hover {
-  color: $selected-item-text-color;
   text-decoration: underline;
   color: $selected-item-text-color;
 }
@@ -298,16 +300,13 @@ input[type=number]:disabled {
   color: $primary-color;
 }
 
-
 .label {
-  opacity: 0.40
+  opacity: 0.4;
 }
-
 
 .lowercase {
   text-transform: lowercase;
 }
-
 
 .uppercase {
   text-transform: uppercase;
@@ -319,13 +318,13 @@ input[type=number]:disabled {
   overflow: hidden;
 }
 
-
 select:disabled {
   @include disabled-element;
 }
 
 button:disabled button:hover:disabled {
   @include disabled-element();
+
   pointer-events: none;
   cursor: default;
   opacity: 0.7;
@@ -335,15 +334,10 @@ i.disabled {
   opacity: 0.25;
 }
 
-
 .main-icon a {
   color: $primary-color-light;
   font-size: $primary-icon-size;
   padding-right: 6pt;
-}
-
-.main-icon a {
-  color: $primary-color-light;
 }
 
 .main-icon a:hover {
@@ -354,6 +348,8 @@ i.disabled {
   border-bottom: 1px double $primary-color-light;
   cursor: pointer;
 }
+
+// tags
 
 .tag {
   background-color: $primary-color-light;
@@ -372,44 +368,47 @@ i.disabled {
   color: $primary-color;
 }
 
+// blink
+
 @keyframes blinker {
   from {
-    opacity: 1.0
+    opacity: 1;
   }
+
   to {
-    opacity: 0.15
+    opacity: 0.15;
   }
 }
 
 .blink {
   text-decoration: blink;
-	animation-name: blinker;
-	animation-duration: 2.0s;
-	animation-iteration-count: infinite;
-	animation-timing-function: ease-in;
-	animation-direction: alternate;
+  animation-name: blinker;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in;
+  animation-direction: alternate;
 }
 
-
-//
 // menu component
-//
 
 .menu-trigger-icon {
   margin-top: -4px;
   margin-left: -6px;
 }
 
-
 // skeleton
 
 @keyframes skeleton-opacity {
-  0% { opacity: 0.80 }
-  100% { opacity: 0.10 }
+  0% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0.1;
+  }
 }
 
 .skeleton {
-  opacity: 0.80;
-
+  opacity: 0.8;
   animation: skeleton-opacity 1s infinite linear;
 }

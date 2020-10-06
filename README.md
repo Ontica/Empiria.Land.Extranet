@@ -1,6 +1,6 @@
 # Empiria Land Extranet Web Site
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5d4a7bd36f5b4001bd0d1af439c08cb0)](https://app.codacy.com/app/Ontica/Empiria.Land.Extranet?utm_source=github.com&utm_medium=referral&utm_content=Ontica/Empiria.Land.Extranet&utm_campaign=Badge_Grade_Dashboard)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/7d5459e6c4cb4e0fb91d1e9f23191930)](https://www.codacy.com/gh/Ontica/Empiria.Land.Extranet/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Ontica/Empiria.Land.Extranet&amp;utm_campaign=Badge_Grade)
 
 ## Overview
 
