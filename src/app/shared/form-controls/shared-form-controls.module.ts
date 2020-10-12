@@ -16,6 +16,7 @@ import { ESignInputComponent } from './esign/esign-input.component';
 import { FileControlComponent } from './file-control/file-control.component';
 import { InlineEditorComponent } from './inline-editor/inline-editor.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
+import { ImageCarouselComponent } from './image-carousel/image-carousel.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { SearchBoxComponent } from './search-box/search-box.component';
     ESignInputComponent,
     FileControlComponent,
     InlineEditorComponent,
-    SearchBoxComponent
+    SearchBoxComponent,
+    ImageCarouselComponent
   ],
 
   exports: [
