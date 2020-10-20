@@ -4,19 +4,30 @@
  *
  * See LICENSE.txt in the project root for complete license information.
  */
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
 
+export interface FileUploaderConfig {
+  accept?: string;
+  autoupload?: boolean;
+}
 
 @Component({
-  selector: 'emp-ng-file-control',
-  templateUrl: './file-control.component.html',
-  styleUrls: ['./file-control.component.scss']
+  selector: 'emp-ng-file-uploader',
+  templateUrl: './file-uploader.component.html',
+  styleUrls: ['./file-uploader.component.scss']
 })
-export class FileControlComponent {
+export class FileUploaderComponent implements OnChanges {
+
+  @Input() config: FileUploaderConfig = {};
 
   @Output() fileControlChange = new EventEmitter<File | null>();
 
   fileToUpload: File | null = null;
+
+
+  ngOnChanges() {
+    this.config = Object.assign({}, { accept: '', autoupload: false }, this.config);
+  }
 
 
   handleFileInput(files: FileList) {

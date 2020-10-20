@@ -1,9 +1,9 @@
 @import "../../../../styles/variables";
 
 .file-drop-area {
-  border: dashed 1px $primary-color !important;
-  height: 90px !important;
-  padding-top: 36px !important;
+  border: dashed 1px $primary-color;
+  height: 90px;
+  padding-top: 36px;
 }
 
 .remove-file-btn {

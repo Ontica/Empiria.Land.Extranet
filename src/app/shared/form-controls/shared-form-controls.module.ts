@@ -13,7 +13,7 @@ import { AngularMaterialModule } from '../angular-material.module';
 
 import { DatepickerComponent } from './datepicker/datepicker.component';
 import { ESignInputComponent } from './esign/esign-input.component';
-import { FileControlComponent } from './file-control/file-control.component';
+import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 import { InlineEditorComponent } from './inline-editor/inline-editor.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 
@@ -30,7 +30,7 @@ import { SearchBoxComponent } from './search-box/search-box.component';
   declarations: [
     DatepickerComponent,
     ESignInputComponent,
-    FileControlComponent,
+    FileUploaderComponent,
     InlineEditorComponent,
     SearchBoxComponent
   ],
@@ -38,7 +38,7 @@ import { SearchBoxComponent } from './search-box/search-box.component';
   exports: [
     DatepickerComponent,
     ESignInputComponent,
-    FileControlComponent,
+    FileUploaderComponent,
     InlineEditorComponent,
     SearchBoxComponent
   ],

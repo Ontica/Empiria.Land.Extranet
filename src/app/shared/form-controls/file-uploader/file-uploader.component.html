@@ -7,5 +7,5 @@
      </span>
 </div>
 
-<input type="file" id="file"
+<input type="file" id="file" [accept]="config.accept"
        (change)="handleFileInput($event.target.files)" style='display:none'>
