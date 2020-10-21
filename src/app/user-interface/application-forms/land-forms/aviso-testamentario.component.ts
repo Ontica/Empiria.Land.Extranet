@@ -44,6 +44,11 @@ export class AvisoTestamentarioComponent implements ApplicationFormComponent, On
   }
 
 
+  onFileControlEvent(file: File) {
+    console.log('file', file);
+  }
+
+
   getFormData(): AvisoTestamentario {
     const formModel = this.form.value;
 

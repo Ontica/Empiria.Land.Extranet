@@ -40,14 +40,28 @@
       </tr>
     </table>
 
-    <table class="form-section">
+    <table class="form-section" *ngIf="formHandler.editionMode">
       <tr>
-        <td class="form-section-title" colspan="2">Texto del aviso testamentario</td>
+        <td class="form-section-title" colspan="2">Adjuntar el archivo PDF con el aviso testamentario</td>
       </tr>
       <tr>
         <td></td>
         <td>
-          <textarea class="text-area uppercase" rows="30" formControlName="text"></textarea>
+          <emp-ng-file-uploader [config]="{ accept: 'application/pdf' }"
+                               (fileControlChange)="onFileControlEvent($event)">
+          </emp-ng-file-uploader>
+        </td>
+      </tr>
+    </table>
+
+    <table class="form-section">
+      <tr>
+        <td class="form-section-title" colspan="2">Resumen del aviso testamentario</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <textarea class="text-area uppercase" rows="15" formControlName="text"></textarea>
         </td>
       </tr>
     </table>
