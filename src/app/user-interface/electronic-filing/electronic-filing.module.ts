@@ -28,6 +28,7 @@ import { RequestTabbedViewComponent } from './request-tabbed-view/request-tabbed
 import { ApplicationFormsModule } from '../application-forms/application-forms.module';
 
 import { ElectronicFilingRoutingModule } from './electronic-filing-routing.module';
+import { RequestFilesListComponent } from './request-files-list/request-files-list.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { ElectronicFilingRoutingModule } from './electronic-filing-routing.modul
     RequestListItemComponent,
     RequestSignerComponent,
     RequestSubmitterComponent,
-    RequestTabbedViewComponent
+    RequestTabbedViewComponent,
+    RequestFilesListComponent
   ],
 
   exports: []
