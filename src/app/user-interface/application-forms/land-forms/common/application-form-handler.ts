@@ -25,18 +25,13 @@ export interface ApplicationFormComponent {
   getFormData(): ApplicationFormFields;
 
   resetForm();
-
 }
 
 
 export class ApplicationFormHandler {
-
   editionMode = false;
-
   exceptionMsg = '';
-
   isLoading = false;
-
   submitted = false;
 
   private appFormComponent: ApplicationFormComponent;
@@ -52,26 +47,21 @@ export class ApplicationFormHandler {
            (!this.appFormComponent.request.transaction || !this.appFormComponent.request.transaction.uid));
   }
 
-
   get canEdit() {
     return (!this.editionMode && !this.readonly);
   }
-
 
   get isReadyForSave() {
     return (!this.appFormComponent.form.pristine && !this.readonly);
   }
 
-
   get readonly() {
     return (this.appFormComponent.request.esign && this.appFormComponent.request.esign.sign);
   }
 
-
   onCancel() {
     this.appFormComponent.resetForm();
   }
-
 
   onDelete() {
     const msg = '¿Elimino esta solicitud?';

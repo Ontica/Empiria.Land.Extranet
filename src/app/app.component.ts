@@ -15,17 +15,24 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
 
   ngOnInit() {
+    this.preventDragAndDrop();
+  }
 
+
+  private preventDragAndDrop() {
     window.addEventListener('dragover', e => {
       e.preventDefault();
-      e.dataTransfer.dropEffect = 'none';
+      if (e.dataTransfer) {
+        e.dataTransfer.dropEffect = 'none';
+      }
     }, false);
 
     window.addEventListener('drop', e => {
       e.preventDefault();
-      e.dataTransfer.dropEffect = 'none';
+      if (e.dataTransfer) {
+        e.dataTransfer.dropEffect = 'none';
+      }
     }, false);
-
   }
 
 }
