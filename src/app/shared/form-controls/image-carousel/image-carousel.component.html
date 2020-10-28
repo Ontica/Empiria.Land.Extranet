@@ -1,0 +1,42 @@
+<div *ngIf="!isManifierGlass" [ngClass]="zoom >= 1 ? 'image-viewer-wrapper' : 'image-center'">           
+    <div [style.width.px]="800 * zoom">
+        <img class="image-container" 
+          [src]="mediaList[currentImagePointer].URL" />
+    </div>
+</div>
+
+<div *ngIf="isManifierGlass"  class="image-viewer-wrapper" >  
+    <div  #contentPlaceholder class="img-magnifier-container">
+        <img #myimage id="myimage"
+            [src]="mediaList[currentImagePointer].URL"
+            class= "image-magnifier-box">
+    </div>     
+</div>
+
+<div style="height: 10px;"></div>
+
+<div>  
+    <button mat-mini-fab color="primary" (click)="onPreviousClick()">
+        <mat-icon>arrow_circle_down</mat-icon>
+    </button> 
+    <button mat-mini-fab color="primary" (click)="onFirstClick()">
+        <mat-icon>radio_button_checked</mat-icon>
+    </button>  
+    <button mat-mini-fab color="primary" (click)="onNextClick()">
+        <mat-icon>arrow_circle_up</mat-icon>
+    </button>            
+    <input mdInput #pageNumber type="number" (keydown.enter)="onGoToPageClick(pageNumber.value)" 
+     [value]="currentImagePointer + 1">    
+    <span>/ {{mediaList.length}}</span>
+    <button mat-mini-fab color="primary" [disabled]="isManifierGlass" (click)="onZoomInClick()">
+        <mat-icon>remove_circle_outline</mat-icon>
+    </button>       
+    <button mat-mini-fab color="primary" [disabled]="isManifierGlass" (click)="onZoomOutClick()">
+        <mat-icon>add_circle_outline</mat-icon>
+    </button>          
+    <span>Zoom:{{ (zoom * 100) | number: '3.0-0'}} %</span>
+    <button mat-mini-fab color="primary" (click)="onManifierGlassClick()">
+        <mat-icon>search</mat-icon>
+    </button>    
+</div>
+

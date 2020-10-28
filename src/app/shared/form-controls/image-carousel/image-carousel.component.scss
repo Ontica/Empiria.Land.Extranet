@@ -1,0 +1,43 @@
+.image-viewer-wrapper {    
+    width:100%;
+    height:100%;
+    overflow:auto;         
+}
+
+.image-container {
+    width: 100%;
+    height: 100%;
+}
+
+.image-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow:auto;    
+}
+
+.image-magnifier-box {
+    width: 100%;
+    height: 100%;
+}
+
+
+.img-magnifier-container {
+    position:relative;
+  }
+  
+  ::ng-deep .img-magnifier-glass {
+    position: absolute;
+    border: 3px solid #000;
+    border-radius: 50%;
+    cursor: none;
+    width: 100px;
+    height: 100px;
+  }
+
+  input {
+    width: 40px;
+  }
