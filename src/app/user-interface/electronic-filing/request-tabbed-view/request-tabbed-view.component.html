@@ -5,7 +5,7 @@
   <mat-horizontal-stepper linear #stepper [selectedIndex]="selectedStepperIndex" labelPosition="bottom" color="accent">
 
     <mat-step completed="true">
-      <ng-template matStepLabel>Datos del interesado</ng-template>
+      <ng-template matStepLabel>Datos<br />del interesado</ng-template>
       <emp-one-requester-data
         [requester]="request.requestedBy"
         [procedureType]="request.procedureType"
@@ -15,7 +15,9 @@
     </mat-step>
 
     <mat-step [completed]="request?.form?.fields">
-      <ng-template matStepLabel>{{signed ? 'Ver' : 'Llenar'}}<br>el formulario</ng-template>
+      <ng-template matStepLabel>
+        {{signed ? 'Ver' : 'Llenar'}}<br />el formulario
+      </ng-template>
       <ng-container *ngIf="request.procedureType === 'AvisoPreventivo'">
         <emp-land-preventive-note
             [request]="request"
@@ -45,8 +47,19 @@
       </ng-container>
     </mat-step>
 
+    <mat-step *ngIf="request.documentation.status !== 'NotAllowed'"
+               [completed]="request.documentation.status === 'Completed'">
+      <ng-template matStepLabel>
+        {{ (signed || request.documentation.status === 'Completed') ? 'Ver' : 'Adjuntar'}}<br />documentos
+      </ng-template>
+
+      <emp-one-request-files-list></emp-one-request-files-list>
+    </mat-step>
+
     <mat-step [completed]="signed">
-      <ng-template matStepLabel>{{signed ? 'Firma electrónica' : (isSigner ? 'Firmar la solicitud' : 'Enviar a firma')}}</ng-template>
+      <ng-template matStepLabel>
+        {{signed ? 'Firma electrónica' : (isSigner ? 'Firmar la solicitud' : 'Enviar a firma')}}
+      </ng-template>
 
       <emp-one-request-signer
           [request]="request"
@@ -56,7 +69,9 @@
     </mat-step>
 
     <mat-step [completed]="submitted">
-      <ng-template matStepLabel>{{submitted ? 'Información del trámite' : 'Solicitar el trámite'}}</ng-template>
+      <ng-template matStepLabel>
+        {{submitted ? 'Información del' : 'Solicitar el'}}<br />trámite
+      </ng-template>
 
       <emp-one-request-submitter
           [request]="request"

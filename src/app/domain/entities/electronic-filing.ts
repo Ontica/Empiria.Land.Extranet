@@ -5,7 +5,7 @@
  * See LICENSE.txt in the project root for complete license information.
  */
 
-import { DateString, Entity } from '@app/core';
+import { DateString, Entity, PartitionedType } from '@app/core';
 
 import { RealEstate } from './property';
 
@@ -84,13 +84,19 @@ export interface ESignData {
 }
 
 
-export interface EFilingDocument {
-  uid: string;
+export interface Documentation {
+  status: 'NotAllowed' | 'Optional' | 'Required' | 'Completed';
+}
+
+
+export interface EFilingDocument extends Entity {
   type: string;
   typeName: string;
   name: string;
   contentType: string;
   uri: string;
+  status: 'protected' | 'readonly' | 'editable' | 'signed' |
+          'submitted' | 'verified' | 'returned' | 'rejected';
 }
 
 
@@ -101,11 +107,11 @@ export interface EFilingRequest extends Entity {
   summary: string;
   lastUpdateTime: DateString;
   status: FilingRequestStatus;
+  documentation: Documentation;
   form?: ApplicationForm;
   paymentOrder?: PaymentOrderData;
   esign?: ESignData;
   transaction?: Transaction;
-  inputDocuments: EFilingDocument[];
   outputDocuments: EFilingDocument[];
   permissions: FilingRequestPermissions;
 }
@@ -219,6 +225,7 @@ export const EmptyEFilingRequest: EFilingRequest = {
     agent: '',
   },
   summary: '',
+  documentation: null,
   form: null,
   lastUpdateTime: '',
   status: {
@@ -227,7 +234,6 @@ export const EmptyEFilingRequest: EFilingRequest = {
   },
   esign: null,
   transaction: EmptyTransaction,
-  inputDocuments: [],
   outputDocuments: [],
   permissions: {
     canManage: false,
